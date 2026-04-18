@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>História — Enoraski</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Code+Pro:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #14110e;
+        --surface: #1c1814;
+        --surface2: #231e19;
+        --border: #2e2820;
+        --border-light: #3d3428;
+        --accent: #c8a020;
+        --accent2: #a04020;
+        --text: #e8e0d0;
+        --muted: #6a6050;
+        --muted2: #8a7860;
+        --fund: #7a9a50;
+        --inter: #c8a020;
+        --av: #a04020;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Source Code Pro", monospace;
+        font-size: 12px;
+        line-height: 1.8;
+        min-height: 100vh;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 59px,
+            rgba(200, 160, 32, 0.04) 59px,
+            rgba(200, 160, 32, 0.04) 60px
+          ),
+          repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 59px,
+            rgba(200, 160, 32, 0.04) 59px,
+            rgba(200, 160, 32, 0.04) 60px
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 64px 44px 80px;
+      }
+      header {
+        margin-bottom: 48px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--border-light);
+      }
+      .school-tag {
+        font-size: 9px;
+        letter-spacing: 0.38em;
+        color: var(--muted);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      h1 {
+        font-family: "Libre Baskerville", serif;
+        font-size: clamp(2.8rem, 8vw, 5rem);
+        font-weight: 400;
+        line-height: 0.95;
+        color: var(--text);
+        margin-bottom: 16px;
+        letter-spacing: 0.02em;
+      }
+      h1 em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      .teacher-block {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .teacher-name {
+        font-family: "Libre Baskerville", serif;
+        font-size: 1.05rem;
+        font-style: italic;
+        color: var(--accent);
+      }
+      .teacher-desc {
+        font-size: 9.5px;
+        letter-spacing: 0.15em;
+        color: var(--muted2);
+        text-transform: uppercase;
+      }
+      .prof-note {
+        margin-bottom: 36px;
+        padding: 14px 20px 14px 18px;
+        border-left: 3px solid var(--accent);
+        background: var(--surface2);
+        font-family: "Libre Baskerville", serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: #c8b890;
+        line-height: 1.6;
+      }
+      .prof-note strong {
+        display: block;
+        font-family: "Source Code Pro", monospace;
+        font-style: normal;
+        font-size: 9px;
+        letter-spacing: 0.25em;
+        color: var(--accent);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+      }
+      .legend {
+        display: flex;
+        gap: 22px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 10px;
+        color: var(--muted2);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .dot-fund {
+        background: var(--fund);
+      }
+      .dot-inter {
+        background: var(--inter);
+      }
+      .dot-av {
+        background: var(--av);
+      }
+      .modulo {
+        margin-bottom: 28px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        overflow: hidden;
+        animation: up 0.35s ease both;
+      }
+      @keyframes up {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .modulo:nth-child(1) {
+        animation-delay: 0.04s;
+      }
+      .modulo:nth-child(2) {
+        animation-delay: 0.08s;
+      }
+      .modulo:nth-child(3) {
+        animation-delay: 0.12s;
+      }
+      .modulo:nth-child(4) {
+        animation-delay: 0.16s;
+      }
+      .modulo:nth-child(5) {
+        animation-delay: 0.2s;
+      }
+      .modulo:nth-child(6) {
+        animation-delay: 0.24s;
+      }
+      .modulo:nth-child(7) {
+        animation-delay: 0.28s;
+      }
+      .modulo:nth-child(8) {
+        animation-delay: 0.32s;
+      }
+      .modulo:nth-child(9) {
+        animation-delay: 0.36s;
+      }
+      .modulo:nth-child(10) {
+        animation-delay: 0.4s;
+      }
+      .modulo-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.2s;
+      }
+      .modulo-header:hover {
+        background: var(--surface2);
+      }
+      .modulo-num {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.12em;
+        min-width: 40px;
+      }
+      .modulo-title {
+        font-family: "Libre Baskerville", serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--text);
+        flex: 1;
+      }
+      .nivel-badge {
+        font-size: 9px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border: 1px solid;
+      }
+      .nivel-fund {
+        color: var(--fund);
+        border-color: var(--fund);
+      }
+      .nivel-inter {
+        color: var(--inter);
+        border-color: var(--inter);
+      }
+      .nivel-av {
+        color: var(--av);
+        border-color: var(--av);
+      }
+      .chevron {
+        color: var(--muted);
+        font-size: 10px;
+        transition: transform 0.2s;
+      }
+      .modulo-header.open .chevron {
+        transform: rotate(90deg);
+      }
+      .modulo-body {
+        display: none;
+      }
+      .modulo-body.open {
+        display: block;
+      }
+      .topico {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+      }
+      .topico:last-child {
+        border-bottom: none;
+      }
+      .topico-idx {
+        min-width: 48px;
+        padding: 12px 14px;
+        font-size: 9px;
+        color: var(--muted);
+        border-right: 1px solid var(--border);
+        display: flex;
+        align-items: flex-start;
+        padding-top: 14px;
+      }
+      .topico-content {
+        padding: 12px 20px;
+        flex: 1;
+      }
+      .topico-name {
+        font-family: "Libre Baskerville", serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 5px;
+      }
+      .topico-sub {
+        color: var(--muted2);
+        font-size: 11px;
+        line-height: 1.65;
+      }
+      .topico-sub li {
+        list-style: none;
+        padding-left: 14px;
+        position: relative;
+      }
+      .topico-sub li::before {
+        content: "›";
+        position: absolute;
+        left: 2px;
+        color: var(--muted);
+      }
+      footer {
+        margin-top: 52px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-light);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .footer-left {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .footer-right {
+        font-family: "Libre Baskerville", serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: var(--muted2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="school-tag">Instituto Enoraski — Grade Curricular</div>
+        <h1>His<em>tó</em>ria</h1>
+        <div class="teacher-block">
+          <span class="teacher-name">Dmitri Sokolov</span>
+          <span class="teacher-desc"
+            >/ Narrativo · Irônico · Revela Padrões Ocultos · Desconstrói
+            Versões Oficiais</span
+          >
+        </div>
+      </header>
+
+      <div class="prof-note">
+        <strong>Sokolov — nota de entrada</strong>
+        A versão oficial raramente é a história. É a história que alguém
+        precisava que você acreditasse. Aqui aprendemos a ler o que não está
+        escrito.
+      </div>
+
+      <div class="legend">
+        <div class="legend-item">
+          <div class="dot dot-fund"></div>
+          Fundamento
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-inter"></div>
+          Intermediário
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-av"></div>
+          Avançado
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 01</span>
+          <span class="modulo-title"
+            >Pré-História e Primeiras Civilizações</span
+          >
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">1.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Hominídeos e Evolução Humana</div>
+              <ul class="topico-sub">
+                <li>Linha evolutiva — Australopithecus ao Homo sapiens</li>
+                <li>
+                  Paleolítico e Neolítico — ferramentas, fogo, sedentarização
+                </li>
+                <li>
+                  Revolução Neolítica — agricultura e pecuária como ruptura
+                  estrutural
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Mesopotâmia e Egito</div>
+              <ul class="topico-sub">
+                <li>Sumérios, acadianos, babilônios, assírios</li>
+                <li>Código de Hamurabi — lei como instrumento de poder</li>
+                <li>Egito faraônico — Estado teocrático, ciclos dinásticos</li>
+                <li>Escrita cuneiforme e hieroglífica</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Outras Civilizações Antigas</div>
+              <ul class="topico-sub">
+                <li>Vale do Indo — Harappa e Mohenjo-daro</li>
+                <li>China antiga — dinastias Shang e Zhou</li>
+                <li>
+                  Fenícios — navegação e alfabeto como tecnologia de expansão
+                </li>
+                <li>Hebreus — monoteísmo e impacto na história ocidental</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 02</span>
+          <span class="modulo-title">Grécia e Roma Antigas</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">2.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Grécia</div>
+              <ul class="topico-sub">
+                <li>Polis — Atenas e Esparta como modelos opostos</li>
+                <li>Democracia ateniense — quem ela incluía e quem excluía</li>
+                <li>Guerras Médicas e Peloponeso</li>
+                <li>
+                  Alexandre e o Helenismo — difusão cultural como política
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Roma</div>
+              <ul class="topico-sub">
+                <li>
+                  Monarquia, República, Império — transições e seus motores
+                </li>
+                <li>Expansão territorial e romanização</li>
+                <li>Crise da República — Graco, Mário, Sila, César</li>
+                <li>
+                  Principado de Augusto — como se vende uma monarquia como res
+                  publica
+                </li>
+                <li>Queda do Ocidente — causas internas e externas</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 03</span>
+          <span class="modulo-title">Idade Média</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">3.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Feudalismo</div>
+              <ul class="topico-sub">
+                <li>Estrutura feudal — suserano, vassalo, servo</li>
+                <li>Igreja como poder político e econômico</li>
+                <li>Modo de produção feudal — terra como centro</li>
+                <li>Crise do feudalismo no século XIV — peste, guerra, fome</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Islamismo e Expansão Árabe</div>
+              <ul class="topico-sub">
+                <li>Maomé e o surgimento do Islã</li>
+                <li>Califados — Omíada e Abássida</li>
+                <li>
+                  Contribuições científicas e filosóficas — o que a Europa
+                  esqueceu e os árabes preservaram
+                </li>
+                <li>Cruzadas — religião como pretexto comercial e político</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Bizâncio e China Medieval</div>
+              <ul class="topico-sub">
+                <li>Império Bizantino — continuidade de Roma no Oriente</li>
+                <li>Cisma do Oriente (1054)</li>
+                <li>China — Dinastia Tang e Song, papel, pólvora, imprensa</li>
+                <li>Mongóis — maior império contíguo e sua herança</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 04</span>
+          <span class="modulo-title">Transição para a Modernidade</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">4.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Renascimento e Humanismo</div>
+              <ul class="topico-sub">
+                <li>Contexto italiano — Florença, Médici, mecenato</li>
+                <li>Ruptura com a visão teocêntrica</li>
+                <li>Arte e ciência como instrumentos de poder e prestígio</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Reforma Protestante</div>
+              <ul class="topico-sub">
+                <li>Lutero, Calvino, Zuínglio — motivações além da teologia</li>
+                <li>Contrarreforma — Concílio de Trento</li>
+                <li>
+                  Guerras de Religião — fé como cobertura para disputas
+                  territoriais
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Expansão Marítima Europeia</div>
+              <ul class="topico-sub">
+                <li>
+                  Portugal e Espanha — motivações econômicas e tecnológicas
+                </li>
+                <li>
+                  Conquista da América — violência sistemática e suas
+                  justificativas
+                </li>
+                <li>Sistema colonial — extração, escravidão, mercantilismo</li>
+                <li>Impacto demográfico nas Américas</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 05</span>
+          <span class="modulo-title">Revoluções do Século XVII–XVIII</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">5.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Iluminismo</div>
+              <ul class="topico-sub">
+                <li>Razão como arma política</li>
+                <li>Locke, Voltaire, Rousseau, Montesquieu</li>
+                <li>Contrato social e soberania popular</li>
+                <li>Quem o Iluminismo libertava — e de quem</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Revolução Inglesa e Americana</div>
+              <ul class="topico-sub">
+                <li>Revolução Gloriosa — parlamentarismo como resultado</li>
+                <li>
+                  Independência dos EUA — contradições de uma revolução
+                  escravocrata liberal
+                </li>
+                <li>Constituição americana e Bill of Rights</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Revolução Francesa</div>
+              <ul class="topico-sub">
+                <li>
+                  Causas estruturais — finanças, fome, crise do Antigo Regime
+                </li>
+                <li>Fases: Assembleia, Convenção, Terror, Diretório</li>
+                <li>Napoleão — Revolução exportada pela força</li>
+                <li>
+                  Legado: código napoleônico, nacionalismo, reação conservadora
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 06</span>
+          <span class="modulo-title"
+            >Século XIX — Industrialização e Nações</span
+          >
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">6.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Revolução Industrial</div>
+              <ul class="topico-sub">
+                <li>Condições na Inglaterra — por que aqui, por que agora</li>
+                <li>Máquina a vapor, ferrovia, têxtil</li>
+                <li>Condições de trabalho — o custo humano do progresso</li>
+                <li>Formação do proletariado e do pensamento socialista</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Imperialismo e Partilha do Mundo</div>
+              <ul class="topico-sub">
+                <li>
+                  Neocolonialismo — África e Ásia como mercados e matéria-prima
+                </li>
+                <li>Conferência de Berlim (1884) — partilha da África</li>
+                <li>Ideologia do "fardo do homem branco"</li>
+                <li>Resistências — revoltas anticoloniais</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Unificações e Movimentos Nacionais</div>
+              <ul class="topico-sub">
+                <li>Unificação italiana — Cavour, Garibaldi, Mazzini</li>
+                <li>Unificação alemã — Bismarck e Realpolitik</li>
+                <li>Primavera dos Povos (1848)</li>
+                <li>América Latina — independências e suas contradições</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 07</span>
+          <span class="modulo-title">Século XX — Guerras e Revoluções</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">7.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Primeira Guerra Mundial</div>
+              <ul class="topico-sub">
+                <li>
+                  Causas estruturais — alianças, imperialismo, corrida
+                  armamentista
+                </li>
+                <li>O assassinato de Sarajevo como detonador</li>
+                <li>Guerra de trincheiras — tecnologia e massacre</li>
+                <li>
+                  Tratado de Versalhes — punição como semente da próxima guerra
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Revolução Russa e Socialismo Real</div>
+              <ul class="topico-sub">
+                <li>1905 e 1917 — Fevereiro e Outubro</li>
+                <li>Lênin, Trotsky, Stálin — divergências e poder</li>
+                <li>URSS — industrialização forçada e o custo humano</li>
+                <li>Stalinismo — terror como sistema</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Totalitarismos e Segunda Guerra</div>
+              <ul class="topico-sub">
+                <li>Fascismo italiano e nazismo — diferenças e semelhanças</li>
+                <li>Crise de 1929 e ascensão dos extremismos</li>
+                <li>Segunda Guerra — causas, frentes, Holocausto</li>
+                <li>
+                  Hiroshima — a bomba como mensagem política, não apenas militar
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 08</span>
+          <span class="modulo-title">Guerra Fria e Mundo Contemporâneo</span>
+          <span class="nivel-badge nivel-av">Avançado</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">8.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Guerra Fria</div>
+              <ul class="topico-sub">
+                <li>Bipolaridade — EUA vs URSS como modelo geopolítico</li>
+                <li>
+                  Doutrina Truman, Plano Marshall, OTAN, Pacto de Varsóvia
+                </li>
+                <li>Conflitos periféricos: Coreia, Vietnã, Cuba, Angola</li>
+                <li>Détente, Reagan, Gorbachev — o colapso soviético</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">8.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Descolonização e Terceiro Mundo</div>
+              <ul class="topico-sub">
+                <li>Conferência de Bandung — não alinhamento</li>
+                <li>
+                  África pós-colonial — independências e neocolonialismo
+                  econômico
+                </li>
+                <li>
+                  Oriente Médio — petróleo, Israel-Palestina, conflitos
+                  estruturais
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">8.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Mundo Pós-1989</div>
+              <ul class="topico-sub">
+                <li>Queda do Muro de Berlim — causas e consequências</li>
+                <li>Globalização — integração econômica e seus perdedores</li>
+                <li>11 de setembro e a "guerra ao terror"</li>
+                <li>Ascensão da China e multipolaridade</li>
+                <li>Crise democrática e populismos do século XXI</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 09</span>
+          <span class="modulo-title">História do Brasil</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">9.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Brasil Colonial</div>
+              <ul class="topico-sub">
+                <li>Povos originários — antes da "descoberta"</li>
+                <li>Sistema colonial — pau-brasil, açúcar, ouro, diamantes</li>
+                <li>Escravidão africana — tráfico, resistência, quilombos</li>
+                <li>Entradas, bandeiras e a interiorização</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">9.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Independência ao Império</div>
+              <ul class="topico-sub">
+                <li>Vinda da família real — o Brasil como solução europeia</li>
+                <li>
+                  Independência — ruptura conservadora, sem revolução social
+                </li>
+                <li>Primeiro e Segundo Reinado</li>
+                <li>Abolição da escravidão — por que 1888 e não antes</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">9.3</div>
+            <div class="topico-content">
+              <div class="topico-name">República ao Tempo Presente</div>
+              <ul class="topico-sub">
+                <li>República Velha — café com leite e coronelismo</li>
+                <li>Era Vargas — populismo como modernização controlada</li>
+                <li>
+                  Ditadura Militar (1964–1985) — repressão e "milagre" econômico
+                </li>
+                <li>Redemocratização, Plano Real, Lula, polarização recente</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="footer-left">
+          Enoraski · História · Revisão Total · 2026
+        </div>
+        <div class="footer-right">Sokolov, D.</div>
+      </footer>
+    </div>
+    <script>
+      function toggle(h) {
+        h.classList.toggle("open");
+        h.nextElementSibling.classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

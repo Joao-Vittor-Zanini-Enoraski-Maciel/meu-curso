@@ -1,0 +1,926 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Química — Enoraski</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Fira+Code:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f7f4ef;
+        --surface: #eeeae3;
+        --surface2: #e6e1d8;
+        --border: #d0c9bc;
+        --border-dark: #a09888;
+        --accent: #3d5a3e;
+        --accent2: #8b4513;
+        --text: #1a1814;
+        --muted: #7a7468;
+        --muted2: #a09888;
+        --fund: #3d5a3e;
+        --inter: #8b4513;
+        --av: #4a3060;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Fira Code", monospace;
+        font-size: 12px;
+        line-height: 1.8;
+        min-height: 100vh;
+      }
+      /* hexagonal grid bg */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: radial-gradient(circle, #c8c0b0 1px, transparent 1px);
+        background-size: 28px 28px;
+        opacity: 0.18;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 64px 44px 80px;
+      }
+      header {
+        margin-bottom: 48px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--border-dark);
+      }
+      .school-tag {
+        font-size: 9px;
+        letter-spacing: 0.38em;
+        color: var(--muted2);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      h1 {
+        font-family: "Crimson Pro", serif;
+        font-size: clamp(3rem, 8vw, 5.2rem);
+        font-weight: 300;
+        line-height: 0.95;
+        color: var(--text);
+        margin-bottom: 16px;
+        letter-spacing: -0.01em;
+      }
+      h1 span {
+        color: var(--accent);
+      }
+      .teacher-block {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+      }
+      .teacher-name {
+        font-family: "Crimson Pro", serif;
+        font-size: 1.1rem;
+        font-style: italic;
+        color: var(--accent2);
+      }
+      .teacher-desc {
+        font-size: 9.5px;
+        letter-spacing: 0.15em;
+        color: var(--muted);
+        text-transform: uppercase;
+      }
+      .prof-note {
+        margin-bottom: 36px;
+        padding: 14px 20px 14px 18px;
+        border-left: 3px solid var(--accent);
+        background: var(--surface2);
+        font-family: "Crimson Pro", serif;
+        font-style: italic;
+        font-size: 1.05rem;
+        color: #2a3a2a;
+        line-height: 1.55;
+      }
+      .prof-note strong {
+        display: block;
+        font-family: "Fira Code", monospace;
+        font-style: normal;
+        font-size: 9px;
+        letter-spacing: 0.25em;
+        color: var(--accent);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+      }
+      .legend {
+        display: flex;
+        gap: 22px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .dot-fund {
+        background: var(--fund);
+      }
+      .dot-inter {
+        background: var(--inter);
+      }
+      .dot-av {
+        background: var(--av);
+      }
+      .modulo {
+        margin-bottom: 28px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        overflow: hidden;
+        animation: up 0.35s ease both;
+      }
+      @keyframes up {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .modulo:nth-child(1) {
+        animation-delay: 0.04s;
+      }
+      .modulo:nth-child(2) {
+        animation-delay: 0.08s;
+      }
+      .modulo:nth-child(3) {
+        animation-delay: 0.12s;
+      }
+      .modulo:nth-child(4) {
+        animation-delay: 0.16s;
+      }
+      .modulo:nth-child(5) {
+        animation-delay: 0.2s;
+      }
+      .modulo:nth-child(6) {
+        animation-delay: 0.24s;
+      }
+      .modulo:nth-child(7) {
+        animation-delay: 0.28s;
+      }
+      .modulo:nth-child(8) {
+        animation-delay: 0.32s;
+      }
+      .modulo:nth-child(9) {
+        animation-delay: 0.36s;
+      }
+      .modulo:nth-child(10) {
+        animation-delay: 0.4s;
+      }
+      .modulo-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.2s;
+      }
+      .modulo-header:hover {
+        background: var(--surface2);
+      }
+      .modulo-num {
+        font-size: 9px;
+        color: var(--muted2);
+        letter-spacing: 0.12em;
+        min-width: 40px;
+      }
+      .modulo-title {
+        font-family: "Crimson Pro", serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text);
+        flex: 1;
+      }
+      .nivel-badge {
+        font-size: 9px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border: 1px solid;
+      }
+      .nivel-fund {
+        color: var(--fund);
+        border-color: var(--fund);
+      }
+      .nivel-inter {
+        color: var(--inter);
+        border-color: var(--inter);
+      }
+      .nivel-av {
+        color: var(--av);
+        border-color: var(--av);
+      }
+      .chevron {
+        color: var(--muted2);
+        font-size: 10px;
+        transition: transform 0.2s;
+      }
+      .modulo-header.open .chevron {
+        transform: rotate(90deg);
+      }
+      .modulo-body {
+        display: none;
+      }
+      .modulo-body.open {
+        display: block;
+      }
+      .topico {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+      }
+      .topico:last-child {
+        border-bottom: none;
+      }
+      .topico-idx {
+        min-width: 48px;
+        padding: 12px 14px;
+        font-size: 9px;
+        color: var(--muted2);
+        border-right: 1px solid var(--border);
+        display: flex;
+        align-items: flex-start;
+        padding-top: 14px;
+      }
+      .topico-content {
+        padding: 12px 20px;
+        flex: 1;
+      }
+      .topico-name {
+        font-family: "Crimson Pro", serif;
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 5px;
+      }
+      .topico-sub {
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.65;
+      }
+      .topico-sub li {
+        list-style: none;
+        padding-left: 14px;
+        position: relative;
+      }
+      .topico-sub li::before {
+        content: "—";
+        position: absolute;
+        left: 0;
+        color: var(--border-dark);
+        font-size: 9px;
+        top: 3px;
+      }
+      footer {
+        margin-top: 52px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-dark);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .footer-left {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .footer-right {
+        font-family: "Crimson Pro", serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: var(--muted2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="school-tag">Instituto Enoraski — Grade Curricular</div>
+        <h1>Quí<span>mi</span>ca</h1>
+        <div class="teacher-block">
+          <span class="teacher-name">Sofiya Lebedeva</span>
+          <span class="teacher-desc"
+            >/ Metódica · Precisa · Não Tolera Aproximações</span
+          >
+        </div>
+      </header>
+
+      <div class="prof-note">
+        <strong>Lebedeva — nota de entrada</strong>
+        Química é a linguagem com que a matéria descreve a si mesma. Toda
+        imprecisão aqui tem consequência real. Não existe "mais ou menos certo"
+        em uma equação química.
+      </div>
+
+      <div class="legend">
+        <div class="legend-item">
+          <div class="dot dot-fund"></div>
+          Fundamento
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-inter"></div>
+          Intermediário
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-av"></div>
+          Avançado
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 01</span>
+          <span class="modulo-title">Estrutura da Matéria</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">1.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Modelos Atômicos</div>
+              <ul class="topico-sub">
+                <li>Dalton, Thomson, Rutherford, Bohr</li>
+                <li>Modelo quântico — orbitais e números quânticos</li>
+                <li>Limitações de cada modelo</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Estrutura do Átomo</div>
+              <ul class="topico-sub">
+                <li>Prótons, nêutrons, elétrons — carga e massa</li>
+                <li>Número atômico (Z) e número de massa (A)</li>
+                <li>Isótopos, isóbaros, isótonos</li>
+                <li>Íons — cátions e ânions</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Distribuição Eletrônica</div>
+              <ul class="topico-sub">
+                <li>Diagrama de Linus Pauling</li>
+                <li>Camadas e subníveis K, L, M, N — s, p, d, f</li>
+                <li>Regra de Hund e Princípio da Exclusão de Pauli</li>
+                <li>Elétrons de valência</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 02</span>
+          <span class="modulo-title">Tabela Periódica</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">2.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Organização e Famílias</div>
+              <ul class="topico-sub">
+                <li>Períodos e grupos — lógica da organização</li>
+                <li>Metais, não-metais, semimetais, gases nobres</li>
+                <li>Elementos representativos e de transição</li>
+                <li>Lantanídeos e actinídeos</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Propriedades Periódicas</div>
+              <ul class="topico-sub">
+                <li>Raio atômico e iônico — variações</li>
+                <li>Energia de ionização</li>
+                <li>Afinidade eletrônica</li>
+                <li>Eletronegatividade e eletropositividade</li>
+                <li>Caráter metálico</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 03</span>
+          <span class="modulo-title">Ligações Químicas</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">3.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Ligação Iônica</div>
+              <ul class="topico-sub">
+                <li>Formação — transferência de elétrons</li>
+                <li>Energia de rede — ciclo de Born-Haber (introdução)</li>
+                <li>Propriedades dos compostos iônicos</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Ligação Covalente</div>
+              <ul class="topico-sub">
+                <li>
+                  Compartilhamento de elétrons — pares ligantes e não ligantes
+                </li>
+                <li>Ligações simples, duplas, triplas</li>
+                <li>Ligação covalente dativa (coordenada)</li>
+                <li>
+                  Teoria da repulsão dos pares de elétrons (VSEPR) — geometria
+                  molecular
+                </li>
+                <li>Polaridade de ligações e moléculas — dipolo elétrico</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Ligação Metálica</div>
+              <ul class="topico-sub">
+                <li>Modelo do mar de elétrons</li>
+                <li>
+                  Propriedades dos metais: condutividade, maleabilidade, brilho
+                </li>
+                <li>Ligas metálicas</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.4</div>
+            <div class="topico-content">
+              <div class="topico-name">Forças Intermoleculares</div>
+              <ul class="topico-sub">
+                <li>Forças de Van der Waals — London, Debye, Keesom</li>
+                <li>
+                  Ligações de hidrogênio — condições e impacto nas propriedades
+                </li>
+                <li>Relação com ponto de fusão/ebulição e solubilidade</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 04</span>
+          <span class="modulo-title">Funções Inorgânicas</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">4.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Ácidos</div>
+              <ul class="topico-sub">
+                <li>Teoria de Arrhenius e de Brønsted-Lowry</li>
+                <li>Nomenclatura de ácidos (hidrácidos e oxoácidos)</li>
+                <li>Propriedades: ionização, força, volatilidade</li>
+                <li>pH e escala logarítmica</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Bases</div>
+              <ul class="topico-sub">
+                <li>Definição de Arrhenius e Brønsted-Lowry</li>
+                <li>Nomenclatura de bases</li>
+                <li>Força das bases — grau de dissociação</li>
+                <li>pOH e relação com pH</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Óxidos</div>
+              <ul class="topico-sub">
+                <li>
+                  Classificação: ácidos, básicos, anfóteros, neutros, mistos
+                </li>
+                <li>Nomenclatura de óxidos</li>
+                <li>Reações dos óxidos com água, ácidos e bases</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.4</div>
+            <div class="topico-content">
+              <div class="topico-name">Sais</div>
+              <ul class="topico-sub">
+                <li>Formação por neutralização</li>
+                <li>Nomenclatura de sais</li>
+                <li>Hidrólise salina — pH de soluções salinas</li>
+                <li>Sais complexos — introdução</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 05</span>
+          <span class="modulo-title">Estequiometria e Reações</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">5.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Cálculo Químico</div>
+              <ul class="topico-sub">
+                <li>Mol e número de Avogadro</li>
+                <li>Massa molar — cálculo e uso</li>
+                <li>Volume molar de gases (CNTP)</li>
+                <li>Composição centesimal de compostos</li>
+                <li>Fórmula mínima e molecular</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Balanceamento e Estequiometria</div>
+              <ul class="topico-sub">
+                <li>Balanceamento por inspeção e por tentativas</li>
+                <li>Método óxido-redução para balanceamento</li>
+                <li>Relações molares entre reagentes e produtos</li>
+                <li>Reagente limitante e em excesso</li>
+                <li>Rendimento da reação — cálculo e causas de perdas</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Tipos de Reações Químicas</div>
+              <ul class="topico-sub">
+                <li>Síntese, análise, deslocamento simples e duplo</li>
+                <li>Reações de combustão — completa e incompleta</li>
+                <li>Reações de oxirredução — número de oxidação</li>
+                <li>Reações ácido-base</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 06</span>
+          <span class="modulo-title">Soluções e Concentrações</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">6.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Tipos e Propriedades das Soluções</div>
+              <ul class="topico-sub">
+                <li>Solvente, soluto, solução</li>
+                <li>Soluções sólidas, líquidas e gasosas</li>
+                <li>Saturação — solubilidade e curvas de solubilidade</li>
+                <li>Efeito da temperatura e pressão na solubilidade</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Concentrações</div>
+              <ul class="topico-sub">
+                <li>Concentração em g/L</li>
+                <li>Concentração molar (molaridade)</li>
+                <li>Título em massa (fração mássica)</li>
+                <li>Partes por milhão (ppm)</li>
+                <li>Diluição de soluções — cálculo</li>
+                <li>Mistura de soluções</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Propriedades Coligativas</div>
+              <ul class="topico-sub">
+                <li>Tonoscopia — abaixamento da pressão de vapor</li>
+                <li>Ebulioscopia — elevação do ponto de ebulição</li>
+                <li>Crioscopia — abaixamento do ponto de fusão</li>
+                <li>Osmoscopia — pressão osmótica</li>
+                <li>Efeito do eletrólito — fator de Van't Hoff</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 07</span>
+          <span class="modulo-title">Termoquímica e Cinética</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">7.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Termoquímica</div>
+              <ul class="topico-sub">
+                <li>Entalpia — definição e variação (ΔH)</li>
+                <li>Reações exotérmicas e endotérmicas</li>
+                <li>Lei de Hess — aditividade das entalpias</li>
+                <li>Entalpia de formação, combustão, neutralização</li>
+                <li>Energia de ligação — cálculo de ΔH</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Cinética Química</div>
+              <ul class="topico-sub">
+                <li>Velocidade de reação — definição e medida</li>
+                <li>
+                  Fatores que afetam a velocidade: concentração, temperatura,
+                  catalisador, superfície de contato
+                </li>
+                <li>Teoria das colisões e energia de ativação</li>
+                <li>Lei de velocidade e ordem de reação</li>
+                <li>Catálise — homogênea e heterogênea</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 08</span>
+          <span class="modulo-title">Equilíbrio Químico</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">8.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Conceito e Constante de Equilíbrio</div>
+              <ul class="topico-sub">
+                <li>Estado de equilíbrio dinâmico</li>
+                <li>Expressão de Kc e Kp</li>
+                <li>Relação entre Kc e Kp</li>
+                <li>Quociente de reação Q — previsão do sentido</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">8.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Princípio de Le Chatelier</div>
+              <ul class="topico-sub">
+                <li>Perturbações: concentração, pressão, temperatura</li>
+                <li>Efeito de catalisador no equilíbrio</li>
+                <li>Aplicações industriais — Haber, Ostwald</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">8.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Equilíbrios Iônicos</div>
+              <ul class="topico-sub">
+                <li>Produto iônico da água — Kw</li>
+                <li>Cálculo de pH e pOH</li>
+                <li>Hidrólise salina</li>
+                <li>Soluções tampão — composição e funcionamento</li>
+                <li>Produto de solubilidade Ksp</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 09</span>
+          <span class="modulo-title">Eletroquímica</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">9.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Oxirredução</div>
+              <ul class="topico-sub">
+                <li>Número de oxidação — regras de determinação</li>
+                <li>Agentes oxidantes e redutores</li>
+                <li>Balanceamento redox pelo método das meias-reações</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">9.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Pilhas e Baterias</div>
+              <ul class="topico-sub">
+                <li>Célula galvânica — ânodo, cátodo, ponte salina</li>
+                <li>Potencial de eletrodo padrão — tabela de potenciais</li>
+                <li>Potencial de célula — cálculo de E°</li>
+                <li>Pilha de Daniell, pilha seca, bateria de chumbo-ácido</li>
+                <li>Espontaneidade e relação com ΔG</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">9.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Eletrólise</div>
+              <ul class="topico-sub">
+                <li>Eletrólise de fusão e de solução aquosa</li>
+                <li>Leis de Faraday — quantidade de substância depositada</li>
+                <li>Eletrodeposição — galvanoplastia</li>
+                <li>Aplicações: produção de alumínio, cloro, NaOH</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 10</span>
+          <span class="modulo-title">Química Orgânica — Fundamentos</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">10.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Carbono e Hidrocarbonetos</div>
+              <ul class="topico-sub">
+                <li>Propriedades do carbono — tetravalência, catenação</li>
+                <li>Tipos de cadeia carbônica</li>
+                <li>Alcanos, alcenos, alcinos, alcadienos</li>
+                <li>Cicloalcanos e arenos — benzeno e aromaticidade</li>
+                <li>Nomenclatura IUPAC</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">10.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Funções Orgânicas</div>
+              <ul class="topico-sub">
+                <li>Haletos orgânicos, álcoois, éteres, aldeídos, cetonas</li>
+                <li>Ácidos carboxílicos e ésteres</li>
+                <li>Aminas e amidas</li>
+                <li>Nomenclatura e identificação de grupos funcionais</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">10.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Isomeria</div>
+              <ul class="topico-sub">
+                <li>
+                  Isomeria plana: cadeia, posição, função, metameria, tautomeria
+                </li>
+                <li>
+                  Isomeria espacial: geométrica (cis/trans) e óptica
+                  (enantiômeros)
+                </li>
+                <li>Quiralidade — carbono assimétrico</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 11</span>
+          <span class="modulo-title">Reações Orgânicas</span>
+          <span class="nivel-badge nivel-av">Avançado</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">11.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Reações de Adição e Substituição</div>
+              <ul class="topico-sub">
+                <li>
+                  Adição em alcenos e alcinos — halogenação, hidrogenação,
+                  hidratação
+                </li>
+                <li>Regra de Markovnikov</li>
+                <li>Substituição em alcanos — halogenação radical</li>
+                <li>
+                  Substituição aromática eletrofílica — nitração, sulfonação,
+                  halogenação
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">11.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Reações de Eliminação e Condensação</div>
+              <ul class="topico-sub">
+                <li>Eliminação — desidratação de álcoois, desidroalogenação</li>
+                <li>Regra de Zaitsev</li>
+                <li>Esterificação e hidrólise de ésteres</li>
+                <li>Saponificação</li>
+                <li>Polimerização — adição e condensação</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">11.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Bioquímica — Introdução</div>
+              <ul class="topico-sub">
+                <li>
+                  Carboidratos — monossacarídeos, dissacarídeos, polissacarídeos
+                </li>
+                <li>Lipídeos — triglicerídeos, fosfolipídeos, esteroides</li>
+                <li>Proteínas — aminoácidos, ligação peptídica, estruturas</li>
+                <li>Ácidos nucleicos — DNA e RNA (estrutura química)</li>
+                <li>Enzimas — catálise biológica</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="footer-left">Enoraski · Química · Revisão Total · 2026</div>
+        <div class="footer-right">Lebedeva, S.</div>
+      </footer>
+    </div>
+    <script>
+      function toggle(h) {
+        h.classList.toggle("open");
+        h.nextElementSibling.classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

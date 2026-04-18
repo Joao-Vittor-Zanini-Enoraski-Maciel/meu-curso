@@ -1,0 +1,745 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Geografia — Enoraski</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;1,300&family=Overpass+Mono:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #111418;
+        --surface: #181c22;
+        --surface2: #1e242c;
+        --border: #242c38;
+        --border-light: #2e3848;
+        --accent: #4a8aaa;
+        --accent2: #aa6a2a;
+        --text: #d0d8e0;
+        --muted: #485868;
+        --muted2: #6878a0;
+        --fund: #4a9a6a;
+        --inter: #4a8aaa;
+        --av: #aa6a2a;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Overpass Mono", monospace;
+        font-size: 12px;
+        line-height: 1.8;
+        min-height: 100vh;
+      }
+      /* topographic contour-like lines */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          repeating-radial-gradient(
+            circle at 70% 30%,
+            transparent 0px,
+            transparent 80px,
+            rgba(74, 138, 170, 0.03) 80px,
+            rgba(74, 138, 170, 0.03) 81px
+          ),
+          repeating-radial-gradient(
+            circle at 30% 70%,
+            transparent 0px,
+            transparent 120px,
+            rgba(74, 154, 106, 0.03) 120px,
+            rgba(74, 154, 106, 0.03) 121px
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 64px 44px 80px;
+      }
+      header {
+        margin-bottom: 48px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--border-light);
+      }
+      .school-tag {
+        font-size: 9px;
+        letter-spacing: 0.38em;
+        color: var(--muted2);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      h1 {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: clamp(3rem, 9vw, 6rem);
+        font-weight: 300;
+        line-height: 0.9;
+        color: var(--text);
+        margin-bottom: 16px;
+        letter-spacing: 0.02em;
+      }
+      h1 em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      .teacher-block {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .teacher-name {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 1.2rem;
+        font-style: italic;
+        color: var(--accent2);
+      }
+      .teacher-desc {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        color: var(--muted2);
+        text-transform: uppercase;
+      }
+      .prof-note {
+        margin-bottom: 36px;
+        padding: 14px 20px 14px 18px;
+        border-left: 3px solid var(--accent);
+        background: var(--surface2);
+        font-family: "Barlow Condensed", sans-serif;
+        font-style: italic;
+        font-size: 1.15rem;
+        font-weight: 300;
+        color: #90b8d0;
+        line-height: 1.55;
+      }
+      .prof-note strong {
+        display: block;
+        font-family: "Overpass Mono", monospace;
+        font-style: normal;
+        font-size: 9px;
+        font-weight: 400;
+        letter-spacing: 0.25em;
+        color: var(--accent);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+      }
+      .legend {
+        display: flex;
+        gap: 22px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 10px;
+        color: var(--muted2);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .dot-fund {
+        background: var(--fund);
+      }
+      .dot-inter {
+        background: var(--inter);
+      }
+      .dot-av {
+        background: var(--av);
+      }
+      .modulo {
+        margin-bottom: 28px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        overflow: hidden;
+        animation: up 0.35s ease both;
+      }
+      @keyframes up {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .modulo:nth-child(1) {
+        animation-delay: 0.04s;
+      }
+      .modulo:nth-child(2) {
+        animation-delay: 0.08s;
+      }
+      .modulo:nth-child(3) {
+        animation-delay: 0.12s;
+      }
+      .modulo:nth-child(4) {
+        animation-delay: 0.16s;
+      }
+      .modulo:nth-child(5) {
+        animation-delay: 0.2s;
+      }
+      .modulo:nth-child(6) {
+        animation-delay: 0.24s;
+      }
+      .modulo:nth-child(7) {
+        animation-delay: 0.28s;
+      }
+      .modulo:nth-child(8) {
+        animation-delay: 0.32s;
+      }
+      .modulo:nth-child(9) {
+        animation-delay: 0.36s;
+      }
+      .modulo-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.2s;
+      }
+      .modulo-header:hover {
+        background: var(--surface2);
+      }
+      .modulo-num {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.12em;
+        min-width: 40px;
+      }
+      .modulo-title {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 1.2rem;
+        font-weight: 400;
+        color: var(--text);
+        flex: 1;
+        letter-spacing: 0.02em;
+      }
+      .nivel-badge {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border: 1px solid;
+      }
+      .nivel-fund {
+        color: var(--fund);
+        border-color: var(--fund);
+      }
+      .nivel-inter {
+        color: var(--inter);
+        border-color: var(--inter);
+      }
+      .nivel-av {
+        color: var(--av);
+        border-color: var(--av);
+      }
+      .chevron {
+        color: var(--muted);
+        font-size: 10px;
+        transition: transform 0.2s;
+      }
+      .modulo-header.open .chevron {
+        transform: rotate(90deg);
+      }
+      .modulo-body {
+        display: none;
+      }
+      .modulo-body.open {
+        display: block;
+      }
+      .topico {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+      }
+      .topico:last-child {
+        border-bottom: none;
+      }
+      .topico-idx {
+        min-width: 48px;
+        padding: 12px 14px;
+        font-size: 9px;
+        color: var(--muted);
+        border-right: 1px solid var(--border);
+        display: flex;
+        align-items: flex-start;
+        padding-top: 14px;
+      }
+      .topico-content {
+        padding: 12px 20px;
+        flex: 1;
+      }
+      .topico-name {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 1.1rem;
+        font-weight: 400;
+        color: var(--text);
+        margin-bottom: 5px;
+        letter-spacing: 0.02em;
+      }
+      .topico-sub {
+        color: var(--muted2);
+        font-size: 11px;
+        line-height: 1.65;
+      }
+      .topico-sub li {
+        list-style: none;
+        padding-left: 14px;
+        position: relative;
+      }
+      .topico-sub li::before {
+        content: "◦";
+        position: absolute;
+        left: 2px;
+        color: var(--muted);
+        font-size: 9px;
+        top: 1px;
+      }
+      footer {
+        margin-top: 52px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-light);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .footer-left {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .footer-right {
+        font-family: "Barlow Condensed", sans-serif;
+        font-style: italic;
+        font-size: 1.1rem;
+        color: var(--muted2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="school-tag">Instituto Enoraski — Grade Curricular</div>
+        <h1>Geo<em>gra</em>fia</h1>
+        <div class="teacher-block">
+          <span class="teacher-name">Sergei Antonov</span>
+          <span class="teacher-desc"
+            >/ Estrutural · Espacial · Conecta Ambiente e Comportamento</span
+          >
+        </div>
+      </header>
+      <div class="prof-note">
+        <strong>Antonov — nota de entrada</strong>
+        O território não é só onde as coisas acontecem. É por que acontecem do
+        jeito que acontecem. Quem entende o espaço entende o poder.
+      </div>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="dot dot-fund"></div>
+          Fundamento
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-inter"></div>
+          Intermediário
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-av"></div>
+          Avançado
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 01</span
+          ><span class="modulo-title"
+            >Cartografia e Representação do Espaço</span
+          >
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">1.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Fundamentos da Cartografia</div>
+              <ul class="topico-sub">
+                <li>Escala — numérica e gráfica, cálculos</li>
+                <li>
+                  Projeções cartográficas — Mercator, Peters, cônica, policônica
+                </li>
+                <li>Orientação — rosa dos ventos, azimute, GPS</li>
+                <li>
+                  Coordenadas geográficas — latitude, longitude, paralelos,
+                  meridianos
+                </li>
+                <li>Fusos horários — cálculo e aplicação</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Tipos de Mapas</div>
+              <ul class="topico-sub">
+                <li>Mapas temáticos, topográficos, políticos, físicos</li>
+                <li>Sensoriamento remoto e imagens de satélite</li>
+                <li>SIG — Sistemas de Informação Geográfica</li>
+                <li>
+                  A política por trás dos mapas — quem os faz, o que omitem
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 02</span
+          ><span class="modulo-title">Geologia e Estrutura da Terra</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">2.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Estrutura Interna da Terra</div>
+              <ul class="topico-sub">
+                <li>Crosta, manto, núcleo externo e interno</li>
+                <li>Litosfera, astenosfera, mesosfera</li>
+                <li>Isostasia — equilíbrio crustal</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Tectônica de Placas</div>
+              <ul class="topico-sub">
+                <li>Teoria da deriva continental — Wegener e as evidências</li>
+                <li>
+                  Placas tectônicas — limites divergentes, convergentes,
+                  transformantes
+                </li>
+                <li>Vulcanismo — tipos e localização</li>
+                <li>Sismicidade — escalas Richter e Mercalli</li>
+                <li>Formação de cadeias montanhosas e fossas oceânicas</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Rochas e Minerais</div>
+              <ul class="topico-sub">
+                <li>Rochas ígneas, sedimentares e metamórficas</li>
+                <li>Ciclo das rochas</li>
+                <li>Solos — formação, horizontes, tipos e degradação</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 03</span
+          ><span class="modulo-title">Climatologia e Meteorologia</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">3.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Atmosfera e Tempo</div>
+              <ul class="topico-sub">
+                <li>Camadas da atmosfera — troposfera ao exosfera</li>
+                <li>
+                  Elementos do tempo — temperatura, pressão, umidade, vento,
+                  precipitação
+                </li>
+                <li>Frentes frias e quentes</li>
+                <li>Massas de ar — origem e influência no Brasil</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Climas do Mundo</div>
+              <ul class="topico-sub">
+                <li>Classificação de Köppen</li>
+                <li>
+                  Fatores do clima — latitude, altitude, maritimidade, correntes
+                  oceânicas, continentalidade
+                </li>
+                <li>Climas intertropicais, temperados, polares</li>
+                <li>
+                  Climas do Brasil — equatorial, tropical, semiárido,
+                  subtropical
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Mudanças Climáticas</div>
+              <ul class="topico-sub">
+                <li>Efeito estufa — natural e antrópico</li>
+                <li>Aquecimento global — evidências e projeções</li>
+                <li>El Niño e La Niña</li>
+                <li>
+                  Acordos climáticos — Kyoto, Paris — estrutura e limitações
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 04</span
+          ><span class="modulo-title">Hidrografia e Relevo</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">4.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Hidrografia</div>
+              <ul class="topico-sub">
+                <li>Ciclo hidrológico</li>
+                <li>Bacias hidrográficas — divisores de água, afluentes</li>
+                <li>Rios — regimes e tipos de foz</li>
+                <li>Lençóis freáticos e aquíferos</li>
+                <li>Bacias brasileiras — Amazônica, Paraná, São Francisco</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Relevo</div>
+              <ul class="topico-sub">
+                <li>Agentes internos — tectonismo e vulcanismo</li>
+                <li>Agentes externos — intemperismo, erosão, deposição</li>
+                <li>
+                  Formas de relevo — planície, planalto, depressão, montanha
+                </li>
+                <li>Relevo brasileiro — classificação de Jurandyr Ross</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 05</span
+          ><span class="modulo-title">Biomas e Questão Ambiental</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">5.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Biomas do Mundo</div>
+              <ul class="topico-sub">
+                <li>Floresta tropical, temperada, taiga, tundra</li>
+                <li>Savanas, desertos, campos</li>
+                <li>Ecossistemas oceânicos e costeiros</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Biomas Brasileiros</div>
+              <ul class="topico-sub">
+                <li>Amazônia — estrutura, ameaças, importância global</li>
+                <li>Cerrado — biodiversidade e pressão do agronegócio</li>
+                <li>Caatinga, Pantanal, Pampa, Mata Atlântica</li>
+                <li>Desmatamento — dados, causas, consequências</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Questões Ambientais</div>
+              <ul class="topico-sub">
+                <li>Recursos naturais — renováveis e não renováveis</li>
+                <li>Matriz energética mundial e brasileira</li>
+                <li>Resíduos sólidos — gestão e políticas</li>
+                <li>
+                  Desertificação, chuva ácida, destruição da camada de ozônio
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 06</span
+          ><span class="modulo-title">Geografia Humana e Demográfica</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">6.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Dinâmica Populacional</div>
+              <ul class="topico-sub">
+                <li>Crescimento vegetativo — natalidade, mortalidade</li>
+                <li>Transição demográfica — fases e exemplos</li>
+                <li>Pirâmides etárias — leitura e análise</li>
+                <li>
+                  Migrações — internas e internacionais, causas e consequências
+                </li>
+                <li>Populações indígenas e tradicionais</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Urbanização</div>
+              <ul class="topico-sub">
+                <li>Processo de urbanização — mundial e brasileiro</li>
+                <li>Metrópoles e megalópoles</li>
+                <li>Problemas urbanos — segregação, mobilidade, habitação</li>
+                <li>Rede urbana brasileira — hierarquia das cidades</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 07</span
+          ><span class="modulo-title">Geografia Econômica</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">7.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Setor Primário</div>
+              <ul class="topico-sub">
+                <li>Agricultura — tipos, modernização, agronegócio</li>
+                <li>
+                  Questão agrária — concentração fundiária, reforma agrária
+                </li>
+                <li>Pecuária, mineração, pesca — distribuição e impactos</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Indústria e Serviços</div>
+              <ul class="topico-sub">
+                <li>
+                  Industrialização — primeira, segunda, terceira revolução
+                </li>
+                <li>
+                  Localização industrial — fatores clássicos e contemporâneos
+                </li>
+                <li>Desindustrialização e serviços na economia pós-fordista</li>
+                <li>Comércio internacional — blocos, WTO, protecionismo</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 08</span
+          ><span class="modulo-title">Geopolítica e Ordem Mundial</span>
+          <span class="nivel-badge nivel-av">Avançado</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">8.1</div>
+            <div class="topico-content">
+              <div class="topico-name">
+                Geopolítica Clássica e Contemporânea
+              </div>
+              <ul class="topico-sub">
+                <li>Heartland, rimland, poder marítimo vs. continental</li>
+                <li>Bipolaridade, unipolaridade, multipolaridade</li>
+                <li>BRICS, G7, G20 — estruturas de poder</li>
+                <li>Conflitos territoriais — causas geográficas</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">8.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Globalização e Fragmentação</div>
+              <ul class="topico-sub">
+                <li>Globalização — fluxos de capital, informação, pessoas</li>
+                <li>Desigualdade espacial — Norte e Sul globais</li>
+                <li>Regionalismo e integração — UE, Mercosul, ASEAN</li>
+                <li>
+                  Conflitos contemporâneos — recursos, fronteiras, religião
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="footer-left">
+          Enoraski · Geografia · Revisão Total · 2026
+        </div>
+        <div class="footer-right">Antonov, S.</div>
+      </footer>
+    </div>
+    <script>
+      function toggle(h) {
+        h.classList.toggle("open");
+        h.nextElementSibling.classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

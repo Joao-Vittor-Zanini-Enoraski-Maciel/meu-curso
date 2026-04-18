@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enoraski · Grade Principal</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg: #0a0a0c;
+        --surface: #0f0f12;
+        --surface-card: #111115;
+        --border: #2a1a1f;
+        --accent: #b91c1c; /* vermelho principal */
+        --accent-dark: #7f1a1a;
+        --accent-glow: #b91c1c30;
+        --text: #e5e0d8;
+        --muted: #6e6a78;
+        --muted-dark: #3a2a2f;
+        --highlight: #f0e6d0;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 13px;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      /* grade / grid noise */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 39px,
+            var(--border) 39px,
+            var(--border) 40px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 39px,
+            var(--border) 39px,
+            var(--border) 40px
+          );
+        opacity: 0.2;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 40px 28px 70px;
+      }
+
+      /* HEADER */
+      header {
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 32px;
+        margin-bottom: 48px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-end;
+      }
+
+      .title-area .school-tag {
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        color: var(--muted);
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+
+      h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.4rem, 6vw, 4rem);
+        font-weight: 700;
+        color: var(--highlight);
+        line-height: 1.05;
+        letter-spacing: -0.01em;
+      }
+
+      .sub {
+        font-size: 11px;
+        color: var(--accent);
+        margin-top: 8px;
+        letter-spacing: 0.2em;
+      }
+
+      .voronin-mini {
+        text-align: right;
+        font-style: italic;
+        font-size: 11px;
+        color: var(--muted);
+        border-right: 2px solid var(--accent);
+        padding-right: 18px;
+      }
+
+      .voronin-mini strong {
+        color: var(--accent);
+        font-style: normal;
+      }
+
+      /* LEGENDA / aviso */
+      .notice {
+        background: var(--surface);
+        border-left: 3px solid var(--accent);
+        padding: 14px 20px;
+        margin-bottom: 44px;
+        font-size: 11px;
+        color: var(--muted);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .badge-red {
+        background: var(--accent);
+        color: #0a0a0c;
+        padding: 4px 12px;
+        font-size: 9px;
+        letter-spacing: 0.1em;
+        font-weight: 600;
+      }
+
+      /* GRADE MATERIAS - GRID CARDS */
+      .subjects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+        gap: 16px;
+        margin-bottom: 60px;
+      }
+
+      .subject-card {
+        background: var(--surface-card);
+        border: 1px solid var(--border);
+        padding: 16px 14px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .subject-card:hover {
+        border-color: var(--accent);
+        transform: translateY(-3px);
+        background: #141418;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+      }
+
+      .subject-name {
+        font-family: "Playfair Display", serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #f0e6da;
+        margin-bottom: 8px;
+      }
+
+      .subject-meta {
+        font-size: 9px;
+        letter-spacing: 0.1em;
+        color: var(--accent);
+        text-transform: uppercase;
+        border-top: 1px dashed var(--border);
+        padding-top: 8px;
+        margin-top: 4px;
+        display: inline-block;
+      }
+
+      /* CRONOGRAMA SEMANAL */
+      .schedule-section {
+        margin-top: 20px;
+        margin-bottom: 60px;
+      }
+
+      .section-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        font-weight: 400;
+        letter-spacing: -0.2px;
+        border-left: 4px solid var(--accent);
+        padding-left: 18px;
+        margin-bottom: 28px;
+        color: #ddd6cc;
+      }
+
+      .schedule-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+      }
+
+      .day-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        overflow: hidden;
+        transition: all 0.2s;
+      }
+
+      .day-header {
+        background: #14111a;
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--border);
+        font-weight: 600;
+        font-family: "Playfair Display", serif;
+        font-size: 1.2rem;
+        color: var(--accent);
+        letter-spacing: 0.05em;
+      }
+
+      .day-content {
+        padding: 14px 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .schedule-item {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        border-bottom: 1px dotted #2a2228;
+        padding-bottom: 8px;
+      }
+
+      .schedule-dot {
+        width: 5px;
+        height: 5px;
+        background: var(--accent);
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .schedule-subject {
+        font-size: 12px;
+        font-weight: 500;
+        color: #e0d8ce;
+      }
+
+      /* FOOTER */
+      footer {
+        margin-top: 50px;
+        padding-top: 28px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 14px;
+        font-size: 10px;
+        color: var(--muted);
+      }
+
+      .footer-right {
+        font-family: "Playfair Display", serif;
+        font-style: italic;
+        color: #3a2a32;
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 720px) {
+        .container {
+          padding: 28px 20px;
+        }
+        .subjects-grid {
+          grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        }
+        .day-header {
+          font-size: 1rem;
+        }
+      }
+
+      /* small micro interação */
+      a {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+      }
+
+      .subject-card {
+        transition: all 0.2s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="title-area">
+          <div class="school-tag">INSTITUTO ENORASKI · CURRÍCULO INTEGRAL</div>
+          <h1>Trivium &<br />Quadrivium moderno</h1>
+          <div class="sub">disciplinas · retórica · ciência · humanidades</div>
+        </div>
+        <div class="voronin-mini">
+          <strong>VORONIN</strong><br />
+          "Conduzir é desaparecer na estrutura."
+        </div>
+      </header>
+
+      <div class="notice">
+        <span
+          >⬤ 19 áreas do conhecimento — acesso direto a cada guia de
+          estudos</span
+        >
+        <span class="badge-red">CLIQUE NO CARD</span>
+      </div>
+
+      <!-- GRADE DE MATÉRIAS (cada card redireciona para página própria) -->
+      <div class="subjects-grid">
+        <!-- 1 filosofia -->
+        <div
+          class="subject-card"
+          onclick="window.location.href = 'filosofia.html'"
+        >
+          <div class="subject-name">Filosofia</div>
+          <div class="subject-meta">ética · metafísica · lógica</div>
+        </div>
+        <!-- 2 retorica -->
+        <div
+          class="subject-card"
+          onclick="window.location.href = 'retorica.html'"
+        >
+          <div class="subject-name">Retórica</div>
+          <div class="subject-meta">persuasão · ethos · pathos</div>
+        </div>
+        <!-- 3 oratória -->
+        <div
+          class="subject-card"
+          onclick="window.location.href = 'oratoria.html'"
+        >
+          <div class="subject-name">Oratória</div>
+          <div class="subject-meta">discurso · voz · presença</div>
+        </div>
+        <!-- 4 português -->
+        <div
+          class="subject-card"
+          onclick="window.location.href = 'portugues.html'"
+        >
+          <div class="subject-name">Português</div>
+          <div class="subject-meta">língua · redação · estilo</div>
+        </div>
+        <!-- 5 gramatica -->
+        <div
+          class="subject-card"
+          onclick="window.location.href = 'gramatica.html'"
+        >
+          <div class="subject-name">Gramática</div>
+          <div class="subject-meta">sintaxe · morfologia · norma</div>
+        </div>
+        <!-- 6 literatura -->
+        <div
+          class="subject-card"
+          onclick="window.location.href = 'literatura.html'"
+        >
+          <div class="subject-name">Literatura</div>
+          <div class="subject-meta">clássicos · análise · poesia</div>
+        </div>
+        <!-- 7 matemática -->
+        <div
+          class="subject-card"
+          onclick="window.location.href = 'matematica.html'"
+        >
+          <div class="subject-name">Matemática</div>
+          <div class="subject-meta">cálculo · álgebra · geometria</div>
+        </div>
+        <!-- 8 física -->
+        <div
+          class="subject-card"
+          onclick="window.location.href = 'fisica.html'"
+        >
+          <div class="subject-name">Física</div>
+          <div class="subject-meta">mecânica · campos · termo</div>
+        </div>
+        <!-- 9 computação -->
+        <div
+          class="subject-card"
+          onclick="window.location.href = 'computacao.html'"
+        >
+          <div class="subject-name">Computação</div>
+          <div class="subject-meta">algoritmos · estruturas · lógica</div>
+        </div>
+        <!-- 10 astronomia -->
+        <div
+          class="subject-card"
+          onclick="window.location.href = 'astronomia.html'"
+        >
+          <div class="subject-name">Astronomia</div>
+          <div class="subject-meta">cosmos · órbitas · evolução estelar</div>
+        </div>
+        <!-- 11 geografia -->
+        <div
+          class="subject-card"
+          onclick="window.location.href = 'geografia.html'"
+        >
+          <div class="subject-name">Geografia</div>
+          <div class="subject-meta">espaço · território · cartografia</div>
+        </div>
+        <!-- 12 politica do brasil -->
+        <div
+          class="subject-card"
+          onclick="window.location.href = 'politica.html'"
+        >
+          <div class="subject-name">Política do Brasil</div>
+          <div class="subject-meta">instituições · constituição · poder</div>
+        </div>
+        <!-- 13 química -->
+        <div
+          class="subject-card"
+          onclick="window.location.href = 'quimica.html'"
+        >
+          <div class="subject-name">Química</div>
+          <div class="subject-meta">átomos · reações · orgânica</div>
+        </div>
+        <!-- 14 biologia -->
+        <div
+          class="subject-card"
+          onclick="window.location.href = 'biologia.html'"
+        >
+          <div class="subject-name">Biologia</div>
+          <div class="subject-meta">células · evolução · ecossistemas</div>
+        </div>
+        <!-- 15 doenças e remédios -->
+        <div
+          class="subject-card"
+          onclick="window.location.href = 'doencas.html'"
+        >
+          <div class="subject-name">Doenças e Remédios</div>
+          <div class="subject-meta">farmacologia · patologia · terapia</div>
+        </div>
+        <!-- 16 historia -->
+        <div
+          class="subject-card"
+          onclick="window.location.href = 'historia.html'"
+        >
+          <div class="subject-name">História</div>
+          <div class="subject-meta">civilizações · processos · rupturas</div>
+        </div>
+        <!-- 17 inglês -->
+        <div
+          class="subject-card"
+          onclick="window.location.href = 'ingles.html'"
+        >
+          <div class="subject-name">Inglês</div>
+          <div class="subject-meta">estrutura · leitura · produção</div>
+        </div>
+        <!-- 18 latim -->
+        <div class="subject-card" onclick="window.location.href = 'latim.html'">
+          <div class="subject-name">Latim</div>
+          <div class="subject-meta">raízes · sintaxe · clássicos</div>
+        </div>
+        <!-- 19 musica -->
+        <div
+          class="subject-card"
+          onclick="window.location.href = 'musica.html'"
+        >
+          <div class="subject-name">Música</div>
+          <div class="subject-meta">teoria · harmonia · percepção</div>
+        </div>
+      </div>
+
+      <!-- CRONOGRAMA SEMANAL -->
+      <div class="schedule-section">
+        <div class="section-title">cronograma · rhytmus studiorum</div>
+        <div class="schedule-grid">
+          <!-- segunda -->
+          <div class="day-card">
+            <div class="day-header">SEGUNDA · LOGOS</div>
+            <div class="day-content">
+              <div class="schedule-item">
+                <span class="schedule-dot"></span
+                ><span class="schedule-subject">Filosofia</span>
+              </div>
+              <div class="schedule-item">
+                <span class="schedule-dot"></span
+                ><span class="schedule-subject">Retórica</span>
+              </div>
+              <div class="schedule-item">
+                <span class="schedule-dot"></span
+                ><span class="schedule-subject">Oratória</span>
+              </div>
+            </div>
+          </div>
+          <!-- terça -->
+          <div class="day-card">
+            <div class="day-header">TERÇA · LÍNGUA & TEXTO</div>
+            <div class="day-content">
+              <div class="schedule-item">
+                <span class="schedule-dot"></span
+                ><span class="schedule-subject">Português</span>
+              </div>
+              <div class="schedule-item">
+                <span class="schedule-dot"></span
+                ><span class="schedule-subject">Gramática</span>
+              </div>
+              <div class="schedule-item">
+                <span class="schedule-dot"></span
+                ><span class="schedule-subject">Literatura</span>
+              </div>
+            </div>
+          </div>
+          <!-- quarta -->
+          <div class="day-card">
+            <div class="day-header">QUARTA · EXATAS & MÁQUINAS</div>
+            <div class="day-content">
+              <div class="schedule-item">
+                <span class="schedule-dot"></span
+                ><span class="schedule-subject">Matemática</span>
+              </div>
+              <div class="schedule-item">
+                <span class="schedule-dot"></span
+                ><span class="schedule-subject">Física</span>
+              </div>
+              <div class="schedule-item">
+                <span class="schedule-dot"></span
+                ><span class="schedule-subject">Computação</span>
+              </div>
+            </div>
+          </div>
+          <!-- quinta -->
+          <div class="day-card">
+            <div class="day-header">QUINTA · ESPAÇO & PODER</div>
+            <div class="day-content">
+              <div class="schedule-item">
+                <span class="schedule-dot"></span
+                ><span class="schedule-subject">Astronomia</span>
+              </div>
+              <div class="schedule-item">
+                <span class="schedule-dot"></span
+                ><span class="schedule-subject">Geografia</span>
+              </div>
+              <div class="schedule-item">
+                <span class="schedule-dot"></span
+                ><span class="schedule-subject">Política do Brasil</span>
+              </div>
+            </div>
+          </div>
+          <!-- sexta -->
+          <div class="day-card">
+            <div class="day-header">SEXTA · VIDA & MATÉRIA</div>
+            <div class="day-content">
+              <div class="schedule-item">
+                <span class="schedule-dot"></span
+                ><span class="schedule-subject">Química</span>
+              </div>
+              <div class="schedule-item">
+                <span class="schedule-dot"></span
+                ><span class="schedule-subject">Biologia</span>
+              </div>
+              <div class="schedule-item">
+                <span class="schedule-dot"></span
+                ><span class="schedule-subject">Doenças e Remédios</span>
+              </div>
+            </div>
+          </div>
+          <!-- sábado -->
+          <div class="day-card">
+            <div class="day-header">SÁBADO · MEMÓRIA & LÍNGUAS</div>
+            <div class="day-content">
+              <div class="schedule-item">
+                <span class="schedule-dot"></span
+                ><span class="schedule-subject">História</span>
+              </div>
+              <div class="schedule-item">
+                <span class="schedule-dot"></span
+                ><span class="schedule-subject">Inglês</span>
+              </div>
+              <div class="schedule-item">
+                <span class="schedule-dot"></span
+                ><span class="schedule-subject">Latim</span>
+              </div>
+            </div>
+          </div>
+          <!-- domingo -->
+          <div class="day-card">
+            <div class="day-header">DOMINGO · HARMONIA</div>
+            <div class="day-content">
+              <div class="schedule-item">
+                <span class="schedule-dot"></span
+                ><span class="schedule-subject">Música</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="footer-left">
+          ENORASKI · 2026 · CURSO INTEGRAL · ACESSO LIVRE ÀS 19 MATRIZES
+        </div>
+        <div class="footer-right">
+          Aleksy Voronin — método da condução invisível
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      // Script sutil para manter consistência (opcional)
+      // Apenas garante que cliques nos cards redirecionam
+      console.log("Portal Enoraski — todas as matérias com cronograma semanal");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Português — Enoraski</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Roboto+Mono:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f5f0eb;
+        --surface: #ede7e0;
+        --surface2: #e4ddd5;
+        --border: #cdc5bb;
+        --border-dark: #a89e94;
+        --accent: #1a1a2e;
+        --accent2: #8b1a1a;
+        --text: #18160f;
+        --muted: #7a7068;
+        --muted2: #a09888;
+        --fund: #2a5c3a;
+        --inter: #1a1a2e;
+        --av: #8b1a1a;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Roboto Mono", monospace;
+        font-size: 12px;
+        line-height: 1.8;
+        min-height: 100vh;
+      }
+      /* ruled paper lines */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: repeating-linear-gradient(
+          transparent,
+          transparent 31px,
+          rgba(160, 152, 136, 0.2) 31px,
+          rgba(160, 152, 136, 0.2) 32px
+        );
+        pointer-events: none;
+        z-index: 0;
+      }
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 64px 44px 80px 72px;
+      }
+      /* red margin line */
+      .container::before {
+        content: "";
+        position: absolute;
+        left: 58px;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: rgba(139, 26, 26, 0.3);
+      }
+      header {
+        margin-bottom: 48px;
+        padding-bottom: 24px;
+        border-bottom: 2px solid var(--text);
+      }
+      .school-tag {
+        font-size: 9px;
+        letter-spacing: 0.38em;
+        color: var(--muted2);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      h1 {
+        font-family: "Spectral", serif;
+        font-size: clamp(2.8rem, 8vw, 5rem);
+        font-weight: 300;
+        line-height: 0.95;
+        color: var(--text);
+        margin-bottom: 16px;
+        letter-spacing: -0.01em;
+      }
+      h1 em {
+        font-style: italic;
+        color: var(--accent2);
+      }
+      .teacher-block {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .teacher-name {
+        font-family: "Spectral", serif;
+        font-size: 1.1rem;
+        font-style: italic;
+        color: var(--accent);
+      }
+      .teacher-desc {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        color: var(--muted);
+        text-transform: uppercase;
+      }
+      .prof-note {
+        margin-bottom: 36px;
+        padding: 14px 20px 14px 18px;
+        border-left: 3px solid var(--accent2);
+        background: var(--surface2);
+        font-family: "Spectral", serif;
+        font-style: italic;
+        font-size: 1.05rem;
+        color: #3a1818;
+        line-height: 1.6;
+      }
+      .prof-note strong {
+        display: block;
+        font-family: "Roboto Mono", monospace;
+        font-style: normal;
+        font-size: 9px;
+        letter-spacing: 0.25em;
+        color: var(--accent2);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+      }
+      .legend {
+        display: flex;
+        gap: 22px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .dot-fund {
+        background: var(--fund);
+      }
+      .dot-inter {
+        background: var(--inter);
+      }
+      .dot-av {
+        background: var(--av);
+      }
+      .modulo {
+        margin-bottom: 28px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        overflow: hidden;
+        animation: up 0.35s ease both;
+      }
+      @keyframes up {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .modulo:nth-child(n) {
+        animation-delay: calc(var(--i, 0) * 0.05s);
+      }
+      .modulo:nth-child(1) {
+        animation-delay: 0.04s;
+      }
+      .modulo:nth-child(2) {
+        animation-delay: 0.08s;
+      }
+      .modulo:nth-child(3) {
+        animation-delay: 0.12s;
+      }
+      .modulo:nth-child(4) {
+        animation-delay: 0.16s;
+      }
+      .modulo:nth-child(5) {
+        animation-delay: 0.2s;
+      }
+      .modulo:nth-child(6) {
+        animation-delay: 0.24s;
+      }
+      .modulo:nth-child(7) {
+        animation-delay: 0.28s;
+      }
+      .modulo:nth-child(8) {
+        animation-delay: 0.32s;
+      }
+      .modulo:nth-child(9) {
+        animation-delay: 0.36s;
+      }
+      .modulo-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.2s;
+      }
+      .modulo-header:hover {
+        background: var(--surface2);
+      }
+      .modulo-num {
+        font-size: 9px;
+        color: var(--muted2);
+        letter-spacing: 0.12em;
+        min-width: 40px;
+      }
+      .modulo-title {
+        font-family: "Spectral", serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text);
+        flex: 1;
+      }
+      .nivel-badge {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border: 1px solid;
+      }
+      .nivel-fund {
+        color: var(--fund);
+        border-color: var(--fund);
+      }
+      .nivel-inter {
+        color: var(--inter);
+        border-color: var(--inter);
+      }
+      .nivel-av {
+        color: var(--av);
+        border-color: var(--av);
+      }
+      .chevron {
+        color: var(--muted2);
+        font-size: 10px;
+        transition: transform 0.2s;
+      }
+      .modulo-header.open .chevron {
+        transform: rotate(90deg);
+      }
+      .modulo-body {
+        display: none;
+      }
+      .modulo-body.open {
+        display: block;
+      }
+      .topico {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+      }
+      .topico:last-child {
+        border-bottom: none;
+      }
+      .topico-idx {
+        min-width: 48px;
+        padding: 12px 14px;
+        font-size: 9px;
+        color: var(--muted2);
+        border-right: 1px solid var(--border);
+        display: flex;
+        align-items: flex-start;
+        padding-top: 14px;
+      }
+      .topico-content {
+        padding: 12px 20px;
+        flex: 1;
+      }
+      .topico-name {
+        font-family: "Spectral", serif;
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 5px;
+      }
+      .topico-sub {
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.65;
+      }
+      .topico-sub li {
+        list-style: none;
+        padding-left: 14px;
+        position: relative;
+      }
+      .topico-sub li::before {
+        content: '"';
+        position: absolute;
+        left: 0;
+        color: var(--border-dark);
+        font-size: 11px;
+        top: 0;
+        font-family: "Spectral", serif;
+      }
+      footer {
+        margin-top: 52px;
+        padding-top: 20px;
+        border-top: 2px solid var(--text);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .footer-left {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .footer-right {
+        font-family: "Spectral", serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: var(--muted2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="school-tag">Instituto Enoraski — Grade Curricular</div>
+        <h1>Por<em>tu</em>guês</h1>
+        <div class="teacher-block">
+          <span class="teacher-name">Irina Volkov</span>
+          <span class="teacher-desc"
+            >/ Rigorosa · Cirúrgica · Detesta Ambiguidade Fraca · Testa Limites
+            da Expressão</span
+          >
+        </div>
+      </header>
+      <div class="prof-note">
+        <strong>Volkov — nota de entrada</strong>
+        Ambiguidade deliberada é arte. Ambiguidade por descuido é ignorância.
+        Aqui você aprenderá a diferença — e a não cometer a segunda.
+      </div>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="dot dot-fund"></div>
+          Fundamento
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-inter"></div>
+          Intermediário
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-av"></div>
+          Avançado
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 01</span
+          ><span class="modulo-title">Leitura e Interpretação de Texto</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">1.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Compreensão Literal e Inferencial</div>
+              <ul class="topico-sub">
+                <li>Localização de informações explícitas no texto</li>
+                <li>Inferência — o que o texto implica mas não diz</li>
+                <li>Distinção entre fato e opinião</li>
+                <li>Identificação de tema e assunto central</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Coesão e Coerência</div>
+              <ul class="topico-sub">
+                <li>
+                  Mecanismos de coesão — referência, substituição, elipse,
+                  conjunção
+                </li>
+                <li>Coerência — lógica interna do texto</li>
+                <li>Progressão temática</li>
+                <li>Ambiguidade estrutural — quando o texto falha</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.3</div>
+            <div class="topico-content">
+              <div class="topico-name">
+                Intertextualidade e Interdiscursividade
+              </div>
+              <ul class="topico-sub">
+                <li>Citação, alusão, paródia, paráfrase</li>
+                <li>Dialogismo — todo texto responde a outros textos</li>
+                <li>Polifonia — múltiplas vozes dentro de um texto</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 02</span
+          ><span class="modulo-title">Tipologia e Gêneros Textuais</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">2.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Tipos Textuais</div>
+              <ul class="topico-sub">
+                <li>Narração — tempo, espaço, narrador, enredo, personagens</li>
+                <li>Descrição — objetiva e subjetiva</li>
+                <li>Dissertação — argumentação e exposição</li>
+                <li>Injunção e prescrição</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Gêneros Textuais</div>
+              <ul class="topico-sub">
+                <li>
+                  Conto, crônica, romance, poema, editorial, artigo de opinião
+                </li>
+                <li>Carta argumentativa, requerimento, relatório</li>
+                <li>Gêneros digitais — e-mail formal, artigo de blog</li>
+                <li>Diferença entre tipo e gênero textual</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 03</span
+          ><span class="modulo-title">Redação Dissertativo-Argumentativa</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">3.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Estrutura e Tese</div>
+              <ul class="topico-sub">
+                <li>Introdução — contextualização e tese precisa</li>
+                <li>Desenvolvimento — argumentos, dados, exemplos</li>
+                <li>Conclusão — proposta de intervenção ou síntese</li>
+                <li>O que é uma tese — afirmação defensável, não descrição</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Argumentação</div>
+              <ul class="topico-sub">
+                <li>
+                  Argumento de autoridade, de exemplificação, de causa e
+                  consequência
+                </li>
+                <li>Contra-argumento e refutação</li>
+                <li>Falácias — como identificar e evitar</li>
+                <li>Gradação argumentativa — do mais fraco ao mais forte</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Estilo e Precisão</div>
+              <ul class="topico-sub">
+                <li>Precisão lexical — a palavra certa no lugar certo</li>
+                <li>Paralelismo sintático</li>
+                <li>
+                  Vícios de linguagem — pleonasmo vicioso, ambiguidade
+                  involuntária
+                </li>
+                <li>Revisão crítica — ler como quem não escreveu</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 04</span
+          ><span class="modulo-title"
+            >Literatura Brasileira — Cronologia e Estilo</span
+          >
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">4.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Do Quinhentismo ao Arcadismo</div>
+              <ul class="topico-sub">
+                <li>Quinhentismo — textos de informação e catequese</li>
+                <li>
+                  Barroco — Vieira, Gregório de Matos, conflito e antítese
+                </li>
+                <li>Arcadismo — Cláudio Manuel, Gonzaga, razão e natureza</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Romantismo e Realismo</div>
+              <ul class="topico-sub">
+                <li>
+                  Romantismo — indianismo, ultrarromantismo, condoreirismo
+                </li>
+                <li>Realismo — Machado de Assis e a dissecação do sujeito</li>
+                <li>Naturalismo — Aluísio Azevedo e determinismo</li>
+                <li>Parnasianismo e Simbolismo</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Modernismo e Contemporaneidade</div>
+              <ul class="topico-sub">
+                <li>Semana de 1922 — ruptura como manifesto</li>
+                <li>1ª fase: Oswald, Mário de Andrade, Bandeira</li>
+                <li>2ª fase: Drummond, Guimarães Rosa, Clarice Lispector</li>
+                <li>3ª fase: Concretismo, poesia marginal</li>
+                <li>Literatura contemporânea — principais vozes</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 05</span
+          ><span class="modulo-title">Literatura Portuguesa</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">5.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Trovadorismo ao Classicismo</div>
+              <ul class="topico-sub">
+                <li>
+                  Trovadorismo — cantigas de amor, amigo, escárnio e maldizer
+                </li>
+                <li>Humanismo — Gil Vicente e o teatro</li>
+                <li>
+                  Classicismo — Camões e Os Lusíadas como epopeia nacional
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Do Barroco ao Modernismo Português</div>
+              <ul class="topico-sub">
+                <li>Barroco português — Pe. António Vieira</li>
+                <li>
+                  Romantismo — Almeida Garrett, Alexandre Herculano, Eça de
+                  Queirós
+                </li>
+                <li>Modernismo — Fernando Pessoa e os heterônimos</li>
+                <li>
+                  Pessoa: Caeiro, Reis, Campos e o ortônimo — quatro poéticas
+                  distintas
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 06</span
+          ><span class="modulo-title">Semântica e Estilística</span>
+          <span class="nivel-badge nivel-av">Avançado</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">6.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Semântica Lexical</div>
+              <ul class="topico-sub">
+                <li>Sinonímia, antonímia, homonímia, paronímia</li>
+                <li>Polissemia — uma palavra, múltiplos sentidos</li>
+                <li>Denotação e conotação</li>
+                <li>Campo semântico e campo lexical</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Figuras de Linguagem</div>
+              <ul class="topico-sub">
+                <li>
+                  Figuras de palavras: metáfora, metonímia, catacrese,
+                  sinestesia
+                </li>
+                <li>
+                  Figuras de pensamento: ironia, eufemismo, hipérbole, antítese,
+                  paradoxo
+                </li>
+                <li>
+                  Figuras de construção: anáfora, elipse, zeugma, inversão,
+                  assíndeto, polissíndeto
+                </li>
+                <li>
+                  Figuras de som: aliteração, assonância, paronomásia,
+                  onomatopeia
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Estilística</div>
+              <ul class="topico-sub">
+                <li>Estilo como escolha — o que cada desvio comunica</li>
+                <li>Análise estilística de textos literários</li>
+                <li>Construção de voz autoral</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="footer-left">
+          Enoraski · Português · Revisão Total · 2026
+        </div>
+        <div class="footer-right">Volkov, I.</div>
+      </footer>
+    </div>
+    <script>
+      function toggle(h) {
+        h.classList.toggle("open");
+        h.nextElementSibling.classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

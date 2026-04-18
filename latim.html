@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Latim — Enoraski</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Code+Pro:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f7f2e8;
+        --surface: #ede6d8;
+        --surface2: #e3dac8;
+        --border: #ccc0a8;
+        --border-dark: #a89070;
+        --accent: #6a3a10;
+        --accent2: #3a1a08;
+        --text: #1a150a;
+        --muted: #786050;
+        --muted2: #a89070;
+        --fund: #3a6a3a;
+        --inter: #6a3a10;
+        --av: #8a1a1a;
+        --gold: #c8900a;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Source Code Pro", monospace;
+        font-size: 12px;
+        line-height: 1.8;
+        min-height: 100vh;
+      }
+      /* aged paper texture */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          radial-gradient(
+            ellipse 80% 60% at 50% 100%,
+            rgba(168, 144, 112, 0.12) 0%,
+            transparent 60%
+          ),
+          repeating-linear-gradient(
+            transparent,
+            transparent 31px,
+            rgba(168, 144, 112, 0.1) 31px,
+            rgba(168, 144, 112, 0.1) 32px
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 64px 44px 80px 72px;
+      }
+      .container::before {
+        content: "";
+        position: absolute;
+        left: 58px;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: rgba(106, 58, 16, 0.25);
+      }
+      header {
+        margin-bottom: 48px;
+        padding-bottom: 24px;
+        border-bottom: 2px solid var(--accent);
+      }
+      .school-tag {
+        font-size: 9px;
+        letter-spacing: 0.38em;
+        color: var(--muted2);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      .latin-motto {
+        font-family: "Libre Baskerville", serif;
+        font-style: italic;
+        font-size: 11px;
+        color: var(--muted2);
+        margin-bottom: 12px;
+        letter-spacing: 0.05em;
+      }
+      h1 {
+        font-family: "Libre Baskerville", serif;
+        font-size: clamp(3rem, 8vw, 5.2rem);
+        font-weight: 400;
+        line-height: 0.95;
+        color: var(--text);
+        margin-bottom: 16px;
+        letter-spacing: 0.04em;
+      }
+      h1 em {
+        font-style: italic;
+        color: var(--gold);
+      }
+      .teacher-block {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .teacher-name {
+        font-family: "Libre Baskerville", serif;
+        font-size: 1.05rem;
+        font-style: italic;
+        color: var(--accent);
+      }
+      .teacher-desc {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        color: var(--muted);
+        text-transform: uppercase;
+      }
+      .prof-note {
+        margin-bottom: 36px;
+        padding: 14px 20px 14px 18px;
+        border-left: 3px solid var(--gold);
+        background: var(--surface2);
+        font-family: "Libre Baskerville", serif;
+        font-style: italic;
+        font-size: 1.05rem;
+        color: #3a2008;
+        line-height: 1.6;
+      }
+      .prof-note strong {
+        display: block;
+        font-family: "Source Code Pro", monospace;
+        font-style: normal;
+        font-size: 9px;
+        letter-spacing: 0.25em;
+        color: var(--gold);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+      }
+      .legend {
+        display: flex;
+        gap: 22px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .dot-fund {
+        background: var(--fund);
+      }
+      .dot-inter {
+        background: var(--inter);
+      }
+      .dot-av {
+        background: var(--av);
+      }
+      .modulo {
+        margin-bottom: 28px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        overflow: hidden;
+        animation: up 0.35s ease both;
+      }
+      @keyframes up {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .modulo:nth-child(1) {
+        animation-delay: 0.04s;
+      }
+      .modulo:nth-child(2) {
+        animation-delay: 0.08s;
+      }
+      .modulo:nth-child(3) {
+        animation-delay: 0.12s;
+      }
+      .modulo:nth-child(4) {
+        animation-delay: 0.16s;
+      }
+      .modulo:nth-child(5) {
+        animation-delay: 0.2s;
+      }
+      .modulo:nth-child(6) {
+        animation-delay: 0.24s;
+      }
+      .modulo:nth-child(7) {
+        animation-delay: 0.28s;
+      }
+      .modulo:nth-child(8) {
+        animation-delay: 0.32s;
+      }
+      .modulo-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.2s;
+      }
+      .modulo-header:hover {
+        background: var(--surface2);
+      }
+      .modulo-num {
+        font-size: 9px;
+        color: var(--muted2);
+        letter-spacing: 0.12em;
+        min-width: 40px;
+      }
+      .modulo-title {
+        font-family: "Libre Baskerville", serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text);
+        flex: 1;
+      }
+      .nivel-badge {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border: 1px solid;
+      }
+      .nivel-fund {
+        color: var(--fund);
+        border-color: var(--fund);
+      }
+      .nivel-inter {
+        color: var(--inter);
+        border-color: var(--inter);
+      }
+      .nivel-av {
+        color: var(--av);
+        border-color: var(--av);
+      }
+      .chevron {
+        color: var(--muted2);
+        font-size: 10px;
+        transition: transform 0.2s;
+      }
+      .modulo-header.open .chevron {
+        transform: rotate(90deg);
+      }
+      .modulo-body {
+        display: none;
+      }
+      .modulo-body.open {
+        display: block;
+      }
+      .topico {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+      }
+      .topico:last-child {
+        border-bottom: none;
+      }
+      .topico-idx {
+        min-width: 48px;
+        padding: 12px 14px;
+        font-size: 9px;
+        color: var(--muted2);
+        border-right: 1px solid var(--border);
+        display: flex;
+        align-items: flex-start;
+        padding-top: 14px;
+      }
+      .topico-content {
+        padding: 12px 20px;
+        flex: 1;
+      }
+      .topico-name {
+        font-family: "Libre Baskerville", serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 5px;
+      }
+      .topico-sub {
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.65;
+      }
+      .topico-sub li {
+        list-style: none;
+        padding-left: 14px;
+        position: relative;
+      }
+      .topico-sub li::before {
+        content: "·";
+        position: absolute;
+        left: 3px;
+        color: var(--muted2);
+        font-size: 12px;
+        top: 0;
+      }
+      /* exemplo latin */
+      .lat-example {
+        margin-top: 8px;
+        padding: 8px 12px;
+        background: rgba(106, 58, 16, 0.06);
+        border-left: 2px solid var(--gold);
+        font-family: "Libre Baskerville", serif;
+        font-style: italic;
+        font-size: 10.5px;
+        color: var(--accent);
+      }
+      .lat-example span {
+        font-style: normal;
+        color: var(--muted2);
+        font-family: "Source Code Pro", monospace;
+        font-size: 9.5px;
+        display: block;
+        margin-top: 2px;
+      }
+      footer {
+        margin-top: 52px;
+        padding-top: 20px;
+        border-top: 2px solid var(--accent);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .footer-left {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .footer-right {
+        font-family: "Libre Baskerville", serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: var(--muted2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="school-tag">Instituto Enoraski — Grade Curricular</div>
+        <div class="latin-motto">Lingua Latina non mortua est — sed dormit</div>
+        <h1>LA<em>TIM</em></h1>
+        <div class="teacher-block">
+          <span class="teacher-name">Dmitri Sokolov</span>
+          <span class="teacher-desc"
+            >/ Narrativo · Revela Padrões Ocultos · Lê o que Está Por
+            Baixo</span
+          >
+        </div>
+      </header>
+      <div class="prof-note">
+        <strong>Sokolov — nota de entrada</strong>
+        Latim não é língua morta. É o substrato de tudo que o Ocidente escreveu
+        por mil anos. Ler Cícero no original é entender de onde vieram as
+        palavras com que você pensa — e que você pensa com palavras que têm
+        história.
+      </div>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="dot dot-fund"></div>
+          Fundamento
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-inter"></div>
+          Intermediário
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-av"></div>
+          Avançado
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 01</span
+          ><span class="modulo-title">Introdução — Por que Latim</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">1.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Latim e as Línguas Românicas</div>
+              <ul class="topico-sub">
+                <li>
+                  Do latim vulgar ao português, espanhol, francês, italiano,
+                  romeno
+                </li>
+                <li>50–80% do vocabulário português tem raiz latina</li>
+                <li>
+                  Latim eclesiástico, jurídico, científico e filosófico — ainda
+                  em uso
+                </li>
+                <li>Por que aprender latim melhora o português</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Pronúncia</div>
+              <ul class="topico-sub">
+                <li>Pronúncia clássica vs. pronúncia eclesiástica</li>
+                <li>Vogais — longas e breves (quantidade vocálica)</li>
+                <li>Consoantes — c, g, v, ae, oe</li>
+                <li>Acento tônico — a regra da penúltima</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 02</span
+          ><span class="modulo-title">Morfologia I — Substantivos e Casos</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">2.1</div>
+            <div class="topico-content">
+              <div class="topico-name">O Sistema de Casos</div>
+              <ul class="topico-sub">
+                <li>Nominativo — sujeito</li>
+                <li>Genitivo — posse, "de"</li>
+                <li>Dativo — objeto indireto, "para/a"</li>
+                <li>Acusativo — objeto direto, direção</li>
+                <li>
+                  Ablativo — complementos circunstanciais, "com/em/de/por"
+                </li>
+                <li>Vocativo — invocação</li>
+              </ul>
+              <div class="lat-example">
+                Rosa, rosae, rosae, rosam, rosa, rosa<span
+                  >→ a rosa / da rosa / para a rosa / a rosa / com a rosa / ó
+                  rosa</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Primeira Declinação (–a)</div>
+              <ul class="topico-sub">
+                <li>Singular e plural — todos os casos</li>
+                <li>Gênero — predominantemente feminino</li>
+                <li>
+                  Vocabulário da 1ª declinação — rosa, puella, aqua, terra, via,
+                  silva
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Segunda Declinação (–us / –um)</div>
+              <ul class="topico-sub">
+                <li>Masculinos em -us e neutros em -um</li>
+                <li>Singular e plural — todos os casos</li>
+                <li>Vocabulário — dominus, servus, puer, bellum, verbum</li>
+                <li>Exceções — vir, deus</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.4</div>
+            <div class="topico-content">
+              <div class="topico-name">
+                Terceira, Quarta e Quinta Declinações
+              </div>
+              <ul class="topico-sub">
+                <li>3ª declinação — padrão e irregularidades</li>
+                <li>Consonantais e temáticos em -i</li>
+                <li>4ª declinação — manus, exercitus</li>
+                <li>5ª declinação — dies, res, spes</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 03</span
+          ><span class="modulo-title">Morfologia II — Verbos</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">3.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Conjugações — Sistema Verbal</div>
+              <ul class="topico-sub">
+                <li>Quatro conjugações — -are, -ēre, -ĕre, -ire</li>
+                <li>Pessoas, número, tempo, modo, voz</li>
+                <li>O verbo esse (ser/estar) — o irregular mais importante</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Tempos do Indicativo Ativo</div>
+              <ul class="topico-sub">
+                <li>Presente — ação atual ou habitual</li>
+                <li>Imperfeito — ação contínua no passado</li>
+                <li>Futuro I — ação futura simples</li>
+                <li>Perfeito — ação concluída no passado</li>
+                <li>Mais-que-perfeito e Futuro II</li>
+              </ul>
+              <div class="lat-example">
+                amo, amas, amat / amamus, amatis, amant<span
+                  >→ eu amo, tu amas, ele ama...</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Voz Passiva</div>
+              <ul class="topico-sub">
+                <li>Formação da passiva — todos os tempos</li>
+                <li>Agente com ablativo + preposição a/ab</li>
+                <li>Passiva impessoal</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.4</div>
+            <div class="topico-content">
+              <div class="topico-name">Subjuntivo</div>
+              <ul class="topico-sub">
+                <li>
+                  Formação — presente, imperfeito, perfeito, mais-que-perfeito
+                </li>
+                <li>Usos do subjuntivo — Consecutio Temporum</li>
+                <li>Orações subordinadas com subjuntivo</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 04</span
+          ><span class="modulo-title"
+            >Morfologia III — Pronomes, Adjetivos, Advérbios</span
+          >
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">4.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Adjetivos</div>
+              <ul class="topico-sub">
+                <li>1ª e 2ª classe de adjetivos</li>
+                <li>Concordância com o substantivo — gênero, número, caso</li>
+                <li>Grau comparativo e superlativo</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Pronomes</div>
+              <ul class="topico-sub">
+                <li>Pessoais — ego, tu, nos, vos</li>
+                <li>Reflexivos — sui, sibi, se</li>
+                <li>Demonstrativos — hic, ille, is, iste</li>
+                <li>Relativos — qui, quae, quod</li>
+                <li>Interrogativos e indefinidos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 05</span
+          ><span class="modulo-title">Sintaxe Latina</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">5.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Ordem das Palavras e Análise</div>
+              <ul class="topico-sub">
+                <li>SOV — sujeito, objeto, verbo — a ordem típica</li>
+                <li>Ênfase por posição — o que está na frente importa</li>
+                <li>Análise sintática pela morfologia, não pela posição</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Construções Sintáticas Típicas</div>
+              <ul class="topico-sub">
+                <li>Accusativus cum infinitivo — discurso indireto</li>
+                <li>Nominativus cum infinitivo</li>
+                <li>Ablativus absolutus — construção participial</li>
+                <li>Gerúndio e gerundivo — modo de expressar obrigação</li>
+                <li>Orações condicionais — real, irreal, potencial</li>
+              </ul>
+              <div class="lat-example">
+                Amare patriam necesse est.<span
+                  >→ É necessário amar a pátria.</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 06</span
+          ><span class="modulo-title">Leitura de Textos — Autores</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">6.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Latim de Entrada</div>
+              <ul class="topico-sub">
+                <li>Fábulas de Fedro — prosa simples, vocabulário acessível</li>
+                <li>Cartas de Cícero — latim cotidiano, coloquial</li>
+                <li>
+                  Trechos dos Evangelhos em latim — Vulgata de São Jerônimo
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Prosa Clássica</div>
+              <ul class="topico-sub">
+                <li>César — De Bello Gallico — latim claro e militar</li>
+                <li>Cícero — Pro Archia, De Amicitia — a prosa modelo</li>
+                <li>Salústio — concisão e julgamento</li>
+                <li>Tácito — brevidade e ironia negra</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Poesia Latina</div>
+              <ul class="topico-sub">
+                <li>Catulo — amor e raiva em metros líricos</li>
+                <li>Virgílio — Eneida, o épico fundador de Roma</li>
+                <li>Horácio — carpe diem e a filosofia do tempo</li>
+                <li>Ovídio — Metamorfoses, narrativa e transformação</li>
+              </ul>
+              <div class="lat-example">
+                Carpe diem, quam minimum credula postero.<span
+                  >— Horácio, Odes I.11 — Colhe o dia, confiando o mínimo no
+                  amanhã.</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 07</span
+          ><span class="modulo-title">Máximas, Expressões e Latim Vivo</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">7.1</div>
+            <div class="topico-content">
+              <div class="topico-name">
+                Latim no Direito, Medicina e Filosofia
+              </div>
+              <ul class="topico-sub">
+                <li>
+                  Expressões jurídicas — habeas corpus, sine qua non, prima
+                  facie
+                </li>
+                <li>Nomenclatura científica — Homo sapiens, Canis lupus</li>
+                <li>
+                  Filosofia — cogito ergo sum, tabula rasa, a priori, a
+                  posteriori
+                </li>
+                <li>Religião — Pater Noster, Gloria in excelsis Deo</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.2</div>
+            <div class="topico-content">
+              <div class="topico-name">100 Máximas Latinas Essenciais</div>
+              <ul class="topico-sub">
+                <li>Alea iacta est — A sorte está lançada. (César)</li>
+                <li>Veni, vidi, vici — Vim, vi, venci. (César)</li>
+                <li>Dum spiro, spero — Enquanto respiro, espero.</li>
+                <li>In vino veritas — No vinho, a verdade.</li>
+                <li>Memento mori — Lembre-se de que morrerás.</li>
+                <li>Noli me tangere — Não me toques. (Evangelhos)</li>
+                <li>Per aspera ad astra — Pelo árduo, até as estrelas.</li>
+                <li>
+                  Si vis pacem, para bellum — Se queres a paz, prepara a guerra.
+                </li>
+                <li>Errare humanum est — Errar é humano.</li>
+                <li>
+                  Historia magistra vitae — A história é mestra da vida.
+                  (Cícero)
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 08</span
+          ><span class="modulo-title">Latim Medieval e Eclesiástico</span>
+          <span class="nivel-badge nivel-av">Avançado</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">8.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Latim Medieval</div>
+              <ul class="topico-sub">
+                <li>
+                  Diferenças do latim clássico — simplificações e inovações
+                </li>
+                <li>Latim escolástico — Tomás de Aquino, Duns Scotus</li>
+                <li>
+                  Leitura de textos medievais — hinos, crônicas, correspondência
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">8.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Etimologia e Herança no Português</div>
+              <ul class="topico-sub">
+                <li>Como rastrear a origem de palavras portuguesas</li>
+                <li>Famílias de palavras — do latim às línguas modernas</li>
+                <li>Latinismos eruditos vs. formas populares — duplets</li>
+                <li>
+                  O legado do latim nas ciências — taxonomia, medicina, direito
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="footer-left">Enoraski · Latim · 2026 · Lingva Latina</div>
+        <div class="footer-right">Sokolov, D.</div>
+      </footer>
+    </div>
+    <script>
+      function toggle(h) {
+        h.classList.toggle("open");
+        h.nextElementSibling.classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

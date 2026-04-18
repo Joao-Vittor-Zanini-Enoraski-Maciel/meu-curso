@@ -1,0 +1,774 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Computação — Enoraski</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400&family=VT323&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #030508;
+        --surface: #070c12;
+        --surface2: #0c1420;
+        --border: #101c2c;
+        --border-light: #182840;
+        --accent: #00d4aa;
+        --accent2: #0080ff;
+        --accent3: #ff6040;
+        --text: #b0d8c0;
+        --muted: #204030;
+        --muted2: #408060;
+        --fund: #00a880;
+        --inter: #0080ff;
+        --av: #ff6040;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Share Tech Mono", monospace;
+        font-size: 12px;
+        line-height: 1.8;
+        min-height: 100vh;
+      }
+      /* terminal scanlines */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 212, 170, 0.015) 2px,
+          rgba(0, 212, 170, 0.015) 4px
+        );
+        pointer-events: none;
+        z-index: 0;
+      }
+      /* glow */
+      body::after {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--accent);
+        box-shadow: 0 0 20px 2px rgba(0, 212, 170, 0.4);
+        opacity: 0.6;
+        pointer-events: none;
+        z-index: 1;
+      }
+      .container {
+        position: relative;
+        z-index: 2;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 64px 44px 80px;
+      }
+      header {
+        margin-bottom: 48px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--border-light);
+      }
+      .school-tag {
+        font-size: 9px;
+        letter-spacing: 0.38em;
+        color: var(--muted2);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      .prompt {
+        font-size: 10px;
+        color: var(--muted2);
+        margin-bottom: 8px;
+      }
+      .prompt span {
+        color: var(--accent);
+      }
+      h1 {
+        font-family: "VT323", monospace;
+        font-size: clamp(3rem, 9vw, 6rem);
+        font-weight: 400;
+        line-height: 0.9;
+        color: var(--accent);
+        margin-bottom: 16px;
+        letter-spacing: 0.05em;
+        text-shadow: 0 0 30px rgba(0, 212, 170, 0.4);
+      }
+      .teacher-block {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .teacher-name {
+        font-family: "Cinzel", serif;
+        font-size: 0.95rem;
+        color: var(--accent2);
+        letter-spacing: 0.08em;
+      }
+      .teacher-desc {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        color: var(--muted2);
+        text-transform: uppercase;
+      }
+      .prof-note {
+        margin-bottom: 36px;
+        padding: 14px 20px 14px 18px;
+        border-left: 2px solid var(--accent);
+        background: var(--surface2);
+        font-family: "Cinzel", serif;
+        font-size: 0.9rem;
+        font-weight: 300;
+        color: #60c0a0;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+      }
+      .prof-note strong {
+        display: block;
+        font-family: "Share Tech Mono", monospace;
+        font-size: 9px;
+        font-weight: 400;
+        letter-spacing: 0.3em;
+        color: var(--accent);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+      }
+      .legend {
+        display: flex;
+        gap: 22px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 10px;
+        color: var(--muted2);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .dot-fund {
+        background: var(--fund);
+        box-shadow: 0 0 6px rgba(0, 168, 128, 0.5);
+      }
+      .dot-inter {
+        background: var(--inter);
+        box-shadow: 0 0 6px rgba(0, 128, 255, 0.5);
+      }
+      .dot-av {
+        background: var(--av);
+        box-shadow: 0 0 6px rgba(255, 96, 64, 0.5);
+      }
+      .modulo {
+        margin-bottom: 28px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        overflow: hidden;
+        animation: up 0.35s ease both;
+      }
+      @keyframes up {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .modulo:nth-child(1) {
+        animation-delay: 0.04s;
+      }
+      .modulo:nth-child(2) {
+        animation-delay: 0.08s;
+      }
+      .modulo:nth-child(3) {
+        animation-delay: 0.12s;
+      }
+      .modulo:nth-child(4) {
+        animation-delay: 0.16s;
+      }
+      .modulo:nth-child(5) {
+        animation-delay: 0.2s;
+      }
+      .modulo:nth-child(6) {
+        animation-delay: 0.24s;
+      }
+      .modulo:nth-child(7) {
+        animation-delay: 0.28s;
+      }
+      .modulo:nth-child(8) {
+        animation-delay: 0.32s;
+      }
+      .modulo:nth-child(9) {
+        animation-delay: 0.36s;
+      }
+      .modulo:nth-child(10) {
+        animation-delay: 0.4s;
+      }
+      .modulo-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.2s;
+      }
+      .modulo-header:hover {
+        background: var(--surface2);
+      }
+      .modulo-num {
+        font-size: 9px;
+        color: var(--muted2);
+        letter-spacing: 0.12em;
+        min-width: 40px;
+      }
+      .modulo-title {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 0.95rem;
+        color: var(--accent);
+        flex: 1;
+      }
+      .nivel-badge {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border: 1px solid;
+      }
+      .nivel-fund {
+        color: var(--fund);
+        border-color: var(--fund);
+      }
+      .nivel-inter {
+        color: var(--inter);
+        border-color: var(--inter);
+      }
+      .nivel-av {
+        color: var(--av);
+        border-color: var(--av);
+      }
+      .chevron {
+        color: var(--muted2);
+        font-size: 10px;
+        transition: transform 0.2s;
+      }
+      .modulo-header.open .chevron {
+        transform: rotate(90deg);
+      }
+      .modulo-body {
+        display: none;
+      }
+      .modulo-body.open {
+        display: block;
+      }
+      .topico {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+      }
+      .topico:last-child {
+        border-bottom: none;
+      }
+      .topico-idx {
+        min-width: 48px;
+        padding: 12px 14px;
+        font-size: 9px;
+        color: var(--muted2);
+        border-right: 1px solid var(--border);
+        display: flex;
+        align-items: flex-start;
+        padding-top: 14px;
+      }
+      .topico-content {
+        padding: 12px 20px;
+        flex: 1;
+      }
+      .topico-name {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 0.9rem;
+        color: var(--text);
+        margin-bottom: 5px;
+      }
+      .topico-sub {
+        color: var(--muted2);
+        font-size: 11px;
+        line-height: 1.65;
+      }
+      .topico-sub li {
+        list-style: none;
+        padding-left: 14px;
+        position: relative;
+      }
+      .topico-sub li::before {
+        content: ">";
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+        font-size: 9px;
+        top: 1px;
+      }
+      footer {
+        margin-top: 52px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-light);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .footer-left {
+        font-size: 9px;
+        color: var(--muted2);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .footer-right {
+        font-family: "Cinzel", serif;
+        font-size: 0.9rem;
+        color: var(--muted2);
+        letter-spacing: 0.08em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="school-tag">Instituto Enoraski — Grade Curricular</div>
+        <div class="prompt">
+          <span>enoraski@instituto</span>:~$ load curriculum
+          --subject=computacao
+        </div>
+        <h1>COMPUTAÇÃO</h1>
+        <div class="teacher-block">
+          <span class="teacher-name">Nikolai Orshin</span>
+          <span class="teacher-desc"
+            >/ Contemplativo · Trabalha com Sistemas Que Excedem a Intuição
+            Humana</span
+          >
+        </div>
+      </header>
+      <div class="prof-note">
+        <strong>Orshin — nota de entrada</strong>
+        Um computador não pensa. Mas a soma de bilhões deles, conectados, está
+        criando algo que nenhum dos seus criadores compreende completamente.
+        Aprenda os fundamentos — eles são os únicos que não mudam.
+      </div>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="dot dot-fund"></div>
+          Fundamento
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-inter"></div>
+          Intermediário
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-av"></div>
+          Avançado
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 01</span
+          ><span class="modulo-title">Fundamentos de Computação</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">1.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Como o Computador Funciona</div>
+              <ul class="topico-sub">
+                <li>Modelo de Von Neumann — CPU, memória, I/O</li>
+                <li>Transistores e lógica binária — de física a computação</li>
+                <li>Clock, ciclos e frequência</li>
+                <li>
+                  Hierarquia de memória — registradores, cache, RAM, disco
+                </li>
+                <li>CPU vs. GPU — paralelismo e casos de uso</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Sistemas de Numeração</div>
+              <ul class="topico-sub">
+                <li>Binário, octal, hexadecimal — conversão e uso</li>
+                <li>Representação de inteiros — complemento de dois</li>
+                <li>Representação de ponto flutuante — IEEE 754</li>
+                <li>Overflow e underflow — quando os números mentem</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Álgebra Booleana e Portas Lógicas</div>
+              <ul class="topico-sub">
+                <li>AND, OR, NOT, NAND, NOR, XOR</li>
+                <li>Tabelas verdade e simplificação</li>
+                <li>Circuitos combinacionais — somador, multiplexador</li>
+                <li>Circuitos sequenciais — flip-flop, registrador</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 02</span
+          ><span class="modulo-title">Sistemas Operacionais</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">2.1</div>
+            <div class="topico-content">
+              <div class="topico-name">O que é um Sistema Operacional</div>
+              <ul class="topico-sub">
+                <li>Kernel — a camada que controla o hardware</li>
+                <li>Processos e threads — o que está rodando agora</li>
+                <li>Escalonamento de processos — como o SO decide quem roda</li>
+                <li>Chamadas de sistema — como programas pedem recursos</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Memória e Armazenamento</div>
+              <ul class="topico-sub">
+                <li>Memória virtual — paginação e segmentação</li>
+                <li>Sistema de arquivos — FAT, NTFS, ext4</li>
+                <li>Permissões de arquivo — leitura, escrita, execução</li>
+                <li>Linux vs. Windows — arquitetura e filosofia</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Terminal e Linha de Comando</div>
+              <ul class="topico-sub">
+                <li>Shell — bash, zsh, conceitos básicos</li>
+                <li>Navegação — cd, ls, pwd, find</li>
+                <li>Manipulação de arquivos — cp, mv, rm, chmod</li>
+                <li>Pipes e redirecionamento — composição de comandos</li>
+                <li>Scripts básicos — automação do cotidiano</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 03</span
+          ><span class="modulo-title">Redes e Internet</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">3.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Fundamentos de Redes</div>
+              <ul class="topico-sub">
+                <li>Modelo OSI — 7 camadas, o que cada uma faz</li>
+                <li>TCP/IP — o protocolo que é a internet</li>
+                <li>IP, MAC, portas — endereçamento</li>
+                <li>DNS — como nomes viram endereços</li>
+                <li>HTTP/HTTPS — como a web funciona</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Segurança Básica</div>
+              <ul class="topico-sub">
+                <li>Criptografia simétrica e assimétrica</li>
+                <li>SSL/TLS — o que é o cadeado do navegador</li>
+                <li>Senhas — hashing, salting, por que MD5 está morto</li>
+                <li>Principais vetores de ataque — phishing, MITM, injeção</li>
+                <li>Boas práticas — o que fazer antes de sofrer um ataque</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 04</span
+          ><span class="modulo-title">Programação — Fundamentos</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">4.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Lógica de Programação</div>
+              <ul class="topico-sub">
+                <li>Variáveis, tipos primitivos, operadores</li>
+                <li>Estruturas de controle — if/else, while, for</li>
+                <li>Funções — parâmetros, retorno, escopo</li>
+                <li>Recursão — quando e como usar</li>
+                <li>Depuração — como pensar como debugger</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Python — Linguagem de Entrada</div>
+              <ul class="topico-sub">
+                <li>
+                  Sintaxe e filosofia — "explicit is better than implicit"
+                </li>
+                <li>Listas, dicionários, sets, tuplas</li>
+                <li>Compreensões de lista e expressões geradoras</li>
+                <li>Módulos padrão essenciais — os, sys, re, json, pathlib</li>
+                <li>Tratamento de exceções</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 05</span
+          ><span class="modulo-title">Estruturas de Dados e Algoritmos</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">5.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Estruturas de Dados</div>
+              <ul class="topico-sub">
+                <li>Array, lista ligada — trade-offs de acesso e inserção</li>
+                <li>Pilha (stack) e fila (queue) — uso e implementação</li>
+                <li>Hash table — colisão e resolução</li>
+                <li>Árvores — binária, BST, balanceada</li>
+                <li>Grafo — representação, BFS, DFS</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Algoritmos Essenciais</div>
+              <ul class="topico-sub">
+                <li>Notação Big-O — o que importa em escala</li>
+                <li>Ordenação — bubble, merge, quick — comparação</li>
+                <li>Busca — linear, binária</li>
+                <li>Programação dinâmica — memoização e tabulação</li>
+                <li>Divisão e conquista</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 06</span
+          ><span class="modulo-title">Banco de Dados</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">6.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Bancos Relacionais e SQL</div>
+              <ul class="topico-sub">
+                <li>Modelo relacional — tabelas, chaves, relacionamentos</li>
+                <li>SQL — SELECT, INSERT, UPDATE, DELETE</li>
+                <li>JOINs — inner, left, right, full</li>
+                <li>Índices — quando e por que criar</li>
+                <li>Normalização — 1NF, 2NF, 3NF</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.2</div>
+            <div class="topico-content">
+              <div class="topico-name">NoSQL e Escolha do Banco</div>
+              <ul class="topico-sub">
+                <li>Document stores — MongoDB</li>
+                <li>Key-value stores — Redis</li>
+                <li>Teorema CAP — consistência, disponibilidade, partição</li>
+                <li>ACID vs. BASE — quando usar cada modelo</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 07</span
+          ><span class="modulo-title">Desenvolvimento Web</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">7.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Front-end</div>
+              <ul class="topico-sub">
+                <li>HTML — semântica, acessibilidade, estrutura</li>
+                <li>CSS — box model, flexbox, grid, responsividade</li>
+                <li>JavaScript — DOM, eventos, fetch, async/await</li>
+                <li>Frameworks modernos — React, Vue (conceitos)</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Back-end e APIs</div>
+              <ul class="topico-sub">
+                <li>APIs REST — verbos HTTP, status codes, JSON</li>
+                <li>Autenticação — sessões, JWT, OAuth</li>
+                <li>Servidores — Node.js, Python/FastAPI</li>
+                <li>Deploy — Docker, containers, o que é um servidor</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 08</span
+          ><span class="modulo-title"
+            >Inteligência Artificial e Machine Learning</span
+          >
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">8.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Fundamentos de ML</div>
+              <ul class="topico-sub">
+                <li>Aprendizado supervisionado — classificação, regressão</li>
+                <li>Aprendizado não supervisionado — clustering</li>
+                <li>Função de perda, gradiente descendente</li>
+                <li>Overfitting e underfitting — bias-variance tradeoff</li>
+                <li>Validação cruzada</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">8.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Redes Neurais e Deep Learning</div>
+              <ul class="topico-sub">
+                <li>
+                  Perceptron e multicamadas — propagação e backpropagation
+                </li>
+                <li>CNNs — visão computacional</li>
+                <li>RNNs e Transformers — sequência e atenção</li>
+                <li>LLMs — o que são, como funcionam, o que não são</li>
+                <li>
+                  Ética em IA — viés, interpretabilidade, responsabilidade
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 09</span
+          ><span class="modulo-title">Ciência da Computação Teórica</span>
+          <span class="nivel-badge nivel-av">Avançado</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">9.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Teoria da Computação</div>
+              <ul class="topico-sub">
+                <li>
+                  Máquina de Turing — o modelo abstrato de todo computador
+                </li>
+                <li>
+                  Decidibilidade — problemas que nenhum computador resolve
+                </li>
+                <li>Halting Problem — Turing e os limites do computável</li>
+                <li>
+                  Complexidade — P, NP e a pergunta de um milhão de dólares
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">9.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Computação Quântica</div>
+              <ul class="topico-sub">
+                <li>Qubit — superposição e entrelaçamento</li>
+                <li>Gates quânticos — analogia com lógica clássica</li>
+                <li>Algoritmo de Shor — fatoração e criptografia em risco</li>
+                <li>Algoritmo de Grover — busca quadraticamente mais rápida</li>
+                <li>Estado atual — onde estamos, o que é hype</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="footer-left">Enoraski · Computação · 2026</div>
+        <div class="footer-right">Orshin, N.</div>
+      </footer>
+    </div>
+    <script>
+      function toggle(h) {
+        h.classList.toggle("open");
+        h.nextElementSibling.classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

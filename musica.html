@@ -1,0 +1,751 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Música — Enoraski</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Raleway:ital,wght@0,200;0,300;0,400;1,200;1,300&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0d0a12;
+        --surface: #131018;
+        --surface2: #1a1522;
+        --border: #221d2e;
+        --border-light: #2e2840;
+        --accent: #b090e0;
+        --accent2: #e090a0;
+        --accent3: #70c0a0;
+        --text: #e8e0f0;
+        --muted: #5a5068;
+        --muted2: #8070a0;
+        --fund: #70c0a0;
+        --inter: #b090e0;
+        --av: #e090a0;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Raleway", sans-serif;
+        font-size: 12.5px;
+        font-weight: 300;
+        line-height: 1.85;
+        min-height: 100vh;
+      }
+      /* soft radial atmosphere */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 80% 50% at 20% 20%,
+            rgba(176, 144, 224, 0.06) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 60% 60% at 80% 80%,
+            rgba(224, 144, 160, 0.05) 0%,
+            transparent 60%
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 64px 44px 80px;
+      }
+      header {
+        margin-bottom: 48px;
+        padding-bottom: 28px;
+        border-bottom: 1px solid var(--border-light);
+      }
+      .school-tag {
+        font-size: 9px;
+        letter-spacing: 0.38em;
+        color: var(--muted2);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      h1 {
+        font-family: "Gilda Display", serif;
+        font-size: clamp(3rem, 9vw, 5.8rem);
+        font-weight: 400;
+        line-height: 0.95;
+        color: var(--text);
+        margin-bottom: 16px;
+        letter-spacing: 0.01em;
+      }
+      h1 em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      .teacher-block {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .teacher-name {
+        font-family: "Gilda Display", serif;
+        font-size: 1.1rem;
+        color: var(--accent2);
+      }
+      .teacher-desc {
+        font-size: 9.5px;
+        letter-spacing: 0.15em;
+        color: var(--muted2);
+        text-transform: uppercase;
+        font-weight: 400;
+      }
+      .prof-note {
+        margin-bottom: 36px;
+        padding: 16px 22px 16px 20px;
+        border-left: 2px solid var(--accent);
+        background: var(--surface2);
+        font-family: "Gilda Display", serif;
+        font-size: 1.05rem;
+        color: #c8b0e8;
+        line-height: 1.6;
+      }
+      .prof-note strong {
+        display: block;
+        font-family: "Raleway", sans-serif;
+        font-size: 9px;
+        font-weight: 400;
+        letter-spacing: 0.25em;
+        color: var(--accent);
+        margin-bottom: 8px;
+        text-transform: uppercase;
+      }
+      .legend {
+        display: flex;
+        gap: 22px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 10px;
+        color: var(--muted2);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .dot-fund {
+        background: var(--fund);
+      }
+      .dot-inter {
+        background: var(--inter);
+      }
+      .dot-av {
+        background: var(--av);
+      }
+      .modulo {
+        margin-bottom: 28px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        overflow: hidden;
+        animation: up 0.4s ease both;
+      }
+      @keyframes up {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .modulo:nth-child(1) {
+        animation-delay: 0.05s;
+      }
+      .modulo:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+      .modulo:nth-child(3) {
+        animation-delay: 0.15s;
+      }
+      .modulo:nth-child(4) {
+        animation-delay: 0.2s;
+      }
+      .modulo:nth-child(5) {
+        animation-delay: 0.25s;
+      }
+      .modulo:nth-child(6) {
+        animation-delay: 0.3s;
+      }
+      .modulo:nth-child(7) {
+        animation-delay: 0.35s;
+      }
+      .modulo:nth-child(8) {
+        animation-delay: 0.4s;
+      }
+      .modulo-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 15px 20px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.2s;
+      }
+      .modulo-header:hover {
+        background: var(--surface2);
+      }
+      .modulo-num {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.12em;
+        min-width: 40px;
+      }
+      .modulo-title {
+        font-family: "Gilda Display", serif;
+        font-size: 1.1rem;
+        color: var(--text);
+        flex: 1;
+      }
+      .nivel-badge {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border: 1px solid;
+        font-weight: 400;
+      }
+      .nivel-fund {
+        color: var(--fund);
+        border-color: var(--fund);
+      }
+      .nivel-inter {
+        color: var(--inter);
+        border-color: var(--inter);
+      }
+      .nivel-av {
+        color: var(--av);
+        border-color: var(--av);
+      }
+      .chevron {
+        color: var(--muted);
+        font-size: 10px;
+        transition: transform 0.2s;
+      }
+      .modulo-header.open .chevron {
+        transform: rotate(90deg);
+      }
+      .modulo-body {
+        display: none;
+      }
+      .modulo-body.open {
+        display: block;
+      }
+      .topico {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+      }
+      .topico:last-child {
+        border-bottom: none;
+      }
+      .topico-idx {
+        min-width: 48px;
+        padding: 12px 14px;
+        font-size: 9px;
+        color: var(--muted);
+        border-right: 1px solid var(--border);
+        display: flex;
+        align-items: flex-start;
+        padding-top: 14px;
+      }
+      .topico-content {
+        padding: 12px 20px;
+        flex: 1;
+      }
+      .topico-name {
+        font-family: "Gilda Display", serif;
+        font-size: 1rem;
+        color: var(--text);
+        margin-bottom: 5px;
+      }
+      .topico-sub {
+        color: var(--muted2);
+        font-size: 11px;
+        line-height: 1.7;
+        font-weight: 300;
+      }
+      .topico-sub li {
+        list-style: none;
+        padding-left: 14px;
+        position: relative;
+      }
+      .topico-sub li::before {
+        content: "♩";
+        position: absolute;
+        left: 0;
+        color: var(--border-light);
+        font-size: 8px;
+        top: 3px;
+      }
+      footer {
+        margin-top: 52px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-light);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .footer-left {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .footer-right {
+        font-family: "Gilda Display", serif;
+        font-size: 1rem;
+        color: var(--muted2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="school-tag">Instituto Enoraski — Grade Curricular</div>
+        <h1>Mú<em>si</em>ca</h1>
+        <div class="teacher-block">
+          <span class="teacher-name">Anya Belinskaya</span>
+          <span class="teacher-desc"
+            >/ Intuitiva · Sensível · Estrutura Emocional · Ordem Dentro do
+            Caos</span
+          >
+        </div>
+      </header>
+
+      <div class="prof-note">
+        <strong>Belinskaya — nota de entrada</strong>
+        A teoria não existe para limitar a música. Existe para que você entenda
+        o que sente quando a ouve — e possa reproduzir isso quando quiser. A
+        ordem é o mapa. O caos é o destino.
+      </div>
+
+      <div class="legend">
+        <div class="legend-item">
+          <div class="dot dot-fund"></div>
+          Fundamento
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-inter"></div>
+          Intermediário
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-av"></div>
+          Avançado
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 01</span>
+          <span class="modulo-title">Som e Percepção</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">1.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Propriedades do Som</div>
+              <ul class="topico-sub">
+                <li>Frequência — o que é altura (pitch) fisicamente</li>
+                <li>Amplitude — volume e dinâmica</li>
+                <li>
+                  Timbre — por que um violino e uma flauta soam diferente na
+                  mesma nota
+                </li>
+                <li>Duração — o tempo como matéria musical</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.2</div>
+            <div class="topico-content">
+              <div class="topico-name">O Ouvido Musical</div>
+              <ul class="topico-sub">
+                <li>Treinamento auditivo — por que é o fundamento de tudo</li>
+                <li>Reconhecimento de intervalos</li>
+                <li>Percepção de ritmo e pulso</li>
+                <li>Ouvido absoluto vs. ouvido relativo</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 02</span>
+          <span class="modulo-title">Notação Musical</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">2.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Leitura de Notas</div>
+              <ul class="topico-sub">
+                <li>Pauta e claves — Sol, Fá, Dó</li>
+                <li>Notas na pauta — linhas e espaços</li>
+                <li>Linhas suplementares</li>
+                <li>Acidentes — sustenido, bemol, bequadro</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Figuras Rítmicas</div>
+              <ul class="topico-sub">
+                <li>Semibreve, mínima, semínima, colcheia, semicolcheia</li>
+                <li>Pausas correspondentes</li>
+                <li>Ponto de aumento — efeito na duração</li>
+                <li>Ligadura de valor vs. ligadura de expressão</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Compasso e Fórmula de Compasso</div>
+              <ul class="topico-sub">
+                <li>Pulso, tempo e compasso</li>
+                <li>Fórmula de compasso — numerador e denominador</li>
+                <li>Compassos simples: 2/4, 3/4, 4/4</li>
+                <li>Compassos compostos: 6/8, 9/8, 12/8</li>
+                <li>Anacruze — início fora do tempo</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.4</div>
+            <div class="topico-content">
+              <div class="topico-name">Sinais e Indicações de Partitura</div>
+              <ul class="topico-sub">
+                <li>Dinâmica: pp, p, mp, mf, f, ff — crescendo, decrescendo</li>
+                <li>
+                  Andamento: Largo, Adagio, Andante, Moderato, Allegro, Presto
+                </li>
+                <li>Articulação: staccato, legato, acento, tenuto</li>
+                <li>Repetições e sinais: D.C., D.S., Fine, Coda</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 03</span>
+          <span class="modulo-title">Intervalos</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">3.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Classificação de Intervalos</div>
+              <ul class="topico-sub">
+                <li>Intervalo melódico vs. harmônico</li>
+                <li>Número do intervalo — contagem de graus</li>
+                <li>Qualidade: justo, maior, menor, aumentado, diminuto</li>
+                <li>Intervalos simples e compostos</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Inversão e Percepção de Intervalos</div>
+              <ul class="topico-sub">
+                <li>Inversão de intervalos — regra dos 9</li>
+                <li>
+                  Consonância e dissonância — por que certos intervalos
+                  tensionam
+                </li>
+                <li>Trítono — o intervalo instável</li>
+                <li>Reconhecimento auditivo de todos os intervalos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 04</span>
+          <span class="modulo-title">Escalas e Tonalidade</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">4.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Escalas Maiores</div>
+              <ul class="topico-sub">
+                <li>Fórmula da escala maior — TT S TTT S</li>
+                <li>As 12 escalas maiores e suas armaduras</li>
+                <li>Escala de Dó como referência zero</li>
+                <li>Ciclo das quintas — ordem dos sustenidos e bemóis</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Escalas Menores</div>
+              <ul class="topico-sub">
+                <li>Menor natural — relação com a maior</li>
+                <li>Menor harmônica — o 7º grau elevado e por que</li>
+                <li>Menor melódica — ascendente e descendente diferentes</li>
+                <li>Relativas maior/menor — mesma armadura</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Outras Escalas</div>
+              <ul class="topico-sub">
+                <li>Escala pentatônica — maior e menor</li>
+                <li>Escala de blues — a blue note</li>
+                <li>Escala cromática</li>
+                <li>Modos gregos — Dórico, Frígio, Lídio, Mixolídio, etc.</li>
+                <li>Escala octatônica e escala de tons inteiros</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 05</span>
+          <span class="modulo-title">Acordes e Harmonia</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">5.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Tríades</div>
+              <ul class="topico-sub">
+                <li>Acorde maior — estrutura e qualidade sonora</li>
+                <li>Acorde menor</li>
+                <li>Acorde diminuto</li>
+                <li>Acorde aumentado</li>
+                <li>Inversões de tríades — 1ª e 2ª inversão</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Tétrades e Extensões</div>
+              <ul class="topico-sub">
+                <li>
+                  Acorde de 7ª — dominante, maior, menor, meio-diminuto,
+                  diminuto
+                </li>
+                <li>Acordes de 9ª, 11ª, 13ª</li>
+                <li>Acordes sus2 e sus4</li>
+                <li>Acordes com notas adicionadas</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Funções Harmônicas</div>
+              <ul class="topico-sub">
+                <li>
+                  Tônica, subdominante, dominante — o triângulo da harmonia
+                </li>
+                <li>Graus da escala e seus acordes — harmonização diatônica</li>
+                <li>Cadências: autêntica, plagal, meia-cadência, engano</li>
+                <li>Progressões clássicas: I–IV–V–I, ii–V–I, I–V–vi–IV</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 06</span>
+          <span class="modulo-title">Ritmo e Métrica Avançada</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">6.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Subdivisão e Polirritmia</div>
+              <ul class="topico-sub">
+                <li>Subdivisão binária e ternária</li>
+                <li>Tercinas, quintinas, sextinas</li>
+                <li>Síncope — o deslocamento do acento</li>
+                <li>Contratempo — o tempo "errado" como elemento</li>
+                <li>Polirritmia — dois ou mais ritmos simultâneos</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Compassos Irregulares</div>
+              <ul class="topico-sub">
+                <li>Compassos de 5 e 7 tempos</li>
+                <li>Mudanças de compasso</li>
+                <li>Música sem compasso fixo — prose rhythm</li>
+                <li>Groove vs. precisão rítmica</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 07</span>
+          <span class="modulo-title">Forma e Estrutura Musical</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">7.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Formas Básicas</div>
+              <ul class="topico-sub">
+                <li>Frase, período, seção — hierarquia estrutural</li>
+                <li>Forma binária — A B</li>
+                <li>Forma ternária — A B A</li>
+                <li>Forma rondó — A B A C A</li>
+                <li>Forma estrófica e through-composed</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Formas Complexas</div>
+              <ul class="topico-sub">
+                <li>
+                  Forma sonata — exposição, desenvolvimento, recapitulação
+                </li>
+                <li>Tema e variações</li>
+                <li>Fuga — sujeito, resposta, contraponto</li>
+                <li>Blues de 12 compassos como estrutura arquetípica</li>
+                <li>Forma canção popular — verso, pré-refrão, refrão, ponte</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 08</span>
+          <span class="modulo-title">Harmonia Avançada e Análise</span>
+          <span class="nivel-badge nivel-av">Avançado</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">8.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Modulação e Cromatismo</div>
+              <ul class="topico-sub">
+                <li>Modulação diatônica — pelo grau pivot</li>
+                <li>Modulação cromática — por acordes alterados</li>
+                <li>Dominante secundária — V/V, V/ii, etc.</li>
+                <li>Acorde de Nápoles</li>
+                <li>Acordes de 6ª aumentada — italiana, francesa, alemã</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">8.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Harmonia Modal e Contemporânea</div>
+              <ul class="topico-sub">
+                <li>Harmonia modal — centro tonal sem função clássica</li>
+                <li>Harmonia por quartas e quintas</li>
+                <li>
+                  Politonalidade e atonalismo — Schoenberg e o dodecafonismo
+                </li>
+                <li>
+                  Harmonia jazz — reharmonização e substituição de trítono
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">8.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Análise de Partitura</div>
+              <ul class="topico-sub">
+                <li>Análise harmônica por algarismos romanos</li>
+                <li>Identificação de forma e estrutura</li>
+                <li>Análise motívica — como temas se desenvolvem</li>
+                <li>Redução e esqueleto harmônico</li>
+                <li>
+                  Aplicação: análise de obras reais (Bach, Mozart, Beatles,
+                  Chick Corea)
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="footer-left">Enoraski · Música · Teoria Musical · 2026</div>
+        <div class="footer-right">Belinskaya, A.</div>
+      </footer>
+    </div>
+    <script>
+      function toggle(h) {
+        h.classList.toggle("open");
+        h.nextElementSibling.classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

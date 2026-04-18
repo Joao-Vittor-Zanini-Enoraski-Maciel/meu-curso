@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oratória — Enoraski</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0e0c08;
+        --surface: #161410;
+        --surface2: #201e18;
+        --border: #2a2820;
+        --border-light: #38342a;
+        --accent: #d4a840;
+        --accent2: #8a5a20;
+        --text: #e8e0cc;
+        --muted: #605840;
+        --muted2: #907860;
+        --fund: #5a8a4a;
+        --inter: #d4a840;
+        --av: #c06040;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Space Mono", monospace;
+        font-size: 11.5px;
+        line-height: 1.85;
+        min-height: 100vh;
+      }
+      /* theatre stage lighting effect */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 60% 40% at 50% 0%,
+            rgba(212, 168, 64, 0.07) 0%,
+            transparent 70%
+          ),
+          radial-gradient(
+            ellipse 30% 60% at 20% 50%,
+            rgba(212, 168, 64, 0.03) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 30% 60% at 80% 50%,
+            rgba(212, 168, 64, 0.03) 0%,
+            transparent 60%
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+      /* curtain lines */
+      body::after {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          var(--accent2),
+          var(--accent),
+          var(--accent2)
+        );
+        opacity: 0.6;
+        pointer-events: none;
+        z-index: 1;
+      }
+      .container {
+        position: relative;
+        z-index: 2;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 64px 44px 80px;
+      }
+      header {
+        margin-bottom: 48px;
+        padding-bottom: 28px;
+        border-bottom: 1px solid var(--border-light);
+      }
+      .school-tag {
+        font-size: 9px;
+        letter-spacing: 0.38em;
+        color: var(--muted2);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      h1 {
+        font-family: "EB Garamond", serif;
+        font-size: clamp(3rem, 8vw, 5.5rem);
+        font-weight: 400;
+        line-height: 0.95;
+        color: var(--text);
+        margin-bottom: 16px;
+      }
+      h1 em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      .teacher-block {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .teacher-name {
+        font-family: "EB Garamond", serif;
+        font-size: 1.1rem;
+        font-style: italic;
+        color: var(--accent2);
+      }
+      .teacher-desc {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        color: var(--muted2);
+        text-transform: uppercase;
+      }
+      .prof-note {
+        margin-bottom: 36px;
+        padding: 16px 22px 16px 20px;
+        border-left: 3px solid var(--accent);
+        background: var(--surface2);
+        font-family: "EB Garamond", serif;
+        font-style: italic;
+        font-size: 1.1rem;
+        color: #c0a060;
+        line-height: 1.6;
+      }
+      .prof-note strong {
+        display: block;
+        font-family: "Space Mono", monospace;
+        font-style: normal;
+        font-size: 9px;
+        font-weight: 400;
+        letter-spacing: 0.25em;
+        color: var(--accent);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+      }
+      .legend {
+        display: flex;
+        gap: 22px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 10px;
+        color: var(--muted2);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .dot-fund {
+        background: var(--fund);
+      }
+      .dot-inter {
+        background: var(--inter);
+      }
+      .dot-av {
+        background: var(--av);
+      }
+      .modulo {
+        margin-bottom: 28px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        overflow: hidden;
+        animation: up 0.35s ease both;
+      }
+      @keyframes up {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .modulo:nth-child(1) {
+        animation-delay: 0.04s;
+      }
+      .modulo:nth-child(2) {
+        animation-delay: 0.08s;
+      }
+      .modulo:nth-child(3) {
+        animation-delay: 0.12s;
+      }
+      .modulo:nth-child(4) {
+        animation-delay: 0.16s;
+      }
+      .modulo:nth-child(5) {
+        animation-delay: 0.2s;
+      }
+      .modulo:nth-child(6) {
+        animation-delay: 0.24s;
+      }
+      .modulo:nth-child(7) {
+        animation-delay: 0.28s;
+      }
+      .modulo:nth-child(8) {
+        animation-delay: 0.32s;
+      }
+      .modulo-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 15px 20px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.2s;
+      }
+      .modulo-header:hover {
+        background: var(--surface2);
+      }
+      .modulo-num {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.12em;
+        min-width: 40px;
+      }
+      .modulo-title {
+        font-family: "EB Garamond", serif;
+        font-size: 1.15rem;
+        font-weight: 500;
+        color: var(--text);
+        flex: 1;
+      }
+      .nivel-badge {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border: 1px solid;
+      }
+      .nivel-fund {
+        color: var(--fund);
+        border-color: var(--fund);
+      }
+      .nivel-inter {
+        color: var(--inter);
+        border-color: var(--inter);
+      }
+      .nivel-av {
+        color: var(--av);
+        border-color: var(--av);
+      }
+      .chevron {
+        color: var(--muted);
+        font-size: 10px;
+        transition: transform 0.2s;
+      }
+      .modulo-header.open .chevron {
+        transform: rotate(90deg);
+      }
+      .modulo-body {
+        display: none;
+      }
+      .modulo-body.open {
+        display: block;
+      }
+      .topico {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+      }
+      .topico:last-child {
+        border-bottom: none;
+      }
+      .topico-idx {
+        min-width: 48px;
+        padding: 12px 14px;
+        font-size: 9px;
+        color: var(--muted);
+        border-right: 1px solid var(--border);
+        display: flex;
+        align-items: flex-start;
+        padding-top: 14px;
+      }
+      .topico-content {
+        padding: 12px 20px;
+        flex: 1;
+      }
+      .topico-name {
+        font-family: "EB Garamond", serif;
+        font-size: 1.05rem;
+        font-weight: 500;
+        color: var(--text);
+        margin-bottom: 5px;
+      }
+      .topico-sub {
+        color: var(--muted2);
+        font-size: 11px;
+        line-height: 1.65;
+      }
+      .topico-sub li {
+        list-style: none;
+        padding-left: 14px;
+        position: relative;
+      }
+      .topico-sub li::before {
+        content: "›";
+        position: absolute;
+        left: 2px;
+        color: var(--accent2);
+        font-size: 11px;
+        top: 0;
+      }
+      footer {
+        margin-top: 52px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-light);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .footer-left {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .footer-right {
+        font-family: "EB Garamond", serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: var(--muted2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="school-tag">Instituto Enoraski — Grade Curricular</div>
+        <h1>Ora<em>tó</em>ria</h1>
+        <div class="teacher-block">
+          <span class="teacher-name">Aleksy Voronin</span>
+          <span class="teacher-desc"
+            >/ Observador · Indireto · Conduz Sem Parecer Conduzir</span
+          >
+        </div>
+      </header>
+      <div class="prof-note">
+        <strong>Voronin — nota de entrada</strong>
+        O orador que parece orador já perdeu. A arte está em parecer que não há
+        arte. Você aprenderá a construir uma presença que não se anuncia — e que
+        por isso ninguém consegue ignorar.
+      </div>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="dot dot-fund"></div>
+          Fundamento
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-inter"></div>
+          Intermediário
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-av"></div>
+          Avançado
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 01</span
+          ><span class="modulo-title">A Voz como Instrumento</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">1.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Técnica Vocal</div>
+              <ul class="topico-sub">
+                <li>Respiração diafragmática — a base de tudo o mais</li>
+                <li>Projeção sem esforço — ressonância em vez de volume</li>
+                <li>Articulação — clareza sem afetação</li>
+                <li>Aquecimento vocal — rotina antes de falar em público</li>
+                <li>Cuidados com a voz — o instrumento físico</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Parâmetros Vocais</div>
+              <ul class="topico-sub">
+                <li>Ritmo — velocidade como ferramenta de ênfase</li>
+                <li>Tom — variação que evita monotonia</li>
+                <li>Volume — dinâmica deliberada, não acidente</li>
+                <li>Pausa — o silêncio que fala mais alto que a palavra</li>
+                <li>Ênfase — qual palavra carregar e por quê</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 02</span
+          ><span class="modulo-title">Presença e Corporalidade</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">2.1</div>
+            <div class="topico-content">
+              <div class="topico-name">O Corpo que Fala</div>
+              <ul class="topico-sub">
+                <li>Postura — o que ela comunica antes de você abrir a boca</li>
+                <li>Gestos — ampliação do discurso, não distração</li>
+                <li>Contato visual — como distribuir atenção em uma plateia</li>
+                <li>Movimento no espaço — deslocamento intencional</li>
+                <li>Microexpressões — o que trair e o que controlar</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Gerenciamento do Nervosismo</div>
+              <ul class="topico-sub">
+                <li>
+                  A fisiologia da ansiedade de performance — o que está
+                  acontecendo
+                </li>
+                <li>Reframing — ansiedade como excitação redirecionada</li>
+                <li>Rituais de preparação — antes de entrar em cena</li>
+                <li>
+                  Técnicas de ancoragem — recuperar o centro durante o discurso
+                </li>
+                <li>Por que tentar eliminar o nervosismo é um erro</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 03</span
+          ><span class="modulo-title">Estrutura do Discurso Oral</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">3.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Abertura e Captura</div>
+              <ul class="topico-sub">
+                <li>
+                  Os primeiros 30 segundos — o único momento sem segunda chance
+                </li>
+                <li>
+                  Aberturas que funcionam: pergunta, provocação, dado
+                  inesperado, silêncio
+                </li>
+                <li>
+                  Aberturas que não funcionam: agradecimentos, "vou falar
+                  sobre..."
+                </li>
+                <li>
+                  Estabelecer o contrato com a plateia — o que eles podem
+                  esperar
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Desenvolvimento e Fluxo</div>
+              <ul class="topico-sub">
+                <li>
+                  Estruturas clássicas — problema/solução, cronologia,
+                  ponto/razão/exemplo
+                </li>
+                <li>
+                  Transições — como mover-se entre ideias sem perder a plateia
+                </li>
+                <li>Redundância estratégica — repetir sem parecer repetir</li>
+                <li>
+                  Gestão do tempo — como sentir o ritmo de uma apresentação
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Fechamento e Memória</div>
+              <ul class="topico-sub">
+                <li>A conclusão que transforma — não resume, reorienta</li>
+                <li>Call to action — quando pedir algo à plateia</li>
+                <li>A última frase — o que fica ecoando</li>
+                <li>
+                  O efeito de primazia e recência — por que começo e fim
+                  importam mais
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 04</span
+          ><span class="modulo-title">Narrativa e Storytelling Oral</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">4.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Por Que Histórias Funcionam</div>
+              <ul class="topico-sub">
+                <li>Neurociência da narrativa — transporte e identificação</li>
+                <li>Jornada do herói como estrutura arquetípica</li>
+                <li>Tensão narrativa — como criá-la e sustentá-la oralmente</li>
+                <li>Detalhe sensorial — o que torna uma história viva</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Construção e Uso de Histórias</div>
+              <ul class="topico-sub">
+                <li>
+                  A história pessoal como argumento — vulnerabilidade
+                  estratégica
+                </li>
+                <li>Anedota vs. narrativa completa — quando usar cada uma</li>
+                <li>Humor na oratória — quando arriscar e como aterrissar</li>
+                <li>
+                  Metáforas estendidas — analogia que dura um discurso inteiro
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 05</span
+          ><span class="modulo-title">Tipos de Fala em Público</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">5.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Apresentações e Palestras</div>
+              <ul class="topico-sub">
+                <li>Uso de slides como suporte, não como roteiro</li>
+                <li>Regra do 10/20/30 de Guy Kawasaki</li>
+                <li>TED como modelo de palestra — estrutura e limites</li>
+                <li>Apresentações técnicas — simplificar sem falsificar</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Debate e Argumentação ao Vivo</div>
+              <ul class="topico-sub">
+                <li>Debate formal — estruturas, turnos, estratégias</li>
+                <li>Refutação em tempo real — ouvir para destruir</li>
+                <li>
+                  Perguntas hostis — como transformar armadilhas em
+                  oportunidades
+                </li>
+                <li>Manter compostura sob pressão</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Conversação e Influência Cotidiana</div>
+              <ul class="topico-sub">
+                <li>
+                  Escuta ativa — a habilidade mais subestimada da oratória
+                </li>
+                <li>Perguntas que guiam — maiêutica na prática</li>
+                <li>Conversas difíceis — como falar o que precisa ser dito</li>
+                <li>Negociação — estrutura e linguagem</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 06</span
+          ><span class="modulo-title">Improviso e Adaptação</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">6.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Falar sem Preparação</div>
+              <ul class="topico-sub">
+                <li>
+                  Estruturas para o improviso — PREP, STAR, problema/solução
+                </li>
+                <li>
+                  Bancos mentais — histórias e exemplos sempre disponíveis
+                </li>
+                <li>
+                  Recuperação de bloqueio — o que fazer quando a mente trava
+                </li>
+                <li>
+                  A ilusão do improviso — como preparar para parecer espontâneo
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Leitura e Adaptação da Plateia</div>
+              <ul class="topico-sub">
+                <li>Sinais de engajamento e desengajamento</li>
+                <li>
+                  Ajuste em tempo real — mudar plano sem mostrar que mudou
+                </li>
+                <li>
+                  Diferentes plateias — especialistas, leigos, céticos, hostis
+                </li>
+                <li>Cultura e contexto — o que adaptar ao ambiente</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 07</span
+          ><span class="modulo-title"
+            >Oratória Avançada — Poder e Subtexto</span
+          >
+          <span class="nivel-badge nivel-av">Avançado</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">7.1</div>
+            <div class="topico-content">
+              <div class="topico-name">O Discurso que Não se Mostra</div>
+              <ul class="topico-sub">
+                <li>Subtexto — o que você comunica sem dizer</li>
+                <li>
+                  Pressuposição em discurso oral — plantar ideias sem
+                  defendê-las
+                </li>
+                <li>
+                  Enquadramento implícito — definir os termos do debate antes de
+                  ele começar
+                </li>
+                <li>
+                  Autoridade silenciosa — presença que não precisa se afirmar
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Análise de Grandes Oradores</div>
+              <ul class="topico-sub">
+                <li>Churchill — ritmo e uso do arcaico como peso</li>
+                <li>MLK — anáfora e escalada emocional</li>
+                <li>Obama — pausa e identidade como argumento</li>
+                <li>Lula — corporalidade e identificação popular</li>
+                <li>
+                  O que cada um faz que não pode ser copiado — só aprendido
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="footer-left">Enoraski · Oratória · 2026</div>
+        <div class="footer-right">Voronin, A.</div>
+      </footer>
+    </div>
+    <script>
+      function toggle(h) {
+        h.classList.toggle("open");
+        h.nextElementSibling.classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

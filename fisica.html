@@ -1,0 +1,1114 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Física — Enoraski</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&family=IBM+Plex+Mono:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f2ede6;
+        --surface: #ece6dd;
+        --surface2: #e4ddd3;
+        --border: #cfc8bc;
+        --border-dark: #b0a898;
+        --accent: #1a3a5c;
+        --accent2: #7a2020;
+        --accent3: #2a5c3a;
+        --text: #1c1a17;
+        --muted: #8a8278;
+        --muted2: #b0a898;
+        --fund: #2a5c3a;
+        --inter: #1a3a5c;
+        --av: #7a2020;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 12.5px;
+        line-height: 1.75;
+        min-height: 100vh;
+      }
+
+      /* PAPER TEXTURE */
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 100;
+      }
+
+      /* VERTICAL RULE — left margin */
+      .container {
+        position: relative;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 64px 40px 80px 80px;
+      }
+
+      .container::before {
+        content: "";
+        position: absolute;
+        left: 56px;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: #d4bfb0;
+      }
+
+      /* HEADER */
+      header {
+        margin-bottom: 52px;
+        padding-bottom: 28px;
+        border-bottom: 2px solid var(--text);
+        position: relative;
+      }
+
+      .school-tag {
+        font-size: 9.5px;
+        letter-spacing: 0.35em;
+        color: var(--muted);
+        text-transform: uppercase;
+        margin-bottom: 14px;
+      }
+
+      h1 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(3rem, 8vw, 5.5rem);
+        font-weight: 300;
+        letter-spacing: -0.02em;
+        line-height: 0.95;
+        color: var(--text);
+        margin-bottom: 16px;
+      }
+
+      h1 em {
+        font-style: italic;
+        color: var(--accent2);
+      }
+
+      .teacher-block {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        margin-top: 12px;
+      }
+
+      .teacher-name {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.1rem;
+        font-style: italic;
+        color: var(--accent);
+      }
+
+      .teacher-desc {
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        color: var(--muted);
+        text-transform: uppercase;
+      }
+
+      /* KIREEV NOTE */
+      .kireev-note {
+        margin-bottom: 36px;
+        padding: 14px 18px 14px 22px;
+        border-left: 3px solid var(--accent2);
+        background: var(--surface2);
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: 1.05rem;
+        color: #4a2010;
+        line-height: 1.5;
+      }
+
+      .kireev-note strong {
+        display: block;
+        font-family: "IBM Plex Mono", monospace;
+        font-style: normal;
+        font-size: 9px;
+        letter-spacing: 0.25em;
+        color: var(--accent2);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+      }
+
+      /* LEGEND */
+      .legend {
+        display: flex;
+        gap: 24px;
+        flex-wrap: wrap;
+        margin-bottom: 44px;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .dot-fund {
+        background: var(--fund);
+      }
+      .dot-inter {
+        background: var(--inter);
+      }
+      .dot-av {
+        background: var(--av);
+      }
+
+      /* MÓDULO */
+      .modulo {
+        margin-bottom: 32px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        overflow: hidden;
+        animation: fadeIn 0.35s ease both;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .modulo:nth-child(1) {
+        animation-delay: 0.04s;
+      }
+      .modulo:nth-child(2) {
+        animation-delay: 0.08s;
+      }
+      .modulo:nth-child(3) {
+        animation-delay: 0.12s;
+      }
+      .modulo:nth-child(4) {
+        animation-delay: 0.16s;
+      }
+      .modulo:nth-child(5) {
+        animation-delay: 0.2s;
+      }
+      .modulo:nth-child(6) {
+        animation-delay: 0.24s;
+      }
+      .modulo:nth-child(7) {
+        animation-delay: 0.28s;
+      }
+      .modulo:nth-child(8) {
+        animation-delay: 0.32s;
+      }
+      .modulo:nth-child(9) {
+        animation-delay: 0.36s;
+      }
+      .modulo:nth-child(10) {
+        animation-delay: 0.4s;
+      }
+
+      .modulo-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 15px 20px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.2s;
+      }
+
+      .modulo-header:hover {
+        background: var(--surface2);
+      }
+
+      .modulo-num {
+        font-size: 9.5px;
+        color: var(--muted2);
+        letter-spacing: 0.12em;
+        min-width: 40px;
+      }
+
+      .modulo-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .nivel-badge {
+        font-size: 9px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border: 1px solid;
+        font-family: "IBM Plex Mono", monospace;
+      }
+
+      .nivel-fund {
+        color: var(--fund);
+        border-color: var(--fund);
+      }
+      .nivel-inter {
+        color: var(--inter);
+        border-color: var(--inter);
+      }
+      .nivel-av {
+        color: var(--av);
+        border-color: var(--av);
+      }
+
+      .chevron {
+        color: var(--muted2);
+        font-size: 10px;
+        transition: transform 0.2s;
+      }
+      .modulo-header.open .chevron {
+        transform: rotate(90deg);
+      }
+
+      .modulo-body {
+        display: none;
+      }
+      .modulo-body.open {
+        display: block;
+      }
+
+      /* TÓPICO */
+      .topico {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+      }
+      .topico:last-child {
+        border-bottom: none;
+      }
+
+      .topico-idx {
+        min-width: 48px;
+        padding: 12px 14px;
+        font-size: 9.5px;
+        color: var(--muted2);
+        border-right: 1px solid var(--border);
+        display: flex;
+        align-items: flex-start;
+        padding-top: 14px;
+      }
+
+      .topico-content {
+        padding: 12px 20px;
+        flex: 1;
+      }
+
+      .topico-name {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 5px;
+      }
+
+      .topico-sub {
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.65;
+      }
+
+      .topico-sub li {
+        list-style: none;
+        padding-left: 14px;
+        position: relative;
+      }
+
+      .topico-sub li::before {
+        content: "·";
+        position: absolute;
+        left: 4px;
+        color: var(--muted2);
+      }
+
+      /* FOOTER */
+      footer {
+        margin-top: 56px;
+        padding-top: 20px;
+        border-top: 2px solid var(--text);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .footer-left {
+        font-size: 9.5px;
+        color: var(--muted);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+
+      .footer-right {
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: var(--muted2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="school-tag">Instituto Enoraski — Grade Curricular</div>
+        <h1>Fí<em>si</em>ca</h1>
+        <div class="teacher-block">
+          <span class="teacher-name">Anton Kireev</span>
+          <span class="teacher-desc"
+            >/ Objetivo · Brutalmente Lógico · Rejeita Intuição Mal
+            Formada</span
+          >
+        </div>
+      </header>
+
+      <div class="kireev-note">
+        <strong>Kireev — nota de entrada</strong>
+        Física não é sobre fórmulas. É sobre entender por que o universo se
+        comporta como se comporta. Se você decorou sem entender, você não sabe.
+        Recomece.
+      </div>
+
+      <div class="legend">
+        <div class="legend-item">
+          <div class="dot dot-fund"></div>
+          Fundamento
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-inter"></div>
+          Intermediário
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-av"></div>
+          Avançado
+        </div>
+      </div>
+
+      <!-- MOD 01 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 01</span>
+          <span class="modulo-title">Grandezas, Medidas e Vetores</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">1.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Grandezas Físicas e Unidades</div>
+              <ul class="topico-sub">
+                <li>Sistema Internacional (SI) — unidades base e derivadas</li>
+                <li>Análise dimensional</li>
+                <li>Algarismos significativos e notação científica</li>
+                <li>Erros de medida — precisão e exatidão</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Grandezas Escalares e Vetoriais</div>
+              <ul class="topico-sub">
+                <li>Definição de vetor — módulo, direção, sentido</li>
+                <li>Adição e subtração vetorial (geométrica e analítica)</li>
+                <li>Decomposição em componentes ortogonais</li>
+                <li>Produto escalar e produto vetorial</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOD 02 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 02</span>
+          <span class="modulo-title">Cinemática</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">2.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Cinemática Escalar</div>
+              <ul class="topico-sub">
+                <li>Posição, deslocamento, velocidade média e instantânea</li>
+                <li>Aceleração média e instantânea</li>
+                <li>Movimento Uniforme (MU) — equações e gráficos</li>
+                <li>
+                  Movimento Uniformemente Variado (MUV) — equações de Torricelli
+                </li>
+                <li>Queda livre e lançamento vertical</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Leitura e Interpretação de Gráficos</div>
+              <ul class="topico-sub">
+                <li>Gráfico s×t — inclinação como velocidade</li>
+                <li>
+                  Gráfico v×t — área como deslocamento, inclinação como
+                  aceleração
+                </li>
+                <li>Gráfico a×t — interpretação e casos especiais</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Cinemática Vetorial</div>
+              <ul class="topico-sub">
+                <li>Lançamento oblíquo — componentes horizontal e vertical</li>
+                <li>Alcance máximo, altura máxima, tempo de voo</li>
+                <li>Composição de movimentos</li>
+                <li>Movimento relativo — referencial e velocidade relativa</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.4</div>
+            <div class="topico-content">
+              <div class="topico-name">Movimento Circular</div>
+              <ul class="topico-sub">
+                <li>Velocidade angular e frequência</li>
+                <li>Aceleração centrípeta</li>
+                <li>Movimento Circular Uniforme (MCU)</li>
+                <li>Movimento Circular Uniformemente Variado (MCUV)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOD 03 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 03</span>
+          <span class="modulo-title">Dinâmica — Leis de Newton</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">3.1</div>
+            <div class="topico-content">
+              <div class="topico-name">As Três Leis de Newton</div>
+              <ul class="topico-sub">
+                <li>1ª Lei (Inércia) — referencial inercial e não inercial</li>
+                <li>2ª Lei (F = ma) — força resultante e aceleração</li>
+                <li>
+                  3ª Lei (Ação e Reação) — pares de forças e suas implicações
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Forças e Aplicações</div>
+              <ul class="topico-sub">
+                <li>Peso, normal, tensão, força elástica</li>
+                <li>Plano inclinado — decomposição de forças</li>
+                <li>Atrito estático e cinético — coeficientes</li>
+                <li>Força centrípeta em curvas e loops</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Gravitação</div>
+              <ul class="topico-sub">
+                <li>Lei da Gravitação Universal de Newton</li>
+                <li>Campo gravitacional — g como aceleração e como campo</li>
+                <li>Peso versus massa</li>
+                <li>Leis de Kepler — órbitas e período</li>
+                <li>Velocidade de escape e órbita circular</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOD 04 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 04</span>
+          <span class="modulo-title">Trabalho, Energia e Potência</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">4.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Trabalho de uma Força</div>
+              <ul class="topico-sub">
+                <li>Definição: W = F·d·cos θ</li>
+                <li>Trabalho de forças variáveis — área sob o gráfico F×d</li>
+                <li>Trabalho da força elástica (mola)</li>
+                <li>Trabalho do peso e da normal</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Energias Mecânicas</div>
+              <ul class="topico-sub">
+                <li>Energia cinética — Teorema trabalho-energia</li>
+                <li>Energia potencial gravitacional</li>
+                <li>Energia potencial elástica</li>
+                <li>Conservação da energia mecânica</li>
+                <li>Forças conservativas e não conservativas</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Potência e Rendimento</div>
+              <ul class="topico-sub">
+                <li>Potência média e instantânea — P = F·v</li>
+                <li>Rendimento de máquinas — η = P_útil / P_total</li>
+                <li>Unidades: watt, CV, kWh</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.4</div>
+            <div class="topico-content">
+              <div class="topico-name">Impulso e Quantidade de Movimento</div>
+              <ul class="topico-sub">
+                <li>Momento linear p = mv</li>
+                <li>Impulso — Teorema impulso-quantidade de movimento</li>
+                <li>Conservação do momento linear</li>
+                <li>
+                  Colisões: elástica, inelástica, perfeitamente inelástica
+                </li>
+                <li>Centro de massa de um sistema</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOD 05 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 05</span>
+          <span class="modulo-title">Estática e Equilíbrio</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">5.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Condições de Equilíbrio</div>
+              <ul class="topico-sub">
+                <li>Equilíbrio de ponto material e de corpo extenso</li>
+                <li>Soma de forças nula — translação</li>
+                <li>Soma de torques nula — rotação</li>
+                <li>Centro de gravidade</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Torque e Momento de Força</div>
+              <ul class="topico-sub">
+                <li>Definição de torque — τ = r × F</li>
+                <li>Braço do momento</li>
+                <li>Máquinas simples: alavancas, polias</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Hidrostática</div>
+              <ul class="topico-sub">
+                <li>Pressão — definição e unidades</li>
+                <li>Lei de Stevin — pressão em fluidos</li>
+                <li>Princípio de Pascal — transmissão de pressão</li>
+                <li>Princípio de Arquimedes — empuxo</li>
+                <li>Flutuação e afundamento</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOD 06 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 06</span>
+          <span class="modulo-title">Termologia</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">6.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Termometria e Escalas</div>
+              <ul class="topico-sub">
+                <li>Temperatura — conceito e equilíbrio térmico</li>
+                <li>Escalas Celsius, Fahrenheit e Kelvin</li>
+                <li>Conversão entre escalas</li>
+                <li>Dilatação térmica — linear, superficial e volumétrica</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Calorimetria</div>
+              <ul class="topico-sub">
+                <li>Calor — definição e unidades</li>
+                <li>Calor sensível — capacidade e calor específico</li>
+                <li>Calorimetria — equação fundamental</li>
+                <li>Calor latente — mudanças de estado</li>
+                <li>Gráfico de aquecimento/resfriamento</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Transmissão de Calor</div>
+              <ul class="topico-sub">
+                <li>Condução — lei de Fourier</li>
+                <li>Convecção — natural e forçada</li>
+                <li>Irradiação — lei de Stefan-Boltzmann</li>
+                <li>Corpo negro e absorção/emissão</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.4</div>
+            <div class="topico-content">
+              <div class="topico-name">Gases e Termodinâmica</div>
+              <ul class="topico-sub">
+                <li>
+                  Transformações gasosas — isobárica, isovolumétrica, isotérmica
+                </li>
+                <li>Lei dos gases ideais — pV = nRT</li>
+                <li>Teoria cinética dos gases</li>
+                <li>
+                  1ª Lei da Termodinâmica — energia interna, trabalho e calor
+                </li>
+                <li>2ª Lei da Termodinâmica — entropia, máquinas térmicas</li>
+                <li>Ciclo de Carnot e rendimento máximo</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOD 07 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 07</span>
+          <span class="modulo-title">Óptica</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">7.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Óptica Geométrica — Fundamentos</div>
+              <ul class="topico-sub">
+                <li>Natureza da luz — raios, feixes, frentes de onda</li>
+                <li>Princípios da óptica geométrica</li>
+                <li>Sombra, penumbra e eclipse</li>
+                <li>Câmara escura</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Reflexão da Luz</div>
+              <ul class="topico-sub">
+                <li>Leis da reflexão</li>
+                <li>Espelhos planos — imagem, localização, características</li>
+                <li>Espelhos esféricos — côncavo e convexo</li>
+                <li>Equação dos espelhos e do aumento</li>
+                <li>Construção geométrica de imagens</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Refração da Luz</div>
+              <ul class="topico-sub">
+                <li>Índice de refração — definição e relação com velocidade</li>
+                <li>Lei de Snell-Descartes</li>
+                <li>Reflexão total interna — ângulo crítico</li>
+                <li>Dispersão da luz — prismas e o arco-íris</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.4</div>
+            <div class="topico-content">
+              <div class="topico-name">Lentes e Instrumentos</div>
+              <ul class="topico-sub">
+                <li>Lentes convergentes e divergentes</li>
+                <li>Equação de Gauss e aumento lateral</li>
+                <li>Construção geométrica de imagens em lentes</li>
+                <li>Defeitos da visão — miopia, hipermetropia, astigmatismo</li>
+                <li>Instrumentos ópticos — lupa, microscópio, telescópio</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOD 08 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 08</span>
+          <span class="modulo-title">Ondas e Som</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">8.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Fundamentos das Ondas</div>
+              <ul class="topico-sub">
+                <li>
+                  Tipos de onda — mecânica/eletromagnética,
+                  transversal/longitudinal
+                </li>
+                <li>
+                  Grandezas: comprimento de onda, frequência, período, amplitude
+                </li>
+                <li>Relação v = λ·f</li>
+                <li>Equação fundamental da onda</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">8.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Fenômenos Ondulatórios</div>
+              <ul class="topico-sub">
+                <li>Reflexão e refração de ondas</li>
+                <li>Difração — condições e exemplos</li>
+                <li>Interferência construtiva e destrutiva</li>
+                <li>Polarização — ondas transversais</li>
+                <li>Efeito Doppler — aproximação e afastamento</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">8.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Ondas Estacionárias e Ressonância</div>
+              <ul class="topico-sub">
+                <li>Formação de ondas estacionárias</li>
+                <li>Nós e ventres</li>
+                <li>Harmônicos em cordas e tubos sonoros</li>
+                <li>Ressonância — condição e aplicações</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">8.4</div>
+            <div class="topico-content">
+              <div class="topico-name">Acústica e Som</div>
+              <ul class="topico-sub">
+                <li>Natureza e propagação do som</li>
+                <li>Velocidade do som em diferentes meios</li>
+                <li>Qualidades fisiológicas — altura, intensidade, timbre</li>
+                <li>Nível sonoro — decibéis</li>
+                <li>Ultrassom e infrassom</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">8.5</div>
+            <div class="topico-content">
+              <div class="topico-name">Movimento Harmônico Simples (MHS)</div>
+              <ul class="topico-sub">
+                <li>Definição e exemplos: pêndulo, mola</li>
+                <li>Equação horária do MHS</li>
+                <li>Energia no MHS</li>
+                <li>Período do pêndulo e do oscilador massa-mola</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOD 09 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 09</span>
+          <span class="modulo-title">Eletrostática</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">9.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Carga Elétrica e Eletrização</div>
+              <ul class="topico-sub">
+                <li>Natureza da carga — próton, elétron</li>
+                <li>Quantização e conservação da carga</li>
+                <li>Processos de eletrização: atrito, contato, indução</li>
+                <li>Condutores e isolantes</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">9.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Lei de Coulomb e Campo Elétrico</div>
+              <ul class="topico-sub">
+                <li>Lei de Coulomb — força entre cargas</li>
+                <li>Campo elétrico — definição e linhas de campo</li>
+                <li>Campo de cargas puntiformes e distribuições</li>
+                <li>Teorema de Gauss (introdução)</li>
+                <li>Blindagem eletrostática</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">9.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Potencial Elétrico e Energia</div>
+              <ul class="topico-sub">
+                <li>Trabalho da força elétrica</li>
+                <li>Energia potencial elétrica</li>
+                <li>
+                  Potencial elétrico — definição e superfícies equipotenciais
+                </li>
+                <li>Relação entre campo e potencial</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">9.4</div>
+            <div class="topico-content">
+              <div class="topico-name">Capacitores</div>
+              <ul class="topico-sub">
+                <li>Capacitância — definição e unidade</li>
+                <li>Capacitor de placas paralelas</li>
+                <li>Energia armazenada no capacitor</li>
+                <li>Associação de capacitores — série e paralelo</li>
+                <li>Dielétrico — efeito na capacitância</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOD 10 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 10</span>
+          <span class="modulo-title">Eletrodinâmica</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">10.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Corrente Elétrica e Resistência</div>
+              <ul class="topico-sub">
+                <li>Corrente elétrica — definição e sentido convencional</li>
+                <li>Resistência elétrica e Lei de Ohm</li>
+                <li>Resistividade e fatores que a influenciam</li>
+                <li>Condutores ôhmicos e não ôhmicos</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">10.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Circuitos Elétricos</div>
+              <ul class="topico-sub">
+                <li>Associação de resistores — série, paralelo e mista</li>
+                <li>Leis de Kirchhoff — lei dos nós e das malhas</li>
+                <li>Potência elétrica e efeito Joule</li>
+                <li>Geradores e receptores — f.e.m. e resistência interna</li>
+                <li>Medidores — voltímetro, amperímetro</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOD 11 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 11</span>
+          <span class="modulo-title">Eletromagnetismo</span>
+          <span class="nivel-badge nivel-av">Avançado</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">11.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Campo Magnético</div>
+              <ul class="topico-sub">
+                <li>Imãs e linhas de campo magnético</li>
+                <li>Campo de correntes — regra da mão direita</li>
+                <li>Campo de fio retilíneo, espira e solenoide</li>
+                <li>Força de Lorentz — carga em campo magnético</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">11.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Força Magnética e Movimento</div>
+              <ul class="topico-sub">
+                <li>Força sobre fio condutor em campo magnético</li>
+                <li>Torque em espira — motor elétrico</li>
+                <li>Movimento circular de carga em campo magnético</li>
+                <li>Espectrômetro de massa — princípio</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">11.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Indução Eletromagnética</div>
+              <ul class="topico-sub">
+                <li>Fluxo magnético</li>
+                <li>Lei de Faraday — f.e.m. induzida</li>
+                <li>Lei de Lenz — sentido da corrente induzida</li>
+                <li>Indutância e autoindução</li>
+                <li>Gerador e transformador — princípio de funcionamento</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">11.4</div>
+            <div class="topico-content">
+              <div class="topico-name">Ondas Eletromagnéticas</div>
+              <ul class="topico-sub">
+                <li>Equações de Maxwell — síntese</li>
+                <li>Espectro eletromagnético</li>
+                <li>Luz como onda eletromagnética</li>
+                <li>Rádio, micro-ondas, IV, UV, raios-X, gama</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOD 12 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 12</span>
+          <span class="modulo-title">Física Moderna</span>
+          <span class="nivel-badge nivel-av">Avançado</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">12.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Relatividade Especial</div>
+              <ul class="topico-sub">
+                <li>Postulados de Einstein</li>
+                <li>Dilatação do tempo e contração do espaço</li>
+                <li>Simultaneidade relativa</li>
+                <li>Equivalência massa-energia — E = mc²</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">12.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Teoria Quântica</div>
+              <ul class="topico-sub">
+                <li>Radiação de corpo negro — hipótese de Planck</li>
+                <li>Efeito fotoelétrico — Einstein e o fóton</li>
+                <li>Dualidade onda-partícula</li>
+                <li>Princípio da incerteza de Heisenberg</li>
+                <li>Modelo atômico de Bohr</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">12.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Física Nuclear</div>
+              <ul class="topico-sub">
+                <li>Estrutura do núcleo — prótons, nêutrons, número atômico</li>
+                <li>Radioatividade — alfa, beta, gama</li>
+                <li>Decaimento radioativo e meia-vida</li>
+                <li>Fissão e fusão nuclear</li>
+                <li>Energia de ligação nuclear</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="footer-left">Enoraski · Física · Revisão Total · 2026</div>
+        <div class="footer-right">Kireev, A.</div>
+      </footer>
+    </div>
+
+    <script>
+      function toggle(header) {
+        header.classList.toggle("open");
+        header.nextElementSibling.classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

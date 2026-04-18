@@ -1,0 +1,1046 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Literatura — Enoraski</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Roboto+Mono:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f6f1ea;
+        --surface: #ede6dd;
+        --surface2: #e3dbd0;
+        --border: #ccc3b6;
+        --border-dark: #a89880;
+        --accent: #1a1a2e;
+        --accent2: #7a1a1a;
+        --text: #18160e;
+        --muted: #706858;
+        --muted2: #a09080;
+        --fund: #3a6a3a;
+        --inter: #1a1a2e;
+        --av: #7a1a1a;
+        --tag-bg: #e8e0d4;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Roboto Mono", monospace;
+        font-size: 12px;
+        line-height: 1.8;
+        min-height: 100vh;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: repeating-linear-gradient(
+          transparent,
+          transparent 31px,
+          rgba(160, 152, 136, 0.15) 31px,
+          rgba(160, 152, 136, 0.15) 32px
+        );
+        pointer-events: none;
+        z-index: 0;
+      }
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 64px 44px 80px 72px;
+      }
+      .container::before {
+        content: "";
+        position: absolute;
+        left: 58px;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: rgba(122, 26, 26, 0.25);
+      }
+      header {
+        margin-bottom: 48px;
+        padding-bottom: 24px;
+        border-bottom: 2px solid var(--text);
+      }
+      .school-tag {
+        font-size: 9px;
+        letter-spacing: 0.38em;
+        color: var(--muted2);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      h1 {
+        font-family: "Spectral", serif;
+        font-size: clamp(2.8rem, 8vw, 5rem);
+        font-weight: 300;
+        line-height: 0.95;
+        color: var(--text);
+        margin-bottom: 16px;
+      }
+      h1 em {
+        font-style: italic;
+        color: var(--accent2);
+      }
+      .teacher-block {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .teacher-name {
+        font-family: "Spectral", serif;
+        font-size: 1.1rem;
+        font-style: italic;
+        color: var(--accent);
+      }
+      .teacher-desc {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        color: var(--muted);
+        text-transform: uppercase;
+      }
+      .prof-note {
+        margin-bottom: 36px;
+        padding: 14px 20px 14px 18px;
+        border-left: 3px solid var(--accent2);
+        background: var(--surface2);
+        font-family: "Spectral", serif;
+        font-style: italic;
+        font-size: 1.05rem;
+        color: #3a1818;
+        line-height: 1.6;
+      }
+      .prof-note strong {
+        display: block;
+        font-family: "Roboto Mono", monospace;
+        font-style: normal;
+        font-size: 9px;
+        letter-spacing: 0.25em;
+        color: var(--accent2);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+      }
+      .legend {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .dot-br {
+        background: #c04040;
+      }
+      .dot-intl {
+        background: #4060a0;
+      }
+      .dot-class {
+        background: #a07830;
+      }
+      .secao {
+        margin-bottom: 40px;
+      }
+      .secao-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 20px;
+        background: var(--accent);
+        cursor: pointer;
+        user-select: none;
+        transition: opacity 0.2s;
+      }
+      .secao-header:hover {
+        opacity: 0.9;
+      }
+      .secao-num {
+        font-size: 9px;
+        color: rgba(255, 255, 255, 0.5);
+        letter-spacing: 0.12em;
+        min-width: 40px;
+      }
+      .secao-title {
+        font-family: "Spectral", serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: #f0e8d8;
+        flex: 1;
+        font-style: italic;
+      }
+      .secao-chevron {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 10px;
+        transition: transform 0.2s;
+      }
+      .secao-header.open .secao-chevron {
+        transform: rotate(90deg);
+      }
+      .secao-body {
+        display: none;
+        border: 1px solid var(--border);
+        border-top: none;
+        background: var(--surface);
+      }
+      .secao-body.open {
+        display: block;
+      }
+      /* Book cards */
+      .book-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .book-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 0;
+        border-bottom: 1px solid var(--border);
+        padding: 14px 20px;
+        transition: background 0.15s;
+      }
+      .book-item:last-child {
+        border-bottom: none;
+      }
+      .book-item:hover {
+        background: var(--surface2);
+      }
+      .book-num {
+        font-size: 9px;
+        color: var(--muted2);
+        min-width: 32px;
+        padding-top: 2px;
+      }
+      .book-info {
+        flex: 1;
+      }
+      .book-title {
+        font-family: "Spectral", serif;
+        font-size: 1rem;
+        font-style: italic;
+        color: var(--text);
+        font-weight: 400;
+      }
+      .book-author {
+        font-size: 10px;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+      .book-why {
+        font-size: 10px;
+        color: var(--muted2);
+        margin-top: 4px;
+        line-height: 1.55;
+        font-style: italic;
+        font-family: "Spectral", serif;
+      }
+      .book-tags {
+        display: flex;
+        gap: 6px;
+        margin-top: 6px;
+        flex-wrap: wrap;
+      }
+      .tag {
+        font-size: 8.5px;
+        letter-spacing: 0.1em;
+        padding: 2px 7px;
+        border: 1px solid;
+        text-transform: uppercase;
+      }
+      .tag-br {
+        color: #c04040;
+        border-color: #c04040;
+        background: rgba(192, 64, 64, 0.06);
+      }
+      .tag-intl {
+        color: #4060a0;
+        border-color: #4060a0;
+        background: rgba(64, 96, 160, 0.06);
+      }
+      .tag-class {
+        color: #a07830;
+        border-color: #a07830;
+        background: rgba(160, 120, 48, 0.06);
+      }
+      .tag-mod {
+        color: #507050;
+        border-color: #507050;
+        background: rgba(80, 112, 80, 0.06);
+      }
+      footer {
+        margin-top: 52px;
+        padding-top: 20px;
+        border-top: 2px solid var(--text);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .footer-left {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .footer-right {
+        font-family: "Spectral", serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: var(--muted2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="school-tag">Instituto Enoraski — Grade Curricular</div>
+        <h1>Li<em>te</em>ratura</h1>
+        <div class="teacher-block">
+          <span class="teacher-name">Irina Volkov</span>
+          <span class="teacher-desc"
+            >/ Rigorosa · Cirúrgica · Testa os Limites da Expressão</span
+          >
+        </div>
+      </header>
+      <div class="prof-note">
+        <strong>Volkov — nota de entrada</strong>
+        Não há livro neutro. Todo texto é uma proposição sobre como o mundo é ou
+        deveria ser. Você lerá para concordar, discordar — nunca para passar o
+        tempo.
+      </div>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="dot dot-br"></div>
+          Nacional
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-intl"></div>
+          Internacional
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-class"></div>
+          Clássico
+        </div>
+      </div>
+
+      <!-- SEÇÃO 1: FICÇÃO BRASILEIRA -->
+      <div class="secao">
+        <div class="secao-header" onclick="toggleS(this)">
+          <span class="secao-num">SEC 01</span>
+          <span class="secao-title">Ficção Brasileira</span>
+          <span class="secao-chevron">▶</span>
+        </div>
+        <div class="secao-body">
+          <div class="book-grid">
+            <div class="book-item">
+              <div class="book-num">01</div>
+              <div class="book-info">
+                <div class="book-title">Dom Casmurro</div>
+                <div class="book-author">Machado de Assis · 1899</div>
+                <div class="book-why">
+                  O narrador não confiável elevado à arte máxima. Você nunca
+                  saberá a verdade — esse é o ponto.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-br">Nacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">02</div>
+              <div class="book-info">
+                <div class="book-title">Memórias Póstumas de Brás Cubas</div>
+                <div class="book-author">Machado de Assis · 1881</div>
+                <div class="book-why">
+                  O defunto autor que narra sua própria vida com ironia
+                  implacável. Modernidade antes do modernismo.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-br">Nacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">03</div>
+              <div class="book-info">
+                <div class="book-title">Grande Sertão: Veredas</div>
+                <div class="book-author">João Guimarães Rosa · 1956</div>
+                <div class="book-why">
+                  A língua portuguesa reinventada. Não é fácil — nem deveria
+                  ser.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-br">Nacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">04</div>
+              <div class="book-info">
+                <div class="book-title">A Paixão Segundo G.H.</div>
+                <div class="book-author">Clarice Lispector · 1964</div>
+                <div class="book-why">
+                  Consciência em colapso e reconstrução. Não há enredo — há ser.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-br">Nacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">05</div>
+              <div class="book-info">
+                <div class="book-title">Vidas Secas</div>
+                <div class="book-author">Graciliano Ramos · 1938</div>
+                <div class="book-why">
+                  Seco como o sertão que descreve. Cada palavra foi pesada antes
+                  de ficar.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-br">Nacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">06</div>
+              <div class="book-info">
+                <div class="book-title">O Cortiço</div>
+                <div class="book-author">Aluísio Azevedo · 1890</div>
+                <div class="book-why">
+                  Naturalismo e determinismo social. O ambiente como personagem.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-br">Nacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">07</div>
+              <div class="book-info">
+                <div class="book-title">Capitães da Areia</div>
+                <div class="book-author">Jorge Amado · 1937</div>
+                <div class="book-why">
+                  A infância roubada de Salvador. Humanismo sem idealização.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-br">Nacional</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">08</div>
+              <div class="book-info">
+                <div class="book-title">Quarto de Despejo</div>
+                <div class="book-author">Carolina Maria de Jesus · 1960</div>
+                <div class="book-why">
+                  Diário de uma mulher negra na favela. Documento e literatura
+                  ao mesmo tempo.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-br">Nacional</span
+                  ><span class="tag tag-mod">Moderno</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">09</div>
+              <div class="book-info">
+                <div class="book-title">Dois Irmãos</div>
+                <div class="book-author">Milton Hatoum · 2000</div>
+                <div class="book-why">
+                  Manaus, memória e fraternidade destruída. Prosa de rara
+                  elegância.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-br">Nacional</span
+                  ><span class="tag tag-mod">Moderno</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">10</div>
+              <div class="book-info">
+                <div class="book-title">Torto Arado</div>
+                <div class="book-author">Itamar Vieira Junior · 2019</div>
+                <div class="book-why">
+                  Terra, corpo e herança negra no sertão. A literatura
+                  brasileira contemporânea em seu melhor.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-br">Nacional</span
+                  ><span class="tag tag-mod">Moderno</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEÇÃO 2: POESIA BRASILEIRA -->
+      <div class="secao">
+        <div
+          class="secao-header"
+          onclick="toggleS(this)"
+          style="background: var(--accent2)"
+        >
+          <span class="secao-num">SEC 02</span>
+          <span class="secao-title">Poesia Brasileira</span>
+          <span class="secao-chevron">▶</span>
+        </div>
+        <div class="secao-body">
+          <div class="book-grid">
+            <div class="book-item">
+              <div class="book-num">01</div>
+              <div class="book-info">
+                <div class="book-title">A Rosa do Povo</div>
+                <div class="book-author">Carlos Drummond de Andrade · 1945</div>
+                <div class="book-why">
+                  O maior livro de poesia brasileiro. "No meio do caminho tinha
+                  uma pedra" é o menor poema que mais incomoda.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-br">Nacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">02</div>
+              <div class="book-info">
+                <div class="book-title">Libertinagem</div>
+                <div class="book-author">Manuel Bandeira · 1930</div>
+                <div class="book-why">
+                  A poesia que soa falada. Pasárgada como utopia melancólica.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-br">Nacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">03</div>
+              <div class="book-info">
+                <div class="book-title">Pau-Brasil</div>
+                <div class="book-author">Oswald de Andrade · 1925</div>
+                <div class="book-why">
+                  A poesia como provocação. Brevidade e golpe.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-br">Nacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">04</div>
+              <div class="book-info">
+                <div class="book-title">Fervo e Luto</div>
+                <div class="book-author">Bráulio Bessa · 2020</div>
+                <div class="book-why">
+                  Repente e cordel contemporâneos. A poesia oral como tradição
+                  viva.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-br">Nacional</span
+                  ><span class="tag tag-mod">Moderno</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEÇÃO 3: FICÇÃO INTERNACIONAL — CLÁSSICOS -->
+      <div class="secao">
+        <div
+          class="secao-header"
+          onclick="toggleS(this)"
+          style="background: #2a3a6a"
+        >
+          <span class="secao-num">SEC 03</span>
+          <span class="secao-title">Ficção Internacional — Clássicos</span>
+          <span class="secao-chevron">▶</span>
+        </div>
+        <div class="secao-body">
+          <div class="book-grid">
+            <div class="book-item">
+              <div class="book-num">01</div>
+              <div class="book-info">
+                <div class="book-title">Crime e Castigo</div>
+                <div class="book-author">Fiódor Dostoiévski · 1866</div>
+                <div class="book-why">
+                  A psicologia do crime antes da psicologia existir como
+                  ciência. Raskólnikov é todo mundo em algum momento.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">02</div>
+              <div class="book-info">
+                <div class="book-title">Os Irmãos Karamazov</div>
+                <div class="book-author">Fiódor Dostoiévski · 1880</div>
+                <div class="book-why">
+                  O último e o mais completo. Deus, livre-arbítrio, família. "O
+                  Grande Inquisidor" é filosofia disfarçada de ficção.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">03</div>
+              <div class="book-info">
+                <div class="book-title">Guerra e Paz</div>
+                <div class="book-author">Lev Tolstói · 1869</div>
+                <div class="book-why">
+                  Não é longo. É exato. O maior romance já escrito segundo quem
+                  o terminou.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">04</div>
+              <div class="book-info">
+                <div class="book-title">Dom Quixote</div>
+                <div class="book-author">Miguel de Cervantes · 1605</div>
+                <div class="book-why">
+                  O primeiro romance moderno. A realidade como construção.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">05</div>
+              <div class="book-info">
+                <div class="book-title">Madame Bovary</div>
+                <div class="book-author">Gustave Flaubert · 1857</div>
+                <div class="book-why">
+                  O romance como dissecação. Flaubert odiava seus personagens —
+                  e é por isso que funcionam.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">06</div>
+              <div class="book-info">
+                <div class="book-title">O Processo</div>
+                <div class="book-author">Franz Kafka · 1925</div>
+                <div class="book-why">
+                  A burocracia como horror existencial. Mais relevante agora do
+                  que quando foi escrito.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">07</div>
+              <div class="book-info">
+                <div class="book-title">Ulysses</div>
+                <div class="book-author">James Joyce · 1922</div>
+                <div class="book-why">
+                  Não precisa entender tudo. Precisa se perder. Esse é o ponto.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">08</div>
+              <div class="book-info">
+                <div class="book-title">Em Busca do Tempo Perdido</div>
+                <div class="book-author">Marcel Proust · 1913–1927</div>
+                <div class="book-why">
+                  A memória como matéria literária. Comece pelo primeiro volume.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">09</div>
+              <div class="book-info">
+                <div class="book-title">O Mestre e Margarida</div>
+                <div class="book-author">Mikhail Bulgákov · 1967</div>
+                <div class="book-why">
+                  O diabo visita Moscou soviética. Sátira, romance e fantasia
+                  como resistência.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">10</div>
+              <div class="book-info">
+                <div class="book-title">Cem Anos de Solidão</div>
+                <div class="book-author">Gabriel García Márquez · 1967</div>
+                <div class="book-why">
+                  O realismo mágico em seu auge. A América Latina como mito.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEÇÃO 4: FICÇÃO INTERNACIONAL — CONTEMPORÂNEA -->
+      <div class="secao">
+        <div
+          class="secao-header"
+          onclick="toggleS(this)"
+          style="background: #334a60"
+        >
+          <span class="secao-num">SEC 04</span>
+          <span class="secao-title">Ficção Internacional — Contemporânea</span>
+          <span class="secao-chevron">▶</span>
+        </div>
+        <div class="secao-body">
+          <div class="book-grid">
+            <div class="book-item">
+              <div class="book-num">01</div>
+              <div class="book-info">
+                <div class="book-title">O Apanhador no Campo de Centeio</div>
+                <div class="book-author">J.D. Salinger · 1951</div>
+                <div class="book-why">
+                  Holden Caulfield e a recusa à hipocrisiaadulta. Voz que não
+                  envelhece.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-mod">Moderno</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">02</div>
+              <div class="book-info">
+                <div class="book-title">Beloved</div>
+                <div class="book-author">Toni Morrison · 1987</div>
+                <div class="book-why">
+                  Escravidão, trauma e o passado que não passa. Nobel merecido.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-mod">Moderno</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">03</div>
+              <div class="book-info">
+                <div class="book-title">A Insustentável Leveza do Ser</div>
+                <div class="book-author">Milan Kundera · 1984</div>
+                <div class="book-why">
+                  Filosofia em forma de romance. Liberdade como peso.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-mod">Moderno</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">04</div>
+              <div class="book-info">
+                <div class="book-title">Mil Raquetes Brilhantes</div>
+                <div class="book-author">Khaled Hosseini · 2007</div>
+                <div class="book-why">
+                  Afeganistão, guerra e vínculos humanos. Narrativa que não
+                  deixa saída fácil.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-mod">Moderno</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">05</div>
+              <div class="book-info">
+                <div class="book-title">O Conto da Aia</div>
+                <div class="book-author">Margaret Atwood · 1985</div>
+                <div class="book-why">
+                  Distopia sem alegorias forçadas. Assusta porque é plausível.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-mod">Moderno</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">06</div>
+              <div class="book-info">
+                <div class="book-title">Submissão</div>
+                <div class="book-author">Michel Houellebecq · 2015</div>
+                <div class="book-why">
+                  Provocação calculada. Sobre identidade, Europa e o vazio do
+                  liberalismo tardio.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-mod">Moderno</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEÇÃO 5: NÃO-FICÇÃO ESSENCIAL -->
+      <div class="secao">
+        <div
+          class="secao-header"
+          onclick="toggleS(this)"
+          style="background: #3a3010"
+        >
+          <span class="secao-num">SEC 05</span>
+          <span class="secao-title">Não-Ficção Essencial</span>
+          <span class="secao-chevron">▶</span>
+        </div>
+        <div class="secao-body">
+          <div class="book-grid">
+            <div class="book-item">
+              <div class="book-num">01</div>
+              <div class="book-info">
+                <div class="book-title">Ensaios</div>
+                <div class="book-author">Michel de Montaigne · 1580</div>
+                <div class="book-why">
+                  O inventor do ensaio. Pensar sobre si mesmo como forma de
+                  pensar sobre tudo.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">02</div>
+              <div class="book-info">
+                <div class="book-title">Raízes do Brasil</div>
+                <div class="book-author">Sérgio Buarque de Holanda · 1936</div>
+                <div class="book-why">
+                  O "homem cordial" e a herança ibérica que explica o Brasil.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-br">Nacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">03</div>
+              <div class="book-info">
+                <div class="book-title">Casa-Grande & Senzala</div>
+                <div class="book-author">Gilberto Freyre · 1933</div>
+                <div class="book-why">
+                  Leia com olho crítico — mas leia. Formação do Brasil, para o
+                  bem e o mal.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-br">Nacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">04</div>
+              <div class="book-info">
+                <div class="book-title">A Origem das Espécies</div>
+                <div class="book-author">Charles Darwin · 1859</div>
+                <div class="book-why">
+                  O livro que mudou o que o homem pensa de si mesmo. Prosa
+                  científica como argumento.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">05</div>
+              <div class="book-info">
+                <div class="book-title">A Condição Humana</div>
+                <div class="book-author">Hannah Arendt · 1958</div>
+                <div class="book-why">
+                  Labor, trabalho, ação — o que significa ser humano no mundo
+                  político.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-mod">Moderno</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">06</div>
+              <div class="book-info">
+                <div class="book-title">Sapiens</div>
+                <div class="book-author">Yuval Noah Harari · 2011</div>
+                <div class="book-why">
+                  Leia com ceticismo ativo. Excelente para questionar —
+                  inclusive o próprio Harari.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-mod">Moderno</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEÇÃO 6: ANTIGOS E ÉPICOS -->
+      <div class="secao">
+        <div
+          class="secao-header"
+          onclick="toggleS(this)"
+          style="background: #4a3800"
+        >
+          <span class="secao-num">SEC 06</span>
+          <span class="secao-title">Antigos e Épicos</span>
+          <span class="secao-chevron">▶</span>
+        </div>
+        <div class="secao-body">
+          <div class="book-grid">
+            <div class="book-item">
+              <div class="book-num">01</div>
+              <div class="book-info">
+                <div class="book-title">A Ilíada</div>
+                <div class="book-author">Homero · ~800 a.C.</div>
+                <div class="book-why">
+                  Guerra, honra, morte e glória. Tudo que a literatura ocidental
+                  está processando até hoje.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">02</div>
+              <div class="book-info">
+                <div class="book-title">A Odisseia</div>
+                <div class="book-author">Homero · ~800 a.C.</div>
+                <div class="book-why">
+                  O retorno como estrutura narrativa universal. Leia depois da
+                  Ilíada.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">03</div>
+              <div class="book-info">
+                <div class="book-title">Os Lusíadas</div>
+                <div class="book-author">Luís de Camões · 1572</div>
+                <div class="book-why">
+                  A épica portuguesa. Glória e melancolia no mesmo poema.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-br">Nacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+            <div class="book-item">
+              <div class="book-num">04</div>
+              <div class="book-info">
+                <div class="book-title">A Divina Comédia</div>
+                <div class="book-author">Dante Alighieri · 1321</div>
+                <div class="book-why">
+                  O mapa medieval do universo moral. Ainda funciona como poema.
+                </div>
+                <div class="book-tags">
+                  <span class="tag tag-intl">Internacional</span
+                  ><span class="tag tag-class">Clássico</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="footer-left">Enoraski · Literatura · Lista Viva · 2026</div>
+        <div class="footer-right">Volkov, I.</div>
+      </footer>
+    </div>
+    <script>
+      function toggleS(h) {
+        h.classList.toggle("open");
+        h.nextElementSibling.classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gramática — Enoraski</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Roboto+Mono:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0f0d10;
+        --surface: #161418;
+        --surface2: #1e1b22;
+        --border: #28242e;
+        --border-light: #342f3e;
+        --accent: #d0c0f0;
+        --accent2: #8b1a1a;
+        --text: #e4dff0;
+        --muted: #60586e;
+        --muted2: #8a7ea0;
+        --fund: #70c090;
+        --inter: #d0c0f0;
+        --av: #e07080;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Roboto Mono", monospace;
+        font-size: 12px;
+        line-height: 1.8;
+        min-height: 100vh;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 39px,
+          rgba(208, 192, 240, 0.04) 39px,
+          rgba(208, 192, 240, 0.04) 40px
+        );
+        pointer-events: none;
+        z-index: 0;
+      }
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 64px 44px 80px;
+      }
+      header {
+        margin-bottom: 48px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--border-light);
+      }
+      .school-tag {
+        font-size: 9px;
+        letter-spacing: 0.38em;
+        color: var(--muted);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      h1 {
+        font-family: "Spectral", serif;
+        font-size: clamp(2.8rem, 8vw, 5rem);
+        font-weight: 300;
+        line-height: 0.95;
+        color: var(--text);
+        margin-bottom: 16px;
+      }
+      h1 em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      .teacher-block {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .teacher-name {
+        font-family: "Spectral", serif;
+        font-size: 1.1rem;
+        font-style: italic;
+        color: var(--accent);
+      }
+      .teacher-desc {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        color: var(--muted2);
+        text-transform: uppercase;
+      }
+      .prof-note {
+        margin-bottom: 36px;
+        padding: 14px 20px 14px 18px;
+        border-left: 3px solid var(--accent);
+        background: var(--surface2);
+        font-family: "Spectral", serif;
+        font-style: italic;
+        font-size: 1.05rem;
+        color: #b0a0d0;
+        line-height: 1.6;
+      }
+      .prof-note strong {
+        display: block;
+        font-family: "Roboto Mono", monospace;
+        font-style: normal;
+        font-size: 9px;
+        letter-spacing: 0.25em;
+        color: var(--accent);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+      }
+      .legend {
+        display: flex;
+        gap: 22px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 10px;
+        color: var(--muted2);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .dot-fund {
+        background: var(--fund);
+      }
+      .dot-inter {
+        background: var(--inter);
+      }
+      .dot-av {
+        background: var(--av);
+      }
+      .modulo {
+        margin-bottom: 28px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        overflow: hidden;
+        animation: up 0.35s ease both;
+      }
+      @keyframes up {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .modulo:nth-child(1) {
+        animation-delay: 0.04s;
+      }
+      .modulo:nth-child(2) {
+        animation-delay: 0.08s;
+      }
+      .modulo:nth-child(3) {
+        animation-delay: 0.12s;
+      }
+      .modulo:nth-child(4) {
+        animation-delay: 0.16s;
+      }
+      .modulo:nth-child(5) {
+        animation-delay: 0.2s;
+      }
+      .modulo:nth-child(6) {
+        animation-delay: 0.24s;
+      }
+      .modulo:nth-child(7) {
+        animation-delay: 0.28s;
+      }
+      .modulo:nth-child(8) {
+        animation-delay: 0.32s;
+      }
+      .modulo-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.2s;
+      }
+      .modulo-header:hover {
+        background: var(--surface2);
+      }
+      .modulo-num {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.12em;
+        min-width: 40px;
+      }
+      .modulo-title {
+        font-family: "Spectral", serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text);
+        flex: 1;
+      }
+      .nivel-badge {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border: 1px solid;
+      }
+      .nivel-fund {
+        color: var(--fund);
+        border-color: var(--fund);
+      }
+      .nivel-inter {
+        color: var(--inter);
+        border-color: var(--inter);
+      }
+      .nivel-av {
+        color: var(--av);
+        border-color: var(--av);
+      }
+      .chevron {
+        color: var(--muted);
+        font-size: 10px;
+        transition: transform 0.2s;
+      }
+      .modulo-header.open .chevron {
+        transform: rotate(90deg);
+      }
+      .modulo-body {
+        display: none;
+      }
+      .modulo-body.open {
+        display: block;
+      }
+      .topico {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+      }
+      .topico:last-child {
+        border-bottom: none;
+      }
+      .topico-idx {
+        min-width: 48px;
+        padding: 12px 14px;
+        font-size: 9px;
+        color: var(--muted);
+        border-right: 1px solid var(--border);
+        display: flex;
+        align-items: flex-start;
+        padding-top: 14px;
+      }
+      .topico-content {
+        padding: 12px 20px;
+        flex: 1;
+      }
+      .topico-name {
+        font-family: "Spectral", serif;
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 5px;
+      }
+      .topico-sub {
+        color: var(--muted2);
+        font-size: 11px;
+        line-height: 1.65;
+      }
+      .topico-sub li {
+        list-style: none;
+        padding-left: 14px;
+        position: relative;
+      }
+      .topico-sub li::before {
+        content: "_";
+        position: absolute;
+        left: 0;
+        color: var(--muted);
+        font-size: 10px;
+      }
+      footer {
+        margin-top: 52px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-light);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .footer-left {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .footer-right {
+        font-family: "Spectral", serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: var(--muted2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="school-tag">Instituto Enoraski — Grade Curricular</div>
+        <h1>Gra<em>má</em>tica</h1>
+        <div class="teacher-block">
+          <span class="teacher-name">Irina Volkov</span>
+          <span class="teacher-desc"
+            >/ Rigorosa · Cirúrgica · Detesta Ambiguidade Fraca</span
+          >
+        </div>
+      </header>
+      <div class="prof-note">
+        <strong>Volkov — nota de entrada</strong>
+        Quem domina a gramática não obedece às regras — compreende por que elas
+        existem. E sabe exatamente quando quebrá-las.
+      </div>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="dot dot-fund"></div>
+          Fundamento
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-inter"></div>
+          Intermediário
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-av"></div>
+          Avançado
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 01</span
+          ><span class="modulo-title">Fonética e Fonologia</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">1.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Sons da Língua</div>
+              <ul class="topico-sub">
+                <li>Fonema vs. letra — distinção essencial</li>
+                <li>Vogais, semivogais e consoantes</li>
+                <li>Encontros vocálicos — ditongo, tritongo, hiato</li>
+                <li>Encontros consonantais — dígrafo, encontro</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Sílaba e Tonicidade</div>
+              <ul class="topico-sub">
+                <li>Divisão silábica — regras e exceções</li>
+                <li>Classificação quanto ao número de sílabas</li>
+                <li>Sílaba tônica — oxítona, paroxítona, proparoxítona</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 02</span
+          ><span class="modulo-title">Ortografia e Acentuação</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">2.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Acentuação Gráfica</div>
+              <ul class="topico-sub">
+                <li>
+                  Regras de acentuação — oxítonas, paroxítonas, proparoxítonas
+                </li>
+                <li>Acento diferencial — pôr/por, pôde/pode</li>
+                <li>Acento em ditongos abertos — hiato com i e u tônicos</li>
+                <li>Acordo Ortográfico de 2009 — o que mudou</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Ortografia</div>
+              <ul class="topico-sub">
+                <li>Uso de s/ss/c/ç/x/z — critérios</li>
+                <li>Uso de j/g — quando distinguir</li>
+                <li>Maiúsculas e minúsculas — regras e casos polêmicos</li>
+                <li>Hífen — uso e supressão após o Acordo</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 03</span
+          ><span class="modulo-title">Morfologia — Classes de Palavras</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">3.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Substantivo e Adjetivo</div>
+              <ul class="topico-sub">
+                <li>
+                  Substantivo — próprio, comum, concreto, abstrato, coletivo
+                </li>
+                <li>Flexão de gênero e número — casos irregulares</li>
+                <li>Adjetivo — flexão, grau comparativo e superlativo</li>
+                <li>Adjetivo pátrio e locução adjetiva</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Artigo, Numeral e Pronome</div>
+              <ul class="topico-sub">
+                <li>Artigo — definido e indefinido, usos e omissões</li>
+                <li>
+                  Numerais — cardinal, ordinal, multiplicativo, fracionário
+                </li>
+                <li>Pronomes pessoais — reto, oblíquo, tratamento</li>
+                <li>
+                  Pronomes possessivos, demonstrativos, relativos, indefinidos,
+                  interrogativos
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Verbo</div>
+              <ul class="topico-sub">
+                <li>Estrutura verbal — radical, vogal temática, desinências</li>
+                <li>Modos — indicativo, subjuntivo, imperativo</li>
+                <li>Tempos verbais — todos os tempos e suas formas</li>
+                <li>Verbos irregulares, defectivos, abundantes</li>
+                <li>Formas nominais — infinitivo, gerúndio, particípio</li>
+                <li>Vozes verbais — ativa, passiva, reflexiva</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.4</div>
+            <div class="topico-content">
+              <div class="topico-name">
+                Advérbio, Preposição, Conjunção, Interjeição
+              </div>
+              <ul class="topico-sub">
+                <li>Advérbio — classificação e locuções adverbiais</li>
+                <li>Preposição — essenciais e acidentais; regência</li>
+                <li>
+                  Conjunção — coordenativas e subordinativas classificadas
+                </li>
+                <li>Interjeição — valor expressivo</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 04</span
+          ><span class="modulo-title"
+            >Morfossintaxe — Formação de Palavras</span
+          >
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">4.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Estrutura das Palavras</div>
+              <ul class="topico-sub">
+                <li>
+                  Radical, prefixo, sufixo, vogal e consoante de ligação,
+                  desinência
+                </li>
+                <li>Palavras primitivas e derivadas</li>
+                <li>
+                  Derivação — prefixal, sufixal, parassintética, regressiva,
+                  imprópria
+                </li>
+                <li>Composição — justaposição e aglutinação</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Principais Prefixos e Sufixos</div>
+              <ul class="topico-sub">
+                <li>Prefixos de origem latina e grega — sentidos e exemplos</li>
+                <li>Sufixos nominais — formadores de substantivo e adjetivo</li>
+                <li>Sufixos verbais</li>
+                <li>Neologismos e estrangeirismos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 05</span
+          ><span class="modulo-title">Sintaxe — A Arquitetura da Frase</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">5.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Termos Essenciais da Oração</div>
+              <ul class="topico-sub">
+                <li>
+                  Sujeito — simples, composto, oculto, indeterminado,
+                  inexistente
+                </li>
+                <li>Predicado — verbal, nominal, verbo-nominal</li>
+                <li>Predicativo do sujeito e do objeto</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Termos Integrantes e Acessórios</div>
+              <ul class="topico-sub">
+                <li>Objeto direto e indireto</li>
+                <li>Complemento nominal</li>
+                <li>Adjunto adnominal e adverbial</li>
+                <li>Aposto — tipos e vírgulas</li>
+                <li>Vocativo</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Período Composto</div>
+              <ul class="topico-sub">
+                <li>Coordenação — orações coordenadas e suas conjunções</li>
+                <li>Subordinação — substantivas, adjetivas, adverbiais</li>
+                <li>Orações reduzidas — reconhecimento e expansão</li>
+                <li>Discurso direto, indireto e indireto livre</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 06</span
+          ><span class="modulo-title">Concordância e Regência</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">6.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Concordância Verbal</div>
+              <ul class="topico-sub">
+                <li>Regras gerais de concordância</li>
+                <li>
+                  Casos especiais — sujeito composto, coletivos, pronomes de
+                  tratamento
+                </li>
+                <li>Verbo "ser" — concordância com predicativo</li>
+                <li>Verbos impessoais</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Concordância Nominal</div>
+              <ul class="topico-sub">
+                <li>Regras gerais</li>
+                <li>
+                  Casos especiais — adjetivo com dois substantivos, cores,
+                  expressões
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Regência Verbal e Nominal</div>
+              <ul class="topico-sub">
+                <li>
+                  Verbos de regência variável — assistir, visar, aspirar,
+                  preferir
+                </li>
+                <li>Transitividade e preposição exigida</li>
+                <li>
+                  Regência nominal — adjetivos e substantivos que exigem
+                  preposição
+                </li>
+                <li>
+                  Crase — regras, casos obrigatórios, proibidos e facultativos
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 07</span
+          ><span class="modulo-title">Colocação Pronominal e Pontuação</span>
+          <span class="nivel-badge nivel-av">Avançado</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">7.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Colocação Pronominal</div>
+              <ul class="topico-sub">
+                <li>Próclise — casos obrigatórios</li>
+                <li>Ênclise — casos obrigatórios</li>
+                <li>Mesóclise — quando e como usar</li>
+                <li>Diferença entre norma culta escrita e norma culta oral</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Pontuação Precisa</div>
+              <ul class="topico-sub">
+                <li>Vírgula — usos corretos e proibições</li>
+                <li>
+                  Ponto e vírgula — separação de elementos paralelos extensos
+                </li>
+                <li>
+                  Dois-pontos — introdução de enumeração, fala, explicação
+                </li>
+                <li>
+                  Aspas, travessão, parênteses — valores sintáticos e
+                  estilísticos
+                </li>
+                <li>Ponto de exclamação e interrogação — usos e efeitos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="footer-left">
+          Enoraski · Gramática · Revisão Total · 2026
+        </div>
+        <div class="footer-right">Volkov, I.</div>
+      </footer>
+    </div>
+    <script>
+      function toggle(h) {
+        h.classList.toggle("open");
+        h.nextElementSibling.classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

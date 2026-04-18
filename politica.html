@@ -1,0 +1,1185 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Política do Brasil — Enoraski</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Code+Pro:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0c0a06;
+        --surface: #141208;
+        --surface2: #1c1a10;
+        --border: #252218;
+        --border-light: #343028;
+        --accent: #d4a020;
+        --accent2: #8a2020;
+        --accent3: #206a20;
+        --text: #e0d8c0;
+        --muted: #585040;
+        --muted2: #887860;
+        --fund: #4a8a3a;
+        --inter: #d4a020;
+        --av: #8a2020;
+        --esq: #a03030;
+        --dir: #3040a0;
+        --cen: #a08030;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Source Code Pro", monospace;
+        font-size: 12px;
+        line-height: 1.8;
+        min-height: 100vh;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 59px,
+            rgba(212, 160, 32, 0.03) 59px,
+            rgba(212, 160, 32, 0.03) 60px
+          ),
+          repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 59px,
+            rgba(212, 160, 32, 0.03) 59px,
+            rgba(212, 160, 32, 0.03) 60px
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 64px 44px 80px;
+      }
+      header {
+        margin-bottom: 48px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--border-light);
+      }
+      .school-tag {
+        font-size: 9px;
+        letter-spacing: 0.38em;
+        color: var(--muted2);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      h1 {
+        font-family: "Libre Baskerville", serif;
+        font-size: clamp(2rem, 6vw, 3.8rem);
+        font-weight: 400;
+        line-height: 1.05;
+        color: var(--text);
+        margin-bottom: 16px;
+      }
+      h1 em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      .teacher-block {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .teacher-name {
+        font-family: "Libre Baskerville", serif;
+        font-size: 1.05rem;
+        font-style: italic;
+        color: var(--accent);
+      }
+      .teacher-desc {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        color: var(--muted2);
+        text-transform: uppercase;
+      }
+      .prof-note {
+        margin-bottom: 36px;
+        padding: 14px 20px 14px 18px;
+        border-left: 3px solid var(--accent);
+        background: var(--surface2);
+        font-family: "Libre Baskerville", serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: #c0a860;
+        line-height: 1.6;
+      }
+      .prof-note strong {
+        display: block;
+        font-family: "Source Code Pro", monospace;
+        font-style: normal;
+        font-size: 9px;
+        letter-spacing: 0.25em;
+        color: var(--accent);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+      }
+      .legend {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 10px;
+        color: var(--muted2);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .dot-fund {
+        background: var(--fund);
+      }
+      .dot-inter {
+        background: var(--inter);
+      }
+      .dot-av {
+        background: var(--av);
+      }
+      .dot-esq {
+        background: var(--esq);
+      }
+      .dot-dir {
+        background: var(--dir);
+      }
+      .dot-cen {
+        background: var(--cen);
+      }
+      /* espectro */
+      .espectro-bar {
+        height: 6px;
+        width: 100%;
+        background: linear-gradient(
+          90deg,
+          #a03030,
+          #c05030,
+          #d4a020,
+          #408040,
+          #3040a0
+        );
+        margin-bottom: 40px;
+        border-radius: 3px;
+        opacity: 0.7;
+      }
+      .modulo {
+        margin-bottom: 28px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        overflow: hidden;
+        animation: up 0.35s ease both;
+      }
+      @keyframes up {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .modulo:nth-child(1) {
+        animation-delay: 0.04s;
+      }
+      .modulo:nth-child(2) {
+        animation-delay: 0.08s;
+      }
+      .modulo:nth-child(3) {
+        animation-delay: 0.12s;
+      }
+      .modulo:nth-child(4) {
+        animation-delay: 0.16s;
+      }
+      .modulo:nth-child(5) {
+        animation-delay: 0.2s;
+      }
+      .modulo:nth-child(6) {
+        animation-delay: 0.24s;
+      }
+      .modulo:nth-child(7) {
+        animation-delay: 0.28s;
+      }
+      .modulo:nth-child(8) {
+        animation-delay: 0.32s;
+      }
+      .modulo-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.2s;
+      }
+      .modulo-header:hover {
+        background: var(--surface2);
+      }
+      .modulo-num {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.12em;
+        min-width: 40px;
+      }
+      .modulo-title {
+        font-family: "Libre Baskerville", serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--text);
+        flex: 1;
+      }
+      .nivel-badge {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border: 1px solid;
+      }
+      .nivel-fund {
+        color: var(--fund);
+        border-color: var(--fund);
+      }
+      .nivel-inter {
+        color: var(--inter);
+        border-color: var(--inter);
+      }
+      .nivel-av {
+        color: var(--av);
+        border-color: var(--av);
+      }
+      .chevron {
+        color: var(--muted);
+        font-size: 10px;
+        transition: transform 0.2s;
+      }
+      .modulo-header.open .chevron {
+        transform: rotate(90deg);
+      }
+      .modulo-body {
+        display: none;
+      }
+      .modulo-body.open {
+        display: block;
+      }
+      .topico {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+      }
+      .topico:last-child {
+        border-bottom: none;
+      }
+      .topico-idx {
+        min-width: 48px;
+        padding: 12px 14px;
+        font-size: 9px;
+        color: var(--muted);
+        border-right: 1px solid var(--border);
+        display: flex;
+        align-items: flex-start;
+        padding-top: 14px;
+      }
+      .topico-content {
+        padding: 12px 20px;
+        flex: 1;
+      }
+      .topico-name {
+        font-family: "Libre Baskerville", serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 5px;
+      }
+      .topico-sub {
+        color: var(--muted2);
+        font-size: 11px;
+        line-height: 1.65;
+      }
+      .topico-sub li {
+        list-style: none;
+        padding-left: 14px;
+        position: relative;
+      }
+      .topico-sub li::before {
+        content: "›";
+        position: absolute;
+        left: 2px;
+        color: var(--muted);
+        font-size: 11px;
+        top: 0;
+      }
+      /* partido cards */
+      .partido-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .partido-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        border-bottom: 1px solid var(--border);
+        padding: 13px 20px;
+      }
+      .partido-item:last-child {
+        border-bottom: none;
+      }
+      .partido-sigla {
+        font-size: 11px;
+        font-weight: 700;
+        min-width: 52px;
+        padding-top: 2px;
+      }
+      .espectro-tag {
+        font-size: 8.5px;
+        letter-spacing: 0.1em;
+        padding: 2px 7px;
+        border: 1px solid;
+        text-transform: uppercase;
+        margin-right: 8px;
+        white-space: nowrap;
+      }
+      .esq {
+        color: var(--esq);
+        border-color: var(--esq);
+      }
+      .cen-esq {
+        color: #c07030;
+        border-color: #c07030;
+      }
+      .cen {
+        color: var(--cen);
+        border-color: var(--cen);
+      }
+      .cen-dir {
+        color: #507080;
+        border-color: #507080;
+      }
+      .dir {
+        color: var(--dir);
+        border-color: var(--dir);
+      }
+      .partido-info {
+        flex: 1;
+      }
+      .partido-nome {
+        font-size: 10px;
+        color: var(--text);
+        margin-bottom: 3px;
+        font-weight: 500;
+      }
+      .partido-desc {
+        font-size: 10px;
+        color: var(--muted2);
+        line-height: 1.55;
+        font-style: italic;
+        font-family: "Libre Baskerville", serif;
+      }
+      footer {
+        margin-top: 52px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-light);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .footer-left {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .footer-right {
+        font-family: "Libre Baskerville", serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: var(--muted2);
+      }
+      .aviso {
+        padding: 12px 18px;
+        background: rgba(212, 160, 32, 0.07);
+        border: 1px solid rgba(212, 160, 32, 0.2);
+        margin-bottom: 28px;
+        font-size: 11px;
+        color: var(--muted2);
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="school-tag">Instituto Enoraski — Grade Curricular</div>
+        <h1>Política do <em>Brasil</em></h1>
+        <div class="teacher-block">
+          <span class="teacher-name">Dmitri Sokolov</span>
+          <span class="teacher-desc"
+            >/ Narrativo · Irônico · Revela Padrões Ocultos</span
+          >
+        </div>
+      </header>
+      <div class="prof-note">
+        <strong>Sokolov — nota de entrada</strong>
+        A política brasileira é um espelho — mas o espelho mente. Aprenderemos a
+        ler o que está por trás da imagem. Nenhum partido será poupado. Nenhum
+        movimento será santificado.
+      </div>
+      <div class="aviso">
+        Esta grade é descritiva, não prescritiva. O objetivo é compreensão, não
+        conversão. Sokolov não tem lado — tem análise.
+      </div>
+
+      <div class="legend">
+        <div class="legend-item">
+          <div class="dot dot-fund"></div>
+          Fundamento
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-inter"></div>
+          Intermediário
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-av"></div>
+          Avançado
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 01</span
+          ><span class="modulo-title"
+            >A Constituição de 1988 — A Sexta República</span
+          >
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">1.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Contexto e Elaboração</div>
+              <ul class="topico-sub">
+                <li>
+                  A redemocratização — por que 1985 não bastou, por que 1988 foi
+                  necessário
+                </li>
+                <li>Assembleia Nacional Constituinte — forças em disputa</li>
+                <li>Centrão — o nome permanente de um arranjo permanente</li>
+                <li>
+                  A "Constituição Cidadã" — Ulysses Guimarães e o que o nome
+                  prometia
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Estrutura do Estado Brasileiro</div>
+              <ul class="topico-sub">
+                <li>
+                  Federalismo — União, Estados, Municípios — distribuição real
+                  de poder
+                </li>
+                <li>
+                  Três poderes — Executivo, Legislativo, Judiciário — e o STF
+                  como quarto
+                </li>
+                <li>
+                  Presidencialismo de coalizão — o modelo que explica tudo e
+                  justifica nada
+                </li>
+                <li>
+                  Sistema eleitoral — proporcional de lista aberta e suas
+                  consequências
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Direitos e Garantias Fundamentais</div>
+              <ul class="topico-sub">
+                <li>
+                  Direitos sociais na Constituição — o que entrou e o que custa
+                </li>
+                <li>
+                  Emendas constitucionais — quantas, por quê, quem se beneficiou
+                </li>
+                <li>A PEC como instrumento político</li>
+                <li>Limites ao poder de emendar — cláusulas pétreas</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 02</span
+          ><span class="modulo-title"
+            >Cronologia da Sexta República (1988–hoje)</span
+          >
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">2.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Collor, Itamar e FHC (1989–2002)</div>
+              <ul class="topico-sub">
+                <li>
+                  Collor — o outsider, o Plano Collor e o impeachment fundador
+                </li>
+                <li>Itamar Franco — o acidente que funcionou</li>
+                <li>
+                  Plano Real — estabilização econômica como capital político
+                </li>
+                <li>
+                  FHC I e II — privatizações, crise cambial de 1999, reeleição e
+                  reformas
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Lula I e II (2003–2010)</div>
+              <ul class="topico-sub">
+                <li>
+                  A Carta ao Povo Brasileiro — o pacto de chegada ao poder
+                </li>
+                <li>Mensalão — o escândalo que reconfigurou o PT</li>
+                <li>
+                  Bolsa Família, PAC, Lula II — crescimento, commodities e
+                  popularidade
+                </li>
+                <li>
+                  Lula como fenômeno político — o que explica e o que não
+                  explica
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.3</div>
+            <div class="topico-content">
+              <div class="topico-name">
+                Dilma I e II — Crise e Impeachment (2011–2016)
+              </div>
+              <ul class="topico-sub">
+                <li>Dilma I — nova matriz econômica e seus resultados</li>
+                <li>
+                  Junho de 2013 — o que explodiu e por quê ninguém esperava
+                </li>
+                <li>
+                  Dilma II — pedaladas, deterioração e o impeachment de 2016
+                </li>
+                <li>
+                  Golpe ou processo constitucional? — a disputa narrativa e seus
+                  argumentos
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.4</div>
+            <div class="topico-content">
+              <div class="topico-name">
+                Temer, Lava-Jato e Bolsonaro (2016–2022)
+              </div>
+              <ul class="topico-sub">
+                <li>Temer — reformas impopulares, sustentação e limites</li>
+                <li>
+                  Lava-Jato — o que foi, o que descobriu, o que extrapolou
+                </li>
+                <li>Eleição de 2018 — a fragmentação e o outsider</li>
+                <li>
+                  Governo Bolsonaro — pandemia, conflito institucional, STF
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.5</div>
+            <div class="topico-content">
+              <div class="topico-name">Lula III e o Presente (2023–hoje)</div>
+              <ul class="topico-sub">
+                <li>
+                  Eleição de 2022 — a disputa mais polarizada da Sexta República
+                </li>
+                <li>
+                  8 de janeiro de 2023 — causas, responsabilidades,
+                  consequências
+                </li>
+                <li>
+                  Governo Lula III — desafios fiscais, polarização persistente
+                </li>
+                <li>
+                  O que a polarização atual revela sobre o Brasil estrutural
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 03</span
+          ><span class="modulo-title">Espectros Políticos</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">3.1</div>
+            <div class="topico-content">
+              <div class="topico-name">O Eixo Esquerda–Direita</div>
+              <ul class="topico-sub">
+                <li>Origem histórica — Assembleia Nacional Francesa, 1789</li>
+                <li>
+                  O que define esquerda e direita — papel do Estado, igualdade,
+                  ordem
+                </li>
+                <li>Limitações do eixo — o que ele captura e o que esconde</li>
+                <li>
+                  O eixo autoritário–libertário — segunda dimensão essencial
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Posições no Espectro</div>
+              <ul class="topico-sub">
+                <li>Extrema-esquerda — marxismo, comunismo, anarquismo</li>
+                <li>Esquerda — social-democracia, progressismo, trabalhismo</li>
+                <li>
+                  Centro-esquerda — liberalismo social, reformismo moderado
+                </li>
+                <li>
+                  Centro — pragmatismo, tecnocracia, "não tenho ideologia"
+                </li>
+                <li>
+                  Centro-direita — liberalismo econômico, conservadorismo
+                  moderado
+                </li>
+                <li>Direita — conservadorismo, nacionalismo econômico</li>
+                <li>
+                  Extrema-direita — ultranacionalismo, populismo autoritário,
+                  neofascismo
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Populismo como Fenômeno Transversal</div>
+              <ul class="topico-sub">
+                <li>O povo vs. a elite — estrutura discursiva populista</li>
+                <li>
+                  Populismo de esquerda e de direita — diferenças e semelhanças
+                </li>
+                <li>Por que o populismo cresce em crises institucionais</li>
+                <li>Brasil e populismo — de Vargas a Bolsonaro e Lula</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 04</span
+          ><span class="modulo-title">Principais Partidos Políticos</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="partido-grid">
+            <div class="partido-item">
+              <div class="partido-sigla" style="color: #c03030">PT</div>
+              <div class="partido-info">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 6px;
+                    margin-bottom: 4px;
+                  "
+                >
+                  <span class="espectro-tag esq">Esquerda</span
+                  ><span class="partido-nome">Partido dos Trabalhadores</span>
+                </div>
+                <div class="partido-desc">
+                  Fundado em 1980 por sindicalistas, intelectuais e movimentos
+                  sociais. De partido de base a máquina de governo. Lula como
+                  fundação e teto.
+                </div>
+              </div>
+            </div>
+            <div class="partido-item">
+              <div class="partido-sigla" style="color: #a03060">PSOL</div>
+              <div class="partido-info">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 6px;
+                    margin-bottom: 4px;
+                  "
+                >
+                  <span class="espectro-tag esq">Esq. Radical</span
+                  ><span class="partido-nome"
+                    >Partido Socialismo e Liberdade</span
+                  >
+                </div>
+                <div class="partido-desc">
+                  Surgiu do racha com o PT em 2004. Feminismo, antirracismo,
+                  anticapitalismo. Guilherme Boulos como principal rosto.
+                </div>
+              </div>
+            </div>
+            <div class="partido-item">
+              <div class="partido-sigla" style="color: #c07020">PDT</div>
+              <div class="partido-info">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 6px;
+                    margin-bottom: 4px;
+                  "
+                >
+                  <span class="espectro-tag cen-esq">Centro-Esq</span
+                  ><span class="partido-nome"
+                    >Partido Democrático Trabalhista</span
+                  >
+                </div>
+                <div class="partido-desc">
+                  Herdeiro do trabalhismo de Getúlio e Brizola. Ciro Gomes como
+                  face mais recente. Em declínio organizacional.
+                </div>
+              </div>
+            </div>
+            <div class="partido-item">
+              <div class="partido-sigla" style="color: #906020">MDB</div>
+              <div class="partido-info">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: raw;
+                    gap: 6px;
+                    margin-bottom: 4px;
+                  "
+                >
+                  <span class="espectro-tag cen">Centro</span
+                  ><span class="partido-nome"
+                    >Movimento Democrático Brasileiro</span
+                  >
+                </div>
+                <div class="partido-desc">
+                  O antigo PMDB. Foi a maior máquina política do país. Hoje
+                  fragmentado, mas ainda poderoso nos estados.
+                </div>
+              </div>
+            </div>
+            <div class="partido-item">
+              <div class="partido-sigla" style="color: #7060a0">PSDB</div>
+              <div class="partido-info">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 6px;
+                    margin-bottom: 4px;
+                  "
+                >
+                  <span class="espectro-tag cen">Centro</span
+                  ><span class="partido-nome"
+                    >Partido da Social Democracia Brasileira</span
+                  >
+                </div>
+                <div class="partido-desc">
+                  O partido do Real e de FHC. Hoje em colapso eleitoral. O que
+                  restou migrou para outras siglas ou para o esquecimento.
+                </div>
+              </div>
+            </div>
+            <div class="partido-item">
+              <div class="partido-sigla" style="color: #5070a0">PSD</div>
+              <div class="partido-info">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 6px;
+                    margin-bottom: 4px;
+                  "
+                >
+                  <span class="espectro-tag cen-dir">Centro-Dir</span
+                  ><span class="partido-nome">Partido Social Democrático</span>
+                </div>
+                <div class="partido-desc">
+                  Criado em 2011 por Kassab. Partido de gestão, sem ideologia
+                  declarada. Um dos maiores bancados do Congresso.
+                </div>
+              </div>
+            </div>
+            <div class="partido-item">
+              <div class="partido-sigla" style="color: #408040">PP</div>
+              <div class="partido-info">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 6px;
+                    margin-bottom: 4px;
+                  "
+                >
+                  <span class="espectro-tag cen-dir">Centro-Dir</span
+                  ><span class="partido-nome">Progressistas</span>
+                </div>
+                <div class="partido-desc">
+                  Herdeiro do PDS, herdeiro da ARENA. A direita que sobrevive em
+                  todos os governos mudando de nome mas não de método.
+                </div>
+              </div>
+            </div>
+            <div class="partido-item">
+              <div class="partido-sigla" style="color: #3060a0">PL</div>
+              <div class="partido-info">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 6px;
+                    margin-bottom: 4px;
+                  "
+                >
+                  <span class="espectro-tag dir">Direita</span
+                  ><span class="partido-nome">Partido Liberal</span>
+                </div>
+                <div class="partido-desc">
+                  Partido de Valdemar Costa Neto que se tornou o maior do Brasil
+                  ao abrigar Bolsonaro. Conservadorismo, milícia política e base
+                  evangélica.
+                </div>
+              </div>
+            </div>
+            <div class="partido-item">
+              <div class="partido-sigla" style="color: #3050a0">UNIÃO</div>
+              <div class="partido-info">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 6px;
+                    margin-bottom: 4px;
+                  "
+                >
+                  <span class="espectro-tag dir">Direita</span
+                  ><span class="partido-nome">União Brasil</span>
+                </div>
+                <div class="partido-desc">
+                  Fusão de DEM e PSL (2022). Segundo maior partido. Controla
+                  parte da mídia — Record, SBT indiretamente.
+                </div>
+              </div>
+            </div>
+            <div class="partido-item">
+              <div class="partido-sigla" style="color: #208040">PODE</div>
+              <div class="partido-info">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 6px;
+                    margin-bottom: 4px;
+                  "
+                >
+                  <span class="espectro-tag cen-dir">Centro-Dir</span
+                  ><span class="partido-nome">Podemos</span>
+                </div>
+                <div class="partido-desc">
+                  Sergio Moro e Álvaro Dias. Anti-corrupção como pauta
+                  principal. Origem no PTN.
+                </div>
+              </div>
+            </div>
+            <div class="partido-item">
+              <div class="partido-sigla" style="color: #608030">NOVO</div>
+              <div class="partido-info">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    gap: 6px;
+                    margin-bottom: 4px;
+                  "
+                >
+                  <span class="espectro-tag dir">Direita Liberal</span
+                  ><span class="partido-nome">Partido Novo</span>
+                </div>
+                <div class="partido-desc">
+                  Liberalismo econômico radical, mínimo Estado,
+                  anticorporativismo. Romeu Zema como principal mandatário.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 05</span
+          ><span class="modulo-title">Movimentos Sociais</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">5.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Movimentos Históricos</div>
+              <ul class="topico-sub">
+                <li>
+                  MST — Movimento dos Sem Terra — estrutura, conquistas,
+                  conflitos
+                </li>
+                <li>
+                  CUT e sindicalismo — o movimento operário e suas
+                  transformações
+                </li>
+                <li>
+                  Diretas Já — a mobilização que acabou perdendo e criando a
+                  Constituinte
+                </li>
+                <li>Caras-Pintadas — o impeachment por pressão popular</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Movimentos Contemporâneos</div>
+              <ul class="topico-sub">
+                <li>Junho de 2013 — sem liderança, sem pauta, com tudo</li>
+                <li>
+                  MBL — Movimento Brasil Livre — financiamento, estratégia,
+                  resultados
+                </li>
+                <li>Feminismo e MeToo no Brasil — ondas, disputas internas</li>
+                <li>Movimento negro — do MNU ao antirracismo institucional</li>
+                <li>LGBTQIA+ — conquistas legais vs. retrocesso cultural</li>
+                <li>Movimento pró-armas e movimento ambientalista</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Movimentos Religiosos na Política</div>
+              <ul class="topico-sub">
+                <li>Frente parlamentar evangélica — tamanho, pauta, poder</li>
+                <li>
+                  Pentecostalismo e política conservadora — a aliança estrutural
+                </li>
+                <li>
+                  Igreja Católica — da Teologia da Libertação à CNBB moderada
+                </li>
+                <li>
+                  Religião como identidade política — o que explica a virada
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 06</span
+          ><span class="modulo-title">Instituições e Poderes</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">6.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Congresso Nacional</div>
+              <ul class="topico-sub">
+                <li>Câmara e Senado — diferenças de composição e função</li>
+                <li>Bancadas temáticas — BBB (Boi, Bíblia, Bala)</li>
+                <li>Presidência da Câmara como segundo poder real</li>
+                <li>Fisiologismo — o nome bonito do que ocorre</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.2</div>
+            <div class="topico-content">
+              <div class="topico-name">STF e o Judiciário</div>
+              <ul class="topico-sub">
+                <li>
+                  Composição do STF — indicação política, mandato vitalício
+                </li>
+                <li>
+                  Ativismo judicial — o que é, quando é legítimo, quando não é
+                </li>
+                <li>STF vs. Congresso vs. Executivo — os conflitos reais</li>
+                <li>
+                  Ministério Público — autonomia, mandatos e poder de
+                  investigação
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Forças Armadas e Democracia</div>
+              <ul class="topico-sub">
+                <li>
+                  O papel constitucional das FA — o art. 142 e sua disputa
+                  interpretativa
+                </li>
+                <li>Militares na política — de 1964 ao governo Bolsonaro</li>
+                <li>
+                  Controle civil das FA — onde o Brasil está e onde deveria
+                  estar
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 07</span
+          ><span class="modulo-title"
+            >Temas Estruturais da Política Brasileira</span
+          >
+          <span class="nivel-badge nivel-av">Avançado</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">7.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Corrupção como Sistema</div>
+              <ul class="topico-sub">
+                <li>
+                  Corrupção estrutural vs. episódica — a diferença que importa
+                </li>
+                <li>Financiamento de campanha — o mecanismo central</li>
+                <li>
+                  Emendas parlamentares — orçamento secreto e seu funcionamento
+                </li>
+                <li>Por que combater corrupção é tão difícil no Brasil</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Desigualdade, Raça e Política</div>
+              <ul class="topico-sub">
+                <li>
+                  Desigualdade como escolha política — quem decide quem paga
+                </li>
+                <li>Raça na política brasileira — representação e poder</li>
+                <li>Políticas de cotas — debate, resultados, resistências</li>
+                <li>
+                  Classe e voto — por que pobres e ricos votam diferente (e às
+                  vezes não)
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Mídia, Redes e Desinformação</div>
+              <ul class="topico-sub">
+                <li>Concentração de mídia no Brasil — quem são os donos</li>
+                <li>
+                  WhatsApp como veículo político — o problema da desinformação
+                  privada
+                </li>
+                <li>
+                  Bolsonarismo digital — estrutura, financiamento, funcionamento
+                </li>
+                <li>
+                  Regulação de plataformas — o debate que não tem solução fácil
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="footer-left">Enoraski · Política do Brasil · 2026</div>
+        <div class="footer-right">Sokolov, D.</div>
+      </footer>
+    </div>
+    <script>
+      function toggle(h) {
+        h.classList.toggle("open");
+        h.nextElementSibling.classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

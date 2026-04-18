@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inglês — Enoraski</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inconsolata:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0e1218;
+        --surface: #141a22;
+        --surface2: #1a2230;
+        --border: #1e2a3a;
+        --border-light: #283848;
+        --accent: #3a8fcc;
+        --accent2: #cc7a20;
+        --text: #d8e4f0;
+        --muted: #507090;
+        --muted2: #708aaa;
+        --fund: #3a9a60;
+        --inter: #3a8fcc;
+        --av: #cc7a20;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Inconsolata", monospace;
+        font-size: 13px;
+        line-height: 1.75;
+        min-height: 100vh;
+      }
+      /* blueprint grid */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(58, 143, 204, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(58, 143, 204, 0.05) 1px, transparent 1px);
+        background-size: 40px 40px;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 64px 44px 80px;
+      }
+      header {
+        margin-bottom: 48px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--border-light);
+      }
+      .school-tag {
+        font-size: 9px;
+        letter-spacing: 0.38em;
+        color: var(--muted);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      h1 {
+        font-family: "DM Serif Display", serif;
+        font-size: clamp(3rem, 8vw, 5.5rem);
+        font-weight: 400;
+        line-height: 0.95;
+        color: var(--text);
+        margin-bottom: 16px;
+        letter-spacing: -0.01em;
+      }
+      h1 em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      .teacher-block {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .teacher-name {
+        font-family: "DM Serif Display", serif;
+        font-size: 1.1rem;
+        font-style: italic;
+        color: var(--accent2);
+      }
+      .teacher-desc {
+        font-size: 9.5px;
+        letter-spacing: 0.15em;
+        color: var(--muted2);
+        text-transform: uppercase;
+      }
+      .prof-note {
+        margin-bottom: 36px;
+        padding: 14px 20px 14px 18px;
+        border-left: 3px solid var(--accent);
+        background: var(--surface2);
+        font-family: "DM Serif Display", serif;
+        font-style: italic;
+        font-size: 1.05rem;
+        color: #90b8d8;
+        line-height: 1.55;
+      }
+      .prof-note strong {
+        display: block;
+        font-family: "Inconsolata", monospace;
+        font-style: normal;
+        font-size: 9px;
+        letter-spacing: 0.25em;
+        color: var(--accent);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+      }
+      .legend {
+        display: flex;
+        gap: 22px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 10px;
+        color: var(--muted2);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .dot-fund {
+        background: var(--fund);
+      }
+      .dot-inter {
+        background: var(--inter);
+      }
+      .dot-av {
+        background: var(--av);
+      }
+      .modulo {
+        margin-bottom: 28px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        overflow: hidden;
+        animation: up 0.35s ease both;
+      }
+      @keyframes up {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .modulo:nth-child(1) {
+        animation-delay: 0.04s;
+      }
+      .modulo:nth-child(2) {
+        animation-delay: 0.08s;
+      }
+      .modulo:nth-child(3) {
+        animation-delay: 0.12s;
+      }
+      .modulo:nth-child(4) {
+        animation-delay: 0.16s;
+      }
+      .modulo:nth-child(5) {
+        animation-delay: 0.2s;
+      }
+      .modulo:nth-child(6) {
+        animation-delay: 0.24s;
+      }
+      .modulo:nth-child(7) {
+        animation-delay: 0.28s;
+      }
+      .modulo-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.2s;
+      }
+      .modulo-header:hover {
+        background: var(--surface2);
+      }
+      .modulo-num {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.12em;
+        min-width: 40px;
+      }
+      .modulo-title {
+        font-family: "DM Serif Display", serif;
+        font-size: 1.1rem;
+        color: var(--text);
+        flex: 1;
+      }
+      .nivel-badge {
+        font-size: 9px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border: 1px solid;
+      }
+      .nivel-fund {
+        color: var(--fund);
+        border-color: var(--fund);
+      }
+      .nivel-inter {
+        color: var(--inter);
+        border-color: var(--inter);
+      }
+      .nivel-av {
+        color: var(--av);
+        border-color: var(--av);
+      }
+      .chevron {
+        color: var(--muted);
+        font-size: 10px;
+        transition: transform 0.2s;
+      }
+      .modulo-header.open .chevron {
+        transform: rotate(90deg);
+      }
+      .modulo-body {
+        display: none;
+      }
+      .modulo-body.open {
+        display: block;
+      }
+      .topico {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+      }
+      .topico:last-child {
+        border-bottom: none;
+      }
+      .topico-idx {
+        min-width: 48px;
+        padding: 12px 14px;
+        font-size: 9px;
+        color: var(--muted);
+        border-right: 1px solid var(--border);
+        display: flex;
+        align-items: flex-start;
+        padding-top: 14px;
+      }
+      .topico-content {
+        padding: 12px 20px;
+        flex: 1;
+      }
+      .topico-name {
+        font-family: "DM Serif Display", serif;
+        font-size: 1rem;
+        color: var(--text);
+        margin-bottom: 5px;
+      }
+      .topico-sub {
+        color: var(--muted2);
+        font-size: 11px;
+        line-height: 1.65;
+      }
+      .topico-sub li {
+        list-style: none;
+        padding-left: 14px;
+        position: relative;
+      }
+      .topico-sub li::before {
+        content: "//";
+        position: absolute;
+        left: 0;
+        color: var(--border-light);
+        font-size: 9px;
+        top: 2px;
+        letter-spacing: -2px;
+      }
+      footer {
+        margin-top: 52px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-light);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .footer-left {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .footer-right {
+        font-family: "DM Serif Display", serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: var(--muted2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="school-tag">Instituto Enoraski — Grade Curricular</div>
+        <h1>Ing<em>lês</em></h1>
+        <div class="teacher-block">
+          <span class="teacher-name">Victor Dragunov</span>
+          <span class="teacher-desc"
+            >/ Pragmático · Direto · Comunicação como Ferramenta, Não como
+            Arte</span
+          >
+        </div>
+      </header>
+
+      <div class="prof-note">
+        <strong>Dragunov — nota de entrada</strong>
+        Inglês não é cultura. É infraestrutura. Você precisa dele para funcionar
+        no mundo, não para admirá-lo. Aprenda a usá-lo com precisão.
+      </div>
+
+      <div class="legend">
+        <div class="legend-item">
+          <div class="dot dot-fund"></div>
+          Fundamento
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-inter"></div>
+          Intermediário
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-av"></div>
+          Avançado
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 01</span>
+          <span class="modulo-title">Foundations — Sound and Form</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">1.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Phonetics and Pronunciation</div>
+              <ul class="topico-sub">
+                <li>
+                  IPA — International Phonetic Alphabet (practical subset)
+                </li>
+                <li>Vowel sounds — the 15 vowel phonemes of English</li>
+                <li>Consonant sounds — voiced vs. voiceless</li>
+                <li>Stress and rhythm — where English beats fall</li>
+                <li>Intonation — rising/falling patterns for meaning</li>
+                <li>Connected speech — reduction, linking, elision</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Core Vocabulary — High Frequency</div>
+              <ul class="topico-sub">
+                <li>Oxford 3000 — systematic acquisition</li>
+                <li>Word families — noun/verb/adjective/adverb forms</li>
+                <li>Collocations — what goes with what</li>
+                <li>False cognates — English/Portuguese traps</li>
+                <li>Academic Word List — for formal contexts</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 02</span>
+          <span class="modulo-title">Grammar — Tenses and Time</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">2.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Present and Past</div>
+              <ul class="topico-sub">
+                <li>Simple Present — habit, fact, schedule</li>
+                <li>
+                  Present Continuous — action in progress, future arrangement
+                </li>
+                <li>Simple Past — completed actions</li>
+                <li>Past Continuous — background action</li>
+                <li>Irregular verbs — high-frequency list</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Perfect Aspects</div>
+              <ul class="topico-sub">
+                <li>Present Perfect — past with present relevance</li>
+                <li>Present Perfect Continuous — duration until now</li>
+                <li>Past Perfect — earlier past</li>
+                <li>Past Perfect Continuous</li>
+                <li>For / Since / Already / Just / Yet / Ever / Never</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Future Forms</div>
+              <ul class="topico-sub">
+                <li>Will — prediction, spontaneous decision</li>
+                <li>Be going to — intention, evidence-based prediction</li>
+                <li>Present Continuous as future</li>
+                <li>Future Continuous and Future Perfect</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 03</span>
+          <span class="modulo-title">Grammar — Structure and Syntax</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">3.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Sentence Architecture</div>
+              <ul class="topico-sub">
+                <li>
+                  Subject-Verb-Object — English word order is non-negotiable
+                </li>
+                <li>Questions — inversion and do-support</li>
+                <li>Negation — structure and contractions</li>
+                <li>Clauses — main, subordinate, relative</li>
+                <li>Coordination and subordination</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Noun Phrases and Articles</div>
+              <ul class="topico-sub">
+                <li>Countable vs. uncountable nouns</li>
+                <li>Articles — a/an, the, zero article — the system</li>
+                <li>Quantifiers — much/many, few/little, some/any</li>
+                <li>Determiners — this/that/these/those</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Modals and Conditionals</div>
+              <ul class="topico-sub">
+                <li>
+                  Modal verbs — can/could, may/might, must/have to, should,
+                  would
+                </li>
+                <li>Zero and First Conditional — real situations</li>
+                <li>Second Conditional — hypothetical present/future</li>
+                <li>Third Conditional — hypothetical past</li>
+                <li>Mixed conditionals</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.4</div>
+            <div class="topico-content">
+              <div class="topico-name">Passive Voice and Reported Speech</div>
+              <ul class="topico-sub">
+                <li>Passive construction — when and why to use it</li>
+                <li>Passive in all tenses</li>
+                <li>Reported speech — tense backshift</li>
+                <li>Reporting verbs — say, tell, ask, claim, deny, suggest</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 04</span>
+          <span class="modulo-title">Reading — Comprehension and Strategy</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">4.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Reading Techniques</div>
+              <ul class="topico-sub">
+                <li>Skimming — getting the gist fast</li>
+                <li>Scanning — locating specific information</li>
+                <li>Intensive reading — processing dense text</li>
+                <li>Inference — reading between the lines</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Text Types and Registers</div>
+              <ul class="topico-sub">
+                <li>Formal vs. informal register — signals and differences</li>
+                <li>News articles, academic texts, technical manuals</li>
+                <li>Opinion pieces — identifying argument structure</li>
+                <li>Instructions and documentation — functional reading</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Vocabulary in Context</div>
+              <ul class="topico-sub">
+                <li>Guessing meaning from context — systematic approach</li>
+                <li>Prefixes and suffixes as meaning signals</li>
+                <li>Discourse markers — how text is organized</li>
+                <li>
+                  Cohesion and reference — what pronouns and connectors point to
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 05</span>
+          <span class="modulo-title">Writing — Precision and Structure</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">5.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Sentence and Paragraph</div>
+              <ul class="topico-sub">
+                <li>Topic sentence — one clear claim per paragraph</li>
+                <li>Supporting sentences — evidence, not repetition</li>
+                <li>Concluding sentence — resolution, not summary</li>
+                <li>Cohesion tools — pronouns, synonyms, connectors</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Essay and Argument</div>
+              <ul class="topico-sub">
+                <li>
+                  Argumentative essay — claim, evidence, counterargument,
+                  rebuttal
+                </li>
+                <li>Introduction and thesis statement</li>
+                <li>Logical connectors — contrast, cause, concession</li>
+                <li>Academic tone — avoiding informality</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Functional Writing</div>
+              <ul class="topico-sub">
+                <li>Emails — formal and informal structure</li>
+                <li>Reports — headings, objectivity, passive</li>
+                <li>Summaries — paraphrasing without distortion</li>
+                <li>CVs and cover letters — professional register</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 06</span>
+          <span class="modulo-title">Listening and Speaking</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">6.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Listening for Function</div>
+              <ul class="topico-sub">
+                <li>
+                  Gist vs. detail — different modes for different purposes
+                </li>
+                <li>Accents — British, American, Australian baselines</li>
+                <li>Podcasts, lectures, interviews — academic listening</li>
+                <li>Conversation — fast speech, reduction, fillers</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Speaking with Precision</div>
+              <ul class="topico-sub">
+                <li>Fluency vs. accuracy — the balance</li>
+                <li>Discourse management — how to organise spoken output</li>
+                <li>Expressing opinion, agreement, disagreement</li>
+                <li>Clarification and repair strategies</li>
+                <li>Presentations — signposting language</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 07</span>
+          <span class="modulo-title">Advanced Use — Nuance and Register</span>
+          <span class="nivel-badge nivel-av">Avançado</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">7.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Idiomatic Language</div>
+              <ul class="topico-sub">
+                <li>Phrasal verbs — high-frequency with multiple meanings</li>
+                <li>Idioms — when to use, when to avoid</li>
+                <li>Fixed expressions and chunks</li>
+                <li>Formal alternatives to informal idioms</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Complex Grammar</div>
+              <ul class="topico-sub">
+                <li>Inversion — not only…but also, rarely, never</li>
+                <li>Cleft sentences — It was X that / What I need is</li>
+                <li>
+                  Nominalization — converting verbs to nouns for formality
+                </li>
+                <li>Ellipsis and substitution in discourse</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.3</div>
+            <div class="topico-content">
+              <div class="topico-name">English for Specific Purposes</div>
+              <ul class="topico-sub">
+                <li>
+                  Academic English — IELTS/TOEFL level reading and writing
+                </li>
+                <li>English for technology and science</li>
+                <li>
+                  Business English — negotiation, presentations, correspondence
+                </li>
+                <li>Critical reading of English-language media</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="footer-left">Enoraski · Inglês · Revisão Total · 2026</div>
+        <div class="footer-right">Dragunov, V.</div>
+      </footer>
+    </div>
+    <script>
+      function toggle(h) {
+        h.classList.toggle("open");
+        h.nextElementSibling.classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

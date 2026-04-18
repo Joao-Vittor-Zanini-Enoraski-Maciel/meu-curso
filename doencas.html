@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doenças e Remédios — Enoraski</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #080c10;
+        --surface: #0c1218;
+        --surface2: #101820;
+        --border: #162030;
+        --border-light: #1e2c40;
+        --accent: #40a8c0;
+        --accent2: #60c090;
+        --accent3: #e07840;
+        --text: #c8dce8;
+        --muted: #2a4050;
+        --muted2: #507888;
+        --fund: #40b870;
+        --inter: #40a8c0;
+        --av: #e07840;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Share Tech Mono", monospace;
+        font-size: 12px;
+        line-height: 1.8;
+        min-height: 100vh;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 50% 40% at 80% 20%,
+            rgba(64, 168, 192, 0.05) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 40% 50% at 20% 80%,
+            rgba(64, 184, 112, 0.04) 0%,
+            transparent 60%
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 64px 44px 80px;
+      }
+      header {
+        margin-bottom: 48px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--border-light);
+      }
+      .school-tag {
+        font-size: 9px;
+        letter-spacing: 0.38em;
+        color: var(--muted2);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      h1 {
+        font-family: "Lora", serif;
+        font-size: clamp(2.2rem, 6vw, 4rem);
+        font-weight: 400;
+        line-height: 1.05;
+        color: var(--text);
+        margin-bottom: 16px;
+      }
+      h1 em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      .teacher-block {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .teacher-name {
+        font-family: "Lora", serif;
+        font-size: 1.05rem;
+        font-style: italic;
+        color: var(--accent2);
+      }
+      .teacher-desc {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        color: var(--muted2);
+        text-transform: uppercase;
+      }
+      .prof-note {
+        margin-bottom: 16px;
+        padding: 14px 20px 14px 18px;
+        border-left: 3px solid var(--accent);
+        background: var(--surface2);
+        font-family: "Lora", serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: #80b8c8;
+        line-height: 1.6;
+      }
+      .prof-note strong {
+        display: block;
+        font-family: "Share Tech Mono", monospace;
+        font-style: normal;
+        font-size: 9px;
+        letter-spacing: 0.25em;
+        color: var(--accent);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+      }
+      .aviso {
+        padding: 12px 18px;
+        background: rgba(224, 120, 64, 0.08);
+        border: 1px solid rgba(224, 120, 64, 0.3);
+        margin-bottom: 36px;
+        font-size: 11px;
+        color: var(--accent3);
+        line-height: 1.6;
+      }
+      .aviso strong {
+        display: block;
+        font-size: 9px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+      .legend {
+        display: flex;
+        gap: 22px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 10px;
+        color: var(--muted2);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .dot-fund {
+        background: var(--fund);
+      }
+      .dot-inter {
+        background: var(--inter);
+      }
+      .dot-av {
+        background: var(--av);
+      }
+      .modulo {
+        margin-bottom: 28px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        overflow: hidden;
+        animation: up 0.35s ease both;
+      }
+      @keyframes up {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .modulo:nth-child(1) {
+        animation-delay: 0.04s;
+      }
+      .modulo:nth-child(2) {
+        animation-delay: 0.08s;
+      }
+      .modulo:nth-child(3) {
+        animation-delay: 0.12s;
+      }
+      .modulo:nth-child(4) {
+        animation-delay: 0.16s;
+      }
+      .modulo:nth-child(5) {
+        animation-delay: 0.2s;
+      }
+      .modulo:nth-child(6) {
+        animation-delay: 0.24s;
+      }
+      .modulo:nth-child(7) {
+        animation-delay: 0.28s;
+      }
+      .modulo:nth-child(8) {
+        animation-delay: 0.32s;
+      }
+      .modulo-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.2s;
+      }
+      .modulo-header:hover {
+        background: var(--surface2);
+      }
+      .modulo-num {
+        font-size: 9px;
+        color: var(--muted2);
+        letter-spacing: 0.12em;
+        min-width: 40px;
+      }
+      .modulo-title {
+        font-family: "Lora", serif;
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--text);
+        flex: 1;
+      }
+      .nivel-badge {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border: 1px solid;
+      }
+      .nivel-fund {
+        color: var(--fund);
+        border-color: var(--fund);
+      }
+      .nivel-inter {
+        color: var(--inter);
+        border-color: var(--inter);
+      }
+      .nivel-av {
+        color: var(--av);
+        border-color: var(--av);
+      }
+      .chevron {
+        color: var(--muted2);
+        font-size: 10px;
+        transition: transform 0.2s;
+      }
+      .modulo-header.open .chevron {
+        transform: rotate(90deg);
+      }
+      .modulo-body {
+        display: none;
+      }
+      .modulo-body.open {
+        display: block;
+      }
+      .topico {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+      }
+      .topico:last-child {
+        border-bottom: none;
+      }
+      .topico-idx {
+        min-width: 48px;
+        padding: 12px 14px;
+        font-size: 9px;
+        color: var(--muted2);
+        border-right: 1px solid var(--border);
+        display: flex;
+        align-items: flex-start;
+        padding-top: 14px;
+      }
+      .topico-content {
+        padding: 12px 20px;
+        flex: 1;
+      }
+      .topico-name {
+        font-family: "Lora", serif;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 5px;
+      }
+      .topico-sub {
+        color: var(--muted2);
+        font-size: 11px;
+        line-height: 1.65;
+      }
+      .topico-sub li {
+        list-style: none;
+        padding-left: 14px;
+        position: relative;
+      }
+      .topico-sub li::before {
+        content: "⊕";
+        position: absolute;
+        left: 0;
+        color: var(--muted);
+        font-size: 8px;
+        top: 3px;
+      }
+      footer {
+        margin-top: 52px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-light);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .footer-left {
+        font-size: 9px;
+        color: var(--muted2);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .footer-right {
+        font-family: "Lora", serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: var(--muted2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="school-tag">Instituto Enoraski — Grade Curricular</div>
+        <h1>Doenças e <em>Remédios</em></h1>
+        <div class="teacher-block">
+          <span class="teacher-name">Yelena Markova</span>
+          <span class="teacher-desc"
+            >/ Analítica · Observa Sistemas como Lógica em Mutação</span
+          >
+        </div>
+      </header>
+      <div class="prof-note">
+        <strong>Markova — nota de entrada</strong>
+        Entender doenças não é diagnosticar-se. É parar de ter medo do que você
+        não entende — e saber quando procurar quem entende mais.
+      </div>
+      <div class="aviso">
+        <strong>⚠ Aviso importante</strong>
+        Este currículo é para compreensão e literacia em saúde — não para
+        autodiagnóstico ou automedicação. Qualquer suspeita de doença ou dúvida
+        sobre medicamento deve ser levada a um profissional de saúde.
+      </div>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="dot dot-fund"></div>
+          Fundamento
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-inter"></div>
+          Intermediário
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-av"></div>
+          Avançado
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 01</span
+          ><span class="modulo-title"
+            >Como o Corpo Adoece — Mecanismos Gerais</span
+          >
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">1.1</div>
+            <div class="topico-content">
+              <div class="topico-name">O que é uma Doença</div>
+              <ul class="topico-sub">
+                <li>Saúde como equilíbrio dinâmico — homeostase</li>
+                <li>Doença como falha de mecanismo, não castigo ou azar</li>
+                <li>
+                  Agentes causais — infecciosos, genéticos, ambientais,
+                  comportamentais
+                </li>
+                <li>
+                  Fatores de risco vs. causas — a diferença que salva decisões
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Inflamação — A Resposta Universal</div>
+              <ul class="topico-sub">
+                <li>
+                  O que é inflamação — rubor, calor, tumor, dor, perda de função
+                </li>
+                <li>Inflamação aguda vs. crônica</li>
+                <li>Citocinas — os mensageiros do sistema imune</li>
+                <li>
+                  Por que a inflamação é protetora e quando se torna o problema
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Terminologia Médica Básica</div>
+              <ul class="topico-sub">
+                <li>Sintoma vs. sinal vs. síndrome</li>
+                <li>Diagnóstico diferencial — o método de exclusão</li>
+                <li>
+                  Prognóstico, incidência, prevalência — o que cada um mede
+                </li>
+                <li>Prefixos e sufixos médicos — -ite, -oma, -emia, -penia</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 02</span
+          ><span class="modulo-title">Doenças Infecciosas</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">2.1</div>
+            <div class="topico-content">
+              <div class="topico-name">
+                Bactérias, Vírus, Fungos e Parasitas
+              </div>
+              <ul class="topico-sub">
+                <li>
+                  Diferenças estruturais — por que importam para o tratamento
+                </li>
+                <li>Antibióticos só funcionam em bactérias — e por quê</li>
+                <li>
+                  Mecanismos de infecção — como cada agente penetra e multiplica
+                </li>
+                <li>Período de incubação — o que ocorre antes dos sintomas</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Doenças Infecciosas Comuns</div>
+              <ul class="topico-sub">
+                <li>
+                  Gripe e resfriado — diferença real, por que antibiótico não
+                  serve
+                </li>
+                <li>COVID-19 — mecanismo, variantes, sequelas</li>
+                <li>
+                  Dengue, Zika, Chikungunya — o mesmo vetor, doenças diferentes
+                </li>
+                <li>Tuberculose — uma das mais antigas, ainda presente</li>
+                <li>
+                  ISTs — HIV, sífilis, gonorreia — transmissão, tratamento,
+                  prevenção
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Imunidade e Vacinação</div>
+              <ul class="topico-sub">
+                <li>
+                  Imunidade inata vs. adaptativa — velocidade e especificidade
+                </li>
+                <li>Anticorpos — como são feitos, como funcionam</li>
+                <li>
+                  Como vacinas funcionam — tipos (inativada, atenuada, mRNA,
+                  vetor viral)
+                </li>
+                <li>Imunidade de rebanho — o cálculo por trás</li>
+                <li>Por que resistência a vacinas não tem base científica</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 03</span
+          ><span class="modulo-title">Doenças Crônicas e Sistêmicas</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">3.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Doenças Cardiovasculares</div>
+              <ul class="topico-sub">
+                <li>Aterosclerose — formação de placa, risco, progressão</li>
+                <li>Infarto do miocárdio — mecanismo e sinais de alerta</li>
+                <li>AVC — isquêmico e hemorrágico — diferença e urgência</li>
+                <li>
+                  Hipertensão — o "assassino silencioso" e por que controlar
+                </li>
+                <li>Fatores de risco modificáveis vs. não modificáveis</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Diabetes e Síndrome Metabólica</div>
+              <ul class="topico-sub">
+                <li>Diabetes tipo 1 — autoimune, insulinodependente</li>
+                <li>
+                  Diabetes tipo 2 — resistência à insulina, estilo de vida
+                </li>
+                <li>Complicações do diabetes — renal, ocular, neuropática</li>
+                <li>Síndrome metabólica — a constelação de risco</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Doenças Autoimunes</div>
+              <ul class="topico-sub">
+                <li>
+                  O sistema imune atacando o próprio corpo — mecanismo geral
+                </li>
+                <li>
+                  Lúpus, artrite reumatoide, esclerose múltipla — exemplos e
+                  diferenças
+                </li>
+                <li>Doenças inflamatórias intestinais — Crohn e retocolite</li>
+                <li>Doenças da tireoide — Hashimoto, Graves</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.4</div>
+            <div class="topico-content">
+              <div class="topico-name">Câncer — Fundamentos</div>
+              <ul class="topico-sub">
+                <li>
+                  O que é câncer — divisão descontrolada e perda de apoptose
+                </li>
+                <li>Oncogenes e genes supressores de tumor</li>
+                <li>Metástase — como e por onde se espalha</li>
+                <li>Estadiamento — o que TNM significa</li>
+                <li>
+                  Tipos de tratamento — cirurgia, quimio, radio, imunoterapia,
+                  terapia alvo
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 04</span
+          ><span class="modulo-title"
+            >Saúde Mental — Doenças e Compreensão</span
+          >
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">4.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Depressão e Ansiedade</div>
+              <ul class="topico-sub">
+                <li>Depressão — além da tristeza, o que é biologicamente</li>
+                <li>Transtorno de ansiedade generalizada, pânico, fobia</li>
+                <li>
+                  Neurotransmissores envolvidos — serotonina, dopamina,
+                  noradrenalina
+                </li>
+                <li>Tratamentos — psicoterapia, medicação, combinação</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Outros Transtornos Relevantes</div>
+              <ul class="topico-sub">
+                <li>TDAH — neurobiologia, diagnóstico, tratamento</li>
+                <li>Transtorno Bipolar — fases, ciclagem, manejo</li>
+                <li>Esquizofrenia — o que é e o que não é</li>
+                <li>TOC — o circuito cortico-estriado-tálamo-cortical</li>
+                <li>Transtornos alimentares — AN, BN, TCAP</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 05</span
+          ><span class="modulo-title"
+            >Farmacologia — Como os Remédios Funcionam</span
+          >
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">5.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Farmacocinética e Farmacodinâmica</div>
+              <ul class="topico-sub">
+                <li>
+                  Farmacocinética — absorção, distribuição, metabolismo,
+                  excreção (ADME)
+                </li>
+                <li>
+                  Via de administração — oral, IV, IM, sublingual — diferenças
+                </li>
+                <li>Meia-vida — o tempo que o remédio dura no corpo</li>
+                <li>Farmacodinâmica — como o remédio age no receptor</li>
+                <li>Agonista, antagonista, agonista parcial</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Principais Classes de Medicamentos</div>
+              <ul class="topico-sub">
+                <li>
+                  Analgésicos — paracetamol, ibuprofeno, opioides — mecanismos e
+                  riscos
+                </li>
+                <li>Antibióticos — classes, mecanismos de ação, resistência</li>
+                <li>
+                  Anti-hipertensivos — IECA, BRA, betabloqueadores, diuréticos
+                </li>
+                <li>
+                  Antidepressivos — ISRS, IRSN, tricíclicos — diferenças e
+                  efeitos
+                </li>
+                <li>
+                  Anticoagulantes e antiagregantes — aspirina, warfarina,
+                  heparina
+                </li>
+                <li>
+                  Corticosteroides — usos, efeitos, riscos do uso prolongado
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Interações e Segurança</div>
+              <ul class="topico-sub">
+                <li>
+                  Interações medicamentosas — como um remédio interfere em outro
+                </li>
+                <li>
+                  Efeitos adversos vs. efeitos colaterais — a distinção que
+                  importa
+                </li>
+                <li>
+                  Contraindicações — gravidez, insuficiência renal, hepática
+                </li>
+                <li>
+                  Genérico vs. referência vs. similar — o que a lei diz e o que
+                  a ciência diz
+                </li>
+                <li>Por que completar o ciclo de antibióticos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 06</span
+          ><span class="modulo-title">Exames e Leitura de Resultados</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">6.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Hemograma e Exames de Sangue</div>
+              <ul class="topico-sub">
+                <li>Hemograma completo — o que cada célula indica</li>
+                <li>Glicemia, colesterol (LDL, HDL, VLDL, triglicerídeos)</li>
+                <li>Enzimas hepáticas — TGO, TGP, GGT</li>
+                <li>Função renal — creatinina, ureia, TFG</li>
+                <li>Proteína C reativa e marcadores inflamatórios</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Exames de Imagem — Fundamentos</div>
+              <ul class="topico-sub">
+                <li>Raio-X — como funciona, o que mostra</li>
+                <li>Ultrassom — ondas sonoras, indicações</li>
+                <li>Tomografia — raio-X em fatias, contraste</li>
+                <li>Ressonância magnética — campo magnético, sem radiação</li>
+                <li>Diferença de indicação entre os exames</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 07</span
+          ><span class="modulo-title"
+            >Saúde Preventiva e Literacia em Saúde</span
+          >
+          <span class="nivel-badge nivel-av">Avançado</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">7.1</div>
+            <div class="topico-content">
+              <div class="topico-name">
+                Prevenção Primária, Secundária e Terciária
+              </div>
+              <ul class="topico-sub">
+                <li>Primária — evitar a doença antes de ela ocorrer</li>
+                <li>Secundária — detectar cedo (rastreamento/screening)</li>
+                <li>Terciária — minimizar impacto de doença instalada</li>
+                <li>Rastreamentos recomendados por faixa etária</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Como Avaliar Informação de Saúde</div>
+              <ul class="topico-sub">
+                <li>
+                  Hierarquia de evidências — estudo de caso, coorte, RCT,
+                  metanálise
+                </li>
+                <li>
+                  Risco relativo vs. risco absoluto — como a mídia distorce
+                </li>
+                <li>Conflito de interesse em pesquisa médica</li>
+                <li>Medicina baseada em evidências vs. medicina narrativa</li>
+                <li>Como reconhecer pseudociência em saúde</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="footer-left">
+          Enoraski · Doenças e Remédios · Literacia em Saúde · 2026
+        </div>
+        <div class="footer-right">Markova, Y.</div>
+      </footer>
+    </div>
+    <script>
+      function toggle(h) {
+        h.classList.toggle("open");
+        h.nextElementSibling.classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

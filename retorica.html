@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Retórica — Enoraski</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f8f3ec;
+        --surface: #f0e9e0;
+        --surface2: #e8e0d5;
+        --border: #d0c8ba;
+        --border-dark: #a89880;
+        --accent: #2a3820;
+        --accent2: #6b4c2a;
+        --text: #1c1810;
+        --muted: #786858;
+        --muted2: #a09080;
+        --fund: #4a7a50;
+        --inter: #2a3820;
+        --av: #6b4c2a;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Space Mono", monospace;
+        font-size: 11.5px;
+        line-height: 1.85;
+        min-height: 100vh;
+      }
+      /* diagonal watermark */
+      body::before {
+        content: "ΛΕΓΕΙΝ";
+        position: fixed;
+        bottom: 10%;
+        right: -2%;
+        font-family: "EB Garamond", serif;
+        font-size: 22vw;
+        font-style: italic;
+        color: rgba(42, 56, 32, 0.04);
+        pointer-events: none;
+        z-index: 0;
+        line-height: 1;
+        white-space: nowrap;
+      }
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 64px 44px 80px;
+      }
+      header {
+        margin-bottom: 48px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--border-dark);
+        position: relative;
+      }
+      .school-tag {
+        font-size: 9px;
+        letter-spacing: 0.38em;
+        color: var(--muted2);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      h1 {
+        font-family: "EB Garamond", serif;
+        font-size: clamp(2.8rem, 8vw, 5.2rem);
+        font-weight: 400;
+        line-height: 0.95;
+        color: var(--text);
+        margin-bottom: 16px;
+        letter-spacing: 0.01em;
+      }
+      h1 em {
+        font-style: italic;
+        color: var(--accent2);
+      }
+      .teacher-block {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .teacher-name {
+        font-family: "EB Garamond", serif;
+        font-size: 1.1rem;
+        font-style: italic;
+        color: var(--accent);
+      }
+      .teacher-desc {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        color: var(--muted);
+        text-transform: uppercase;
+      }
+      .prof-note {
+        margin-bottom: 36px;
+        padding: 16px 22px 16px 20px;
+        border-left: 3px solid var(--accent2);
+        background: var(--surface2);
+        font-family: "EB Garamond", serif;
+        font-style: italic;
+        font-size: 1.1rem;
+        color: #3a2810;
+        line-height: 1.6;
+      }
+      .prof-note strong {
+        display: block;
+        font-family: "Space Mono", monospace;
+        font-style: normal;
+        font-size: 9px;
+        font-weight: 400;
+        letter-spacing: 0.25em;
+        color: var(--accent2);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+      }
+      .legend {
+        display: flex;
+        gap: 22px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .dot-fund {
+        background: var(--fund);
+      }
+      .dot-inter {
+        background: var(--inter);
+      }
+      .dot-av {
+        background: var(--av);
+      }
+      .modulo {
+        margin-bottom: 28px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        overflow: hidden;
+        animation: up 0.35s ease both;
+      }
+      @keyframes up {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .modulo:nth-child(1) {
+        animation-delay: 0.04s;
+      }
+      .modulo:nth-child(2) {
+        animation-delay: 0.08s;
+      }
+      .modulo:nth-child(3) {
+        animation-delay: 0.12s;
+      }
+      .modulo:nth-child(4) {
+        animation-delay: 0.16s;
+      }
+      .modulo:nth-child(5) {
+        animation-delay: 0.2s;
+      }
+      .modulo:nth-child(6) {
+        animation-delay: 0.24s;
+      }
+      .modulo:nth-child(7) {
+        animation-delay: 0.28s;
+      }
+      .modulo-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.2s;
+      }
+      .modulo-header:hover {
+        background: var(--surface2);
+      }
+      .modulo-num {
+        font-size: 9px;
+        color: var(--muted2);
+        letter-spacing: 0.12em;
+        min-width: 40px;
+      }
+      .modulo-title {
+        font-family: "EB Garamond", serif;
+        font-size: 1.15rem;
+        font-weight: 500;
+        color: var(--text);
+        flex: 1;
+      }
+      .nivel-badge {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border: 1px solid;
+      }
+      .nivel-fund {
+        color: var(--fund);
+        border-color: var(--fund);
+      }
+      .nivel-inter {
+        color: var(--inter);
+        border-color: var(--inter);
+      }
+      .nivel-av {
+        color: var(--av);
+        border-color: var(--av);
+      }
+      .chevron {
+        color: var(--muted2);
+        font-size: 10px;
+        transition: transform 0.2s;
+      }
+      .modulo-header.open .chevron {
+        transform: rotate(90deg);
+      }
+      .modulo-body {
+        display: none;
+      }
+      .modulo-body.open {
+        display: block;
+      }
+      .topico {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+      }
+      .topico:last-child {
+        border-bottom: none;
+      }
+      .topico-idx {
+        min-width: 48px;
+        padding: 12px 14px;
+        font-size: 9px;
+        color: var(--muted2);
+        border-right: 1px solid var(--border);
+        display: flex;
+        align-items: flex-start;
+        padding-top: 14px;
+      }
+      .topico-content {
+        padding: 12px 20px;
+        flex: 1;
+      }
+      .topico-name {
+        font-family: "EB Garamond", serif;
+        font-size: 1.05rem;
+        font-weight: 500;
+        color: var(--text);
+        margin-bottom: 5px;
+      }
+      .topico-sub {
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.65;
+      }
+      .topico-sub li {
+        list-style: none;
+        padding-left: 14px;
+        position: relative;
+      }
+      .topico-sub li::before {
+        content: "§";
+        position: absolute;
+        left: 0;
+        color: var(--border-dark);
+        font-size: 9px;
+        top: 1px;
+        font-family: "EB Garamond", serif;
+      }
+      footer {
+        margin-top: 52px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-dark);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .footer-left {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .footer-right {
+        font-family: "EB Garamond", serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: var(--muted2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="school-tag">Instituto Enoraski — Grade Curricular</div>
+        <h1>Re<em>tó</em>rica e Escrita</h1>
+        <div class="teacher-block">
+          <span class="teacher-name">Aleksy Voronin</span>
+          <span class="teacher-desc"
+            >/ Observador · Indireto · Desmonta Certezas · Conduz Sem Parecer
+            Conduzir</span
+          >
+        </div>
+      </header>
+      <div class="prof-note">
+        <strong>Voronin — nota de entrada</strong>
+        Um argumento que você percebe como argumento já perdeu metade da força.
+        O verdadeiro poder está em fazer o outro chegar sozinho onde você queria
+        que ele chegasse.
+      </div>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="dot dot-fund"></div>
+          Fundamento
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-inter"></div>
+          Intermediário
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-av"></div>
+          Avançado
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 01</span
+          ><span class="modulo-title">Fundamentos da Retórica Clássica</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">1.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Origens e Cânones</div>
+              <ul class="topico-sub">
+                <li>
+                  Retórica em Aristóteles — arte de encontrar os meios de
+                  persuasão disponíveis
+                </li>
+                <li>Os três cânones: inventio, dispositio, elocutio</li>
+                <li>Memória e actio — a retórica oral</li>
+                <li>
+                  Sofistas vs. Sócrates — a disputa pela definição de retórica
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Ethos, Pathos, Logos</div>
+              <ul class="topico-sub">
+                <li>
+                  Ethos — credibilidade construída antes e durante o discurso
+                </li>
+                <li>Pathos — a emoção como argumento legítimo</li>
+                <li>Logos — estrutura lógica e evidência</li>
+                <li>Combinação e tensão entre os três modos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 02</span
+          ><span class="modulo-title">Lógica Argumentativa</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">2.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Argumentos e Estruturas</div>
+              <ul class="topico-sub">
+                <li>Silogismo — premissa maior, menor, conclusão</li>
+                <li>Entimema — silogismo com premissa implícita</li>
+                <li>Dedução e indução — fluxos opostos do raciocínio</li>
+                <li>Analogia — força e limitações</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Falácias</div>
+              <ul class="topico-sub">
+                <li>Ad hominem, ad populum, apelo à autoridade indevida</li>
+                <li>Homem de palha — deformar para refutar</li>
+                <li>Falsa dicotomia — dois lados quando há muitos</li>
+                <li>Slippery slope, post hoc, petição de princípio</li>
+                <li>Como usar falácias retoricamente — e como desarmá-las</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 03</span
+          ><span class="modulo-title">Figuras Retóricas como Ferramentas</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">3.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Figuras de Argumento</div>
+              <ul class="topico-sub">
+                <li>Antítese — conflito que ilumina</li>
+                <li>Paradoxo — contradição que revela verdade</li>
+                <li>Ironia — dizer o contrário do que parece</li>
+                <li>Reductio ad absurdum — levar ao limite para expor</li>
+                <li>Amplificação — expandir para emocionar</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Figuras de Presença</div>
+              <ul class="topico-sub">
+                <li>Anáfora — repetição que acumula força</li>
+                <li>Tricolon — ritmo de três</li>
+                <li>Climax e anticlimax</li>
+                <li>Praeteritio — mencionar ao negar que mencionará</li>
+                <li>Quiasmo — inversão especular</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 04</span
+          ><span class="modulo-title">Escrita Persuasiva</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">4.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Construção do Argumento Escrito</div>
+              <ul class="topico-sub">
+                <li>Tese como arma — precisa, provocativa, defensável</li>
+                <li>Ordenação dos argumentos — do mais fraco ao mais forte</li>
+                <li>Concessão estratégica — antecipar a objeção</li>
+                <li>Conclusão que não repete — que transforma</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Estilo e Voz</div>
+              <ul class="topico-sub">
+                <li>Clareza vs. profundidade — a tensão produtiva</li>
+                <li>Frase curta e frase longa — ritmo como ferramenta</li>
+                <li>
+                  Escolha lexical — a palavra que não pode ser substituída
+                </li>
+                <li>Tom — como estabelecer autoridade sem agressão</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Gêneros Persuasivos</div>
+              <ul class="topico-sub">
+                <li>Ensaio argumentativo — tese sustentada com profundidade</li>
+                <li>Artigo de opinião — argumento em espaço comprimido</li>
+                <li>Carta aberta — o leitor como testemunha do argumento</li>
+                <li>Manifesto — argumento como declaração de ruptura</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 05</span
+          ><span class="modulo-title">Oratória e Discurso Oral</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">5.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Estrutura do Discurso Oral</div>
+              <ul class="topico-sub">
+                <li>
+                  Exordium — capturar a atenção sem parecer que está tentando
+                </li>
+                <li>Narratio — estabelecer os fatos</li>
+                <li>Confirmatio — os argumentos</li>
+                <li>Refutatio — antecipar e destruir as objeções</li>
+                <li>Peroratio — a conclusão emocional</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Presença e Entrega</div>
+              <ul class="topico-sub">
+                <li>Voz — ritmo, pausa, variação de tom</li>
+                <li>Silêncio como ferramenta retórica</li>
+                <li>Contato visual e postura</li>
+                <li>Improviso vs. preparação — a ilusão da espontaneidade</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 06</span
+          ><span class="modulo-title"
+            >Análise Retórica de Textos e Discursos</span
+          >
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">6.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Leitura Retórica</div>
+              <ul class="topico-sub">
+                <li>Identificar o propósito real de um texto</li>
+                <li>Mapeamento de ethos, pathos, logos em textos reais</li>
+                <li>
+                  Análise de escolhas lexicais e sintáticas como argumentos
+                </li>
+                <li>O que o texto omite — ausência como argumento</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.2</div>
+            <div class="topico-content">
+              <div class="topico-name">
+                Análise de Discursos Históricos e Contemporâneos
+              </div>
+              <ul class="topico-sub">
+                <li>Discursos clássicos — Péricles, Cícero, Lincoln</li>
+                <li>
+                  Retórica política contemporânea — mecanismos e manipulação
+                </li>
+                <li>Publicidade como retórica — o argumento invisível</li>
+                <li>Redes sociais e fragmentação retórica</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 07</span
+          ><span class="modulo-title"
+            >Retórica Avançada — Persuasão Indireta</span
+          >
+          <span class="nivel-badge nivel-av">Avançado</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">7.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Frames e Enquadramento</div>
+              <ul class="topico-sub">
+                <li>Framing — como o enquadramento define a percepção</li>
+                <li>Reframing — mudar o terreno do debate</li>
+                <li>Metáfora conceitual como estrutura de pensamento</li>
+                <li>Agenda-setting — controlar o que se discute, não como</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Persuasão sem Argumento Explícito</div>
+              <ul class="topico-sub">
+                <li>Narrativa como argumento — storytelling estrutural</li>
+                <li>Perguntas retóricas que conduzem conclusões</li>
+                <li>
+                  Implicatura conversacional — o que se comunica sem dizer
+                </li>
+                <li>Pressuposição — o que é aceito antes de argumentar</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="footer-left">Enoraski · Retórica e Escrita · 2026</div>
+        <div class="footer-right">Voronin, A.</div>
+      </footer>
+    </div>
+    <script>
+      function toggle(h) {
+        h.classList.toggle("open");
+        h.nextElementSibling.classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

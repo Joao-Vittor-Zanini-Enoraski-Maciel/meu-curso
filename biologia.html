@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Biologia — Enoraski</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f4f8f2;
+        --surface: #ebf0e8;
+        --surface2: #e2e9de;
+        --border: #c8d4c0;
+        --border-dark: #9aae90;
+        --accent: #2a5a1e;
+        --accent2: #5a8a2e;
+        --text: #141c10;
+        --muted: #6a7a64;
+        --muted2: #96a890;
+        --fund: #2a5a1e;
+        --inter: #2a6a5a;
+        --av: #6a3a10;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Share Tech Mono", monospace;
+        font-size: 12px;
+        line-height: 1.8;
+        min-height: 100vh;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          radial-gradient(
+            circle at 20% 80%,
+            rgba(42, 90, 30, 0.05) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(42, 106, 90, 0.04) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 64px 44px 80px;
+      }
+      header {
+        margin-bottom: 48px;
+        padding-bottom: 24px;
+        border-bottom: 2px solid var(--accent);
+      }
+      .school-tag {
+        font-size: 9px;
+        letter-spacing: 0.38em;
+        color: var(--muted2);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      h1 {
+        font-family: "Lora", serif;
+        font-size: clamp(2.8rem, 8vw, 5rem);
+        font-weight: 400;
+        line-height: 0.95;
+        color: var(--text);
+        margin-bottom: 16px;
+      }
+      h1 em {
+        font-style: italic;
+        color: var(--accent2);
+      }
+      .teacher-block {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .teacher-name {
+        font-family: "Lora", serif;
+        font-size: 1.1rem;
+        font-style: italic;
+        color: var(--accent);
+      }
+      .teacher-desc {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        color: var(--muted);
+        text-transform: uppercase;
+      }
+      .prof-note {
+        margin-bottom: 36px;
+        padding: 14px 20px 14px 18px;
+        border-left: 3px solid var(--accent2);
+        background: var(--surface2);
+        font-family: "Lora", serif;
+        font-style: italic;
+        font-size: 1.05rem;
+        color: #1e3a14;
+        line-height: 1.6;
+      }
+      .prof-note strong {
+        display: block;
+        font-family: "Share Tech Mono", monospace;
+        font-style: normal;
+        font-size: 9px;
+        letter-spacing: 0.25em;
+        color: var(--accent2);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+      }
+      .legend {
+        display: flex;
+        gap: 22px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .dot-fund {
+        background: var(--fund);
+      }
+      .dot-inter {
+        background: var(--inter);
+      }
+      .dot-av {
+        background: var(--av);
+      }
+      .modulo {
+        margin-bottom: 28px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        overflow: hidden;
+        animation: up 0.35s ease both;
+      }
+      @keyframes up {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .modulo:nth-child(1) {
+        animation-delay: 0.04s;
+      }
+      .modulo:nth-child(2) {
+        animation-delay: 0.08s;
+      }
+      .modulo:nth-child(3) {
+        animation-delay: 0.12s;
+      }
+      .modulo:nth-child(4) {
+        animation-delay: 0.16s;
+      }
+      .modulo:nth-child(5) {
+        animation-delay: 0.2s;
+      }
+      .modulo:nth-child(6) {
+        animation-delay: 0.24s;
+      }
+      .modulo:nth-child(7) {
+        animation-delay: 0.28s;
+      }
+      .modulo:nth-child(8) {
+        animation-delay: 0.32s;
+      }
+      .modulo:nth-child(9) {
+        animation-delay: 0.36s;
+      }
+      .modulo:nth-child(10) {
+        animation-delay: 0.4s;
+      }
+      .modulo-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.2s;
+      }
+      .modulo-header:hover {
+        background: var(--surface2);
+      }
+      .modulo-num {
+        font-size: 9px;
+        color: var(--muted2);
+        letter-spacing: 0.12em;
+        min-width: 40px;
+      }
+      .modulo-title {
+        font-family: "Lora", serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text);
+        flex: 1;
+      }
+      .nivel-badge {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border: 1px solid;
+      }
+      .nivel-fund {
+        color: var(--fund);
+        border-color: var(--fund);
+      }
+      .nivel-inter {
+        color: var(--inter);
+        border-color: var(--inter);
+      }
+      .nivel-av {
+        color: var(--av);
+        border-color: var(--av);
+      }
+      .chevron {
+        color: var(--muted2);
+        font-size: 10px;
+        transition: transform 0.2s;
+      }
+      .modulo-header.open .chevron {
+        transform: rotate(90deg);
+      }
+      .modulo-body {
+        display: none;
+      }
+      .modulo-body.open {
+        display: block;
+      }
+      .topico {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+      }
+      .topico:last-child {
+        border-bottom: none;
+      }
+      .topico-idx {
+        min-width: 48px;
+        padding: 12px 14px;
+        font-size: 9px;
+        color: var(--muted2);
+        border-right: 1px solid var(--border);
+        display: flex;
+        align-items: flex-start;
+        padding-top: 14px;
+      }
+      .topico-content {
+        padding: 12px 20px;
+        flex: 1;
+      }
+      .topico-name {
+        font-family: "Lora", serif;
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 5px;
+      }
+      .topico-sub {
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.65;
+      }
+      .topico-sub li {
+        list-style: none;
+        padding-left: 14px;
+        position: relative;
+      }
+      .topico-sub li::before {
+        content: "○";
+        position: absolute;
+        left: 0;
+        color: var(--muted2);
+        font-size: 7px;
+        top: 4px;
+      }
+      footer {
+        margin-top: 52px;
+        padding-top: 20px;
+        border-top: 2px solid var(--accent);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .footer-left {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .footer-right {
+        font-family: "Lora", serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: var(--muted2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="school-tag">Instituto Enoraski — Grade Curricular</div>
+        <h1>Bio<em>lo</em>gia</h1>
+        <div class="teacher-block">
+          <span class="teacher-name">Yelena Markova</span>
+          <span class="teacher-desc"
+            >/ Analítica · Adaptativa · Observa Sistemas Vivos como Lógica em
+            Mutação</span
+          >
+        </div>
+      </header>
+      <div class="prof-note">
+        <strong>Markova — nota de entrada</strong>
+        A vida é um sistema de soluções a problemas que nenhum engenheiro
+        planejou. Estudar biologia é aprender a ler a lógica que emerge do
+        acaso.
+      </div>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="dot dot-fund"></div>
+          Fundamento
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-inter"></div>
+          Intermediário
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-av"></div>
+          Avançado
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 01</span
+          ><span class="modulo-title">A Célula — Unidade da Vida</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">1.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Célula Procariótica e Eucariótica</div>
+              <ul class="topico-sub">
+                <li>
+                  Comparação estrutural — membrana, parede, material genético
+                </li>
+                <li>Bactérias e arqueas — diversidade procariótica</li>
+                <li>Evolução da célula eucariótica — teoria endossimbiótica</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Organelas e suas Funções</div>
+              <ul class="topico-sub">
+                <li>Núcleo — estrutura, cromatina, nucléolo</li>
+                <li>Mitocôndria — estrutura e função energética</li>
+                <li>Cloroplasto — estrutura e fotossíntese</li>
+                <li>Retículo endoplasmático liso e rugoso</li>
+                <li>Complexo de Golgi, lisossomos, peroxissomos</li>
+                <li>Ribossomos — estrutura e síntese proteica</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Membrana Plasmática</div>
+              <ul class="topico-sub">
+                <li>Modelo do mosaico fluido</li>
+                <li>Transporte passivo — difusão, osmose</li>
+                <li>Transporte ativo — bombas, cotransporte</li>
+                <li>Endocitose e exocitose</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 02</span
+          ><span class="modulo-title">Metabolismo Celular</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">2.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Fotossíntese</div>
+              <ul class="topico-sub">
+                <li>
+                  Fase clara — reações fotoquímicas, fotossistemas, ATP e NADPH
+                </li>
+                <li>Fase escura — ciclo de Calvin, fixação do CO₂</li>
+                <li>Fatores que afetam a fotossíntese</li>
+                <li>Fotorrespiração e plantas C4 e CAM</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Respiração Celular</div>
+              <ul class="topico-sub">
+                <li>Glicólise — local, produtos, saldo energético</li>
+                <li>Ciclo de Krebs — local, produtos</li>
+                <li>Cadeia respiratória — ATP sintase, gradiente de prótons</li>
+                <li>Fermentação — lática e alcoólica</li>
+                <li>Saldo energético total — por que 36-38 ATP?</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 03</span
+          ><span class="modulo-title">Genética Molecular</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">3.1</div>
+            <div class="topico-content">
+              <div class="topico-name">DNA e RNA</div>
+              <ul class="topico-sub">
+                <li>
+                  Estrutura do DNA — dupla hélice, nucleotídeos, pareamento
+                </li>
+                <li>
+                  Replicação do DNA — semiconservativa, enzimas envolvidas
+                </li>
+                <li>Tipos de RNA — mRNA, tRNA, rRNA</li>
+                <li>
+                  Código genético — tripletos, degeneração, universalidade
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Expressão Gênica</div>
+              <ul class="topico-sub">
+                <li>Transcrição — RNA polimerase, promotor, terminador</li>
+                <li>Processamento do pré-mRNA — splicing, cap, cauda poli-A</li>
+                <li>Tradução — iniciação, alongamento, terminação</li>
+                <li>Regulação gênica — operon Lac, fatores de transcrição</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Mutação e Biotecnologia</div>
+              <ul class="topico-sub">
+                <li>Tipos de mutação — puntual, frameshift</li>
+                <li>Mutágenos e efeitos</li>
+                <li>PCR — princípio e aplicações</li>
+                <li>CRISPR-Cas9 — edição gênica de precisão</li>
+                <li>DNA recombinante e transgênicos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 04</span
+          ><span class="modulo-title">Divisão Celular e Reprodução</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">4.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Ciclo Celular e Mitose</div>
+              <ul class="topico-sub">
+                <li>Fases do ciclo — G1, S, G2, M</li>
+                <li>Controle do ciclo — checkpoints, ciclinas</li>
+                <li>Mitose — prófase, metáfase, anáfase, telófase</li>
+                <li>Citocinese — animal e vegetal</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Meiose e Gametogênese</div>
+              <ul class="topico-sub">
+                <li>Meiose I e II — reduções e equações</li>
+                <li>Recombinação — crossing-over e variabilidade</li>
+                <li>Espermatogênese e ovogênese — diferenças</li>
+                <li>Fecundação e desenvolvimento embrionário inicial</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 05</span
+          ><span class="modulo-title">Genética Mendeliana e Cromossômica</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">5.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Leis de Mendel</div>
+              <ul class="topico-sub">
+                <li>1ª Lei — segregação dos fatores</li>
+                <li>2ª Lei — segregação independente</li>
+                <li>Dominância completa, incompleta e codominância</li>
+                <li>Alelos múltiplos — sistema ABO</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Herança Ligada ao Sexo e Interações</div>
+              <ul class="topico-sub">
+                <li>Cromossomos sexuais e herança ligada ao X</li>
+                <li>Daltonismo, hemofilia — exemplos clássicos</li>
+                <li>Epistasia — genes que silenciam outros</li>
+                <li>Pleiotropia — um gene, múltiplos efeitos</li>
+                <li>Herança poligênica e variação contínua</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 06</span
+          ><span class="modulo-title">Evolução</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">6.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Teoria Evolutiva</div>
+              <ul class="topico-sub">
+                <li>Darwin e Wallace — seleção natural</li>
+                <li>Lamarckismo — o que estava errado e por quê</li>
+                <li>Síntese moderna — genética + evolução</li>
+                <li>
+                  Evidências — fósseis, anatomia comparada, biogeografia,
+                  molecular
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Mecanismos Evolutivos</div>
+              <ul class="topico-sub">
+                <li>
+                  Seleção natural — tipos: direcional, estabilizadora,
+                  disruptiva
+                </li>
+                <li>Deriva genética — efeito fundador, gargalo de garrafa</li>
+                <li>Mutação e fluxo gênico como forças evolutivas</li>
+                <li>Especiação — alopátrica, simpátrica</li>
+                <li>
+                  Equilíbrio de Hardy-Weinberg — quando a evolução não ocorre
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 07</span
+          ><span class="modulo-title">Classificação e Biodiversidade</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">7.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Sistemática e Taxonomia</div>
+              <ul class="topico-sub">
+                <li>Taxonomia linneana — domínio ao espécie</li>
+                <li>Nomenclatura binomial</li>
+                <li>Cladística — agrupamento por ancestralidade</li>
+                <li>Os três domínios — Bacteria, Archaea, Eukarya</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Reinos e Grupos Principais</div>
+              <ul class="topico-sub">
+                <li>Vírus — estrutura, ciclos lítico e lisogênico</li>
+                <li>Monera/Bacteria — importância ecológica e médica</li>
+                <li>Protistas — diversidade e importância</li>
+                <li>Fungi — estrutura, nutrição, reprodução</li>
+                <li>
+                  Plantae — briófitas, pteridófitas, gimnospermas, angiospermas
+                </li>
+                <li>
+                  Animalia — invertebrados e vertebrados — filos principais
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 08</span
+          ><span class="modulo-title">Fisiologia Animal e Vegetal</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">8.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Sistemas do Corpo Humano</div>
+              <ul class="topico-sub">
+                <li>
+                  Sistema circulatório — coração, vasos, sangue, grupos
+                  sanguíneos
+                </li>
+                <li>
+                  Sistema respiratório — mecânica respiratória, troca gasosa
+                </li>
+                <li>Sistema digestório — enzimas, absorção, microbioma</li>
+                <li>Sistema nervoso — neurônio, sinapse, SNC e SNP</li>
+                <li>
+                  Sistema endócrino — glândulas, hormônios, retroalimentação
+                </li>
+                <li>Sistema imunológico — imunidade inata e adaptativa</li>
+                <li>Sistema reprodutor — ciclo menstrual, gametogênese</li>
+                <li>Sistema excretor — néfron, filtração, reabsorção</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">8.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Fisiologia Vegetal</div>
+              <ul class="topico-sub">
+                <li>Transporte de seiva — xilema e floema</li>
+                <li>Fotossíntese e transpiração — relação foliar</li>
+                <li>
+                  Hormônios vegetais — auxina, giberelina, citocinina, etileno,
+                  ABA
+                </li>
+                <li>Tropismo e nastismo</li>
+                <li>Reprodução — flor, polinização, fruto e semente</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 09</span
+          ><span class="modulo-title">Ecologia</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">9.1</div>
+            <div class="topico-content">
+              <div class="topico-name">
+                Níveis de Organização e Ecossistemas
+              </div>
+              <ul class="topico-sub">
+                <li>Indivíduo, população, comunidade, ecossistema, biosfera</li>
+                <li>Cadeia e teia alimentar</li>
+                <li>Fluxo de energia e pirâmides ecológicas</li>
+                <li>Ciclos biogeoquímicos — C, N, P, água</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">9.2</div>
+            <div class="topico-content">
+              <div class="topico-name">
+                Dinâmica de Populações e Relações Ecológicas
+              </div>
+              <ul class="topico-sub">
+                <li>Crescimento exponencial e logístico</li>
+                <li>Relações intra e interespecíficas</li>
+                <li>
+                  Predação, parasitismo, mutualismo, comensalismo, amensalismo
+                </li>
+                <li>Sucessão ecológica — primária e secundária</li>
+                <li>Biomas terrestres e aquáticos do Brasil</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="footer-left">
+          Enoraski · Biologia · Revisão Total · 2026
+        </div>
+        <div class="footer-right">Markova, Y.</div>
+      </footer>
+    </div>
+    <script>
+      function toggle(h) {
+        h.classList.toggle("open");
+        h.nextElementSibling.classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

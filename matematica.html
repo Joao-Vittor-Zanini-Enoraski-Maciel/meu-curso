@@ -1,0 +1,1135 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Matemática — Enoraski</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0c0c0e;
+        --surface: #111115;
+        --border: #1e1e26;
+        --accent: #c8a96e;
+        --accent2: #7c6fd4;
+        --text: #d4d0c8;
+        --muted: #5a5870;
+        --red: #c25f5f;
+        --green: #6aab8a;
+        --num: #3a3a48;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 13px;
+        line-height: 1.7;
+        min-height: 100vh;
+      }
+
+      /* GRID NOISE TEXTURE */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 39px,
+            var(--border) 39px,
+            var(--border) 40px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 39px,
+            var(--border) 39px,
+            var(--border) 40px
+          );
+        opacity: 0.25;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 60px 24px 80px;
+      }
+
+      /* HEADER */
+      header {
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 32px;
+        margin-bottom: 48px;
+      }
+
+      .school-tag {
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        color: var(--muted);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+
+      h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.2rem, 6vw, 3.8rem);
+        font-weight: 700;
+        color: #f0ece0;
+        line-height: 1.1;
+        margin-bottom: 8px;
+      }
+
+      .teacher-line {
+        color: var(--accent);
+        font-size: 11px;
+        letter-spacing: 0.2em;
+      }
+
+      .teacher-line span {
+        color: var(--muted);
+      }
+
+      /* LEGEND */
+      .legend {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+        padding: 14px 18px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .dot-fund {
+        background: var(--green);
+      }
+      .dot-inter {
+        background: var(--accent);
+      }
+      .dot-av {
+        background: var(--accent2);
+      }
+
+      /* MÓDULOS */
+      .modulo {
+        margin-bottom: 40px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        overflow: hidden;
+        animation: fadeUp 0.4s ease both;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .modulo:nth-child(1) {
+        animation-delay: 0.05s;
+      }
+      .modulo:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+      .modulo:nth-child(3) {
+        animation-delay: 0.15s;
+      }
+      .modulo:nth-child(4) {
+        animation-delay: 0.2s;
+      }
+      .modulo:nth-child(5) {
+        animation-delay: 0.25s;
+      }
+      .modulo:nth-child(6) {
+        animation-delay: 0.3s;
+      }
+      .modulo:nth-child(7) {
+        animation-delay: 0.35s;
+      }
+      .modulo:nth-child(8) {
+        animation-delay: 0.4s;
+      }
+      .modulo:nth-child(9) {
+        animation-delay: 0.45s;
+      }
+      .modulo:nth-child(10) {
+        animation-delay: 0.5s;
+      }
+
+      .modulo-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.2s;
+      }
+
+      .modulo-header:hover {
+        background: #15151c;
+      }
+
+      .modulo-num {
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        min-width: 36px;
+      }
+
+      .modulo-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.05rem;
+        font-style: italic;
+        color: #f0ece0;
+        flex: 1;
+      }
+
+      .nivel-badge {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 3px 8px;
+        border: 1px solid;
+      }
+
+      .nivel-fund {
+        color: var(--green);
+        border-color: var(--green);
+      }
+      .nivel-inter {
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+      .nivel-av {
+        color: var(--accent2);
+        border-color: var(--accent2);
+      }
+
+      .chevron {
+        color: var(--muted);
+        font-size: 10px;
+        transition: transform 0.2s;
+      }
+
+      .modulo-header.open .chevron {
+        transform: rotate(90deg);
+      }
+
+      .modulo-body {
+        display: none;
+        padding: 0;
+      }
+
+      .modulo-body.open {
+        display: block;
+      }
+
+      .topico {
+        display: flex;
+        gap: 0;
+        border-bottom: 1px solid var(--num);
+      }
+
+      .topico:last-child {
+        border-bottom: none;
+      }
+
+      .topico-idx {
+        min-width: 44px;
+        padding: 12px 14px;
+        font-size: 10px;
+        color: var(--muted);
+        border-right: 1px solid var(--num);
+        display: flex;
+        align-items: flex-start;
+        padding-top: 14px;
+      }
+
+      .topico-content {
+        padding: 12px 18px;
+        flex: 1;
+      }
+
+      .topico-name {
+        color: #e8e4da;
+        font-weight: 600;
+        margin-bottom: 4px;
+        font-size: 12px;
+      }
+
+      .topico-sub {
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.6;
+      }
+
+      .topico-sub li {
+        list-style: none;
+        padding-left: 12px;
+        position: relative;
+      }
+
+      .topico-sub li::before {
+        content: "—";
+        position: absolute;
+        left: 0;
+        color: #2a2a36;
+      }
+
+      /* FOOTER */
+      footer {
+        margin-top: 60px;
+        padding-top: 24px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: gap;
+      }
+
+      .footer-left {
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.15em;
+      }
+
+      .footer-right {
+        font-family: "Playfair Display", serif;
+        font-style: italic;
+        font-size: 11px;
+        color: #2a2a36;
+      }
+
+      /* ORLOV QUOTE */
+      .orlov-note {
+        margin-bottom: 40px;
+        padding: 16px 20px;
+        border-left: 2px solid var(--accent2);
+        background: #0f0f18;
+        font-style: italic;
+        color: #7a78a0;
+        font-size: 12px;
+      }
+
+      .orlov-note strong {
+        color: var(--accent2);
+        font-style: normal;
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        display: block;
+        margin-bottom: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="school-tag">Instituto Enoraski — Grade Curricular</div>
+        <h1>Matemática</h1>
+        <div class="teacher-line">
+          Mikhail Orlov <span>/ Estrutura & Cálculo</span>
+        </div>
+      </header>
+
+      <div class="orlov-note">
+        <strong>ORLOV — nota introdutória</strong>
+        Revisão total não significa lentidão. Significa eliminar lacunas. Se
+        você já sabe, passe. Se hesitou, ficou.
+      </div>
+
+      <div class="legend">
+        <div class="legend-item">
+          <div class="dot dot-fund"></div>
+          Fundamento
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-inter"></div>
+          Intermediário
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-av"></div>
+          Avançado
+        </div>
+      </div>
+
+      <!-- MÓDULO 1 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 01</span>
+          <span class="modulo-title">Aritmética e Números</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">1.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Conjuntos Numéricos</div>
+              <ul class="topico-sub">
+                <li>Naturais, Inteiros, Racionais, Irracionais, Reais</li>
+                <li>Representação na reta numérica</li>
+                <li>Relações de inclusão entre conjuntos</li>
+                <li>Densidade dos racionais e irracionais</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Operações Fundamentais</div>
+              <ul class="topico-sub">
+                <li>
+                  Adição, subtração, multiplicação, divisão com inteiros e
+                  racionais
+                </li>
+                <li>Propriedades comutativa, associativa, distributiva</li>
+                <li>Hierarquia das operações</li>
+                <li>Operações com frações e números mistos</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Divisibilidade e Números Primos</div>
+              <ul class="topico-sub">
+                <li>Critérios de divisibilidade (2, 3, 5, 7, 11)</li>
+                <li>Fatoração em primos</li>
+                <li>MMC e MDC — algoritmo de Euclides</li>
+                <li>Aplicações em frações</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.4</div>
+            <div class="topico-content">
+              <div class="topico-name">Potenciação e Radiciação</div>
+              <ul class="topico-sub">
+                <li>Propriedades das potências</li>
+                <li>Potências de expoente negativo e fracionário</li>
+                <li>Raízes e simplificação de radicais</li>
+                <li>Racionalização de denominadores</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.5</div>
+            <div class="topico-content">
+              <div class="topico-name">Números Complexos</div>
+              <ul class="topico-sub">
+                <li>Unidade imaginária i</li>
+                <li>Forma algébrica a + bi</li>
+                <li>Operações: soma, produto, divisão</li>
+                <li>Módulo e conjugado</li>
+                <li>Forma trigonométrica e polar</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MÓDULO 2 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 02</span>
+          <span class="modulo-title">Álgebra Elementar</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">2.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Expressões Algébricas</div>
+              <ul class="topico-sub">
+                <li>Monômios e polinômios</li>
+                <li>Operações com polinômios</li>
+                <li>Produtos notáveis</li>
+                <li>
+                  Fatoração: fator comum, agrupamento, diferença de quadrados,
+                  trinômio
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Equações do 1º Grau</div>
+              <ul class="topico-sub">
+                <li>Resolução de equações lineares</li>
+                <li>Equações com frações e parênteses</li>
+                <li>Problemas de modelagem com equações</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Equações do 2º Grau</div>
+              <ul class="topico-sub">
+                <li>Fórmula de Bhaskara</li>
+                <li>Discriminante e natureza das raízes</li>
+                <li>Relações de Girard (soma e produto das raízes)</li>
+                <li>Equações biquadradas</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.4</div>
+            <div class="topico-content">
+              <div class="topico-name">
+                Equações Algébricas de Grau Superior
+              </div>
+              <ul class="topico-sub">
+                <li>Teorema do resto e da divisão</li>
+                <li>Regra de Briot-Ruffini</li>
+                <li>Raízes racionais e multiplicidade</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.5</div>
+            <div class="topico-content">
+              <div class="topico-name">Inequações</div>
+              <ul class="topico-sub">
+                <li>Inequações do 1º e 2º grau</li>
+                <li>Resolução por estudo do sinal</li>
+                <li>Inequações com módulo</li>
+                <li>Representação em intervalos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MÓDULO 3 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 03</span>
+          <span class="modulo-title">Teoria dos Conjuntos e Lógica</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">3.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Conjuntos</div>
+              <ul class="topico-sub">
+                <li>Notação e representação</li>
+                <li>União, interseção, diferença, complementar</li>
+                <li>Diagramas de Venn</li>
+                <li>Problemas de contagem com conjuntos</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Lógica Matemática</div>
+              <ul class="topico-sub">
+                <li>Proposições e conectivos lógicos</li>
+                <li>Tabelas-verdade</li>
+                <li>Tautologia, contradição, contingência</li>
+                <li>Implicação e equivalência lógica</li>
+                <li>Negação de proposições compostas</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MÓDULO 4 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 04</span>
+          <span class="modulo-title">Funções</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">4.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Conceito de Função</div>
+              <ul class="topico-sub">
+                <li>Relação, domínio, contradomínio, imagem</li>
+                <li>Função injetora, sobrejetora, bijetora</li>
+                <li>Função inversa e composta</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Função Afim (1º Grau)</div>
+              <ul class="topico-sub">
+                <li>Gráfico, coeficientes angular e linear</li>
+                <li>Crescimento, decrescimento, zero da função</li>
+                <li>Aplicações e modelagem</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Função Quadrática (2º Grau)</div>
+              <ul class="topico-sub">
+                <li>Parábola: vértice, eixo de simetria, concavidade</li>
+                <li>Valor máximo e mínimo</li>
+                <li>Zeros e gráfico completo</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.4</div>
+            <div class="topico-content">
+              <div class="topico-name">Função Exponencial</div>
+              <ul class="topico-sub">
+                <li>Propriedades e gráfico</li>
+                <li>Base e, crescimento/decaimento</li>
+                <li>Equações exponenciais</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.5</div>
+            <div class="topico-content">
+              <div class="topico-name">Função Logarítmica</div>
+              <ul class="topico-sub">
+                <li>Definição como inversa da exponencial</li>
+                <li>Propriedades operatórias</li>
+                <li>Mudança de base</li>
+                <li>Equações e inequações logarítmicas</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.6</div>
+            <div class="topico-content">
+              <div class="topico-name">Funções Trigonométricas</div>
+              <ul class="topico-sub">
+                <li>Seno, cosseno, tangente — definição e gráficos</li>
+                <li>Período, amplitude, deslocamento de fase</li>
+                <li>Funções inversas: arcsen, arccos, arctan</li>
+                <li>Equações trigonométricas</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.7</div>
+            <div class="topico-content">
+              <div class="topico-name">Funções Modulares</div>
+              <ul class="topico-sub">
+                <li>Definição de módulo</li>
+                <li>Gráfico de f(x) = |x| e variações</li>
+                <li>Equações e inequações modulares</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MÓDULO 5 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 05</span>
+          <span class="modulo-title">Sistemas e Matrizes</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">5.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Sistemas Lineares</div>
+              <ul class="topico-sub">
+                <li>Sistemas 2×2 e 3×3</li>
+                <li>Método da substituição, adição, escalonamento</li>
+                <li>Classificação: SPD, SPI, SI</li>
+                <li>Interpretação geométrica</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Matrizes</div>
+              <ul class="topico-sub">
+                <li>Tipos de matrizes e notação</li>
+                <li>
+                  Operações: soma, multiplicação escalar, produto matricial
+                </li>
+                <li>Matriz transposta e inversa</li>
+                <li>Matriz identidade e nula</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Determinantes</div>
+              <ul class="topico-sub">
+                <li>Determinante de ordem 2 e 3 (Sarrus)</li>
+                <li>Propriedades dos determinantes</li>
+                <li>Regra de Cramer</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MÓDULO 6 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 06</span>
+          <span class="modulo-title">Combinatória e Probabilidade</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">6.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Princípio Fundamental da Contagem</div>
+              <ul class="topico-sub">
+                <li>Regra do produto e da soma</li>
+                <li>Problemas com restrições</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Análise Combinatória</div>
+              <ul class="topico-sub">
+                <li>Permutação simples e com repetição</li>
+                <li>Combinação simples</li>
+                <li>Arranjo</li>
+                <li>Permutação circular</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Binômio de Newton</div>
+              <ul class="topico-sub">
+                <li>Triângulo de Pascal</li>
+                <li>Termo geral do binômio</li>
+                <li>Propriedades dos coeficientes binomiais</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.4</div>
+            <div class="topico-content">
+              <div class="topico-name">Probabilidade</div>
+              <ul class="topico-sub">
+                <li>Espaço amostral e eventos</li>
+                <li>Probabilidade clássica</li>
+                <li>Eventos independentes e mutuamente exclusivos</li>
+                <li>Probabilidade condicional</li>
+                <li>Teorema de Bayes</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.5</div>
+            <div class="topico-content">
+              <div class="topico-name">Estatística</div>
+              <ul class="topico-sub">
+                <li>Média, mediana, moda</li>
+                <li>Variância e desvio padrão</li>
+                <li>Gráficos e tabelas de frequência</li>
+                <li>Distribuição binomial e normal (introdução)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MÓDULO 7 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 07</span>
+          <span class="modulo-title">Trigonometria</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">7.1</div>
+            <div class="topico-content">
+              <div class="topico-name">
+                Trigonometria no Triângulo Retângulo
+              </div>
+              <ul class="topico-sub">
+                <li>Seno, cosseno, tangente de ângulos agudos</li>
+                <li>Ângulos notáveis: 30°, 45°, 60°</li>
+                <li>Aplicações em problemas geométricos</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.2</div>
+            <div class="topico-content">
+              <div class="topico-name">
+                Trigonometria no Ciclo Trigonométrico
+              </div>
+              <ul class="topico-sub">
+                <li>Arcos e ângulos (grau e radiano)</li>
+                <li>Sinal das funções por quadrante</li>
+                <li>Reduções ao 1º quadrante</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Identidades e Fórmulas</div>
+              <ul class="topico-sub">
+                <li>Identidades fundamentais</li>
+                <li>Fórmulas de adição e subtração de arcos</li>
+                <li>Fórmulas do arco duplo e arco metade</li>
+                <li>Transformações de soma em produto</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.4</div>
+            <div class="topico-content">
+              <div class="topico-name">Lei dos Senos e dos Cossenos</div>
+              <ul class="topico-sub">
+                <li>Lei dos senos — demonstração e aplicações</li>
+                <li>Lei dos cossenos — demonstração e aplicações</li>
+                <li>Resolução de triângulos quaisquer</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MÓDULO 8 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 08</span>
+          <span class="modulo-title">Geometria Plana</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">8.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Ângulos e Retas</div>
+              <ul class="topico-sub">
+                <li>Tipos de ângulos e relações</li>
+                <li>Retas paralelas cortadas por transversal</li>
+                <li>Paralelismo e perpendicularismo</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">8.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Triângulos</div>
+              <ul class="topico-sub">
+                <li>Classificação, propriedades, congruência (casos)</li>
+                <li>Semelhança de triângulos (casos)</li>
+                <li>Relações métricas no triângulo retângulo</li>
+                <li>Teorema de Tales</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">8.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Quadriláteros e Polígonos</div>
+              <ul class="topico-sub">
+                <li>Paralelogramos, trapézios, losango</li>
+                <li>Soma dos ângulos internos e externos</li>
+                <li>Polígonos regulares e suas propriedades</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">8.4</div>
+            <div class="topico-content">
+              <div class="topico-name">Circunferência e Círculo</div>
+              <ul class="topico-sub">
+                <li>Elementos: raio, corda, arco, setor</li>
+                <li>Ângulos central e inscrito</li>
+                <li>Posições relativas (ponto, reta, circunferência)</li>
+                <li>Comprimento de arco e área de setor</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">8.5</div>
+            <div class="topico-content">
+              <div class="topico-name">Áreas de Figuras Planas</div>
+              <ul class="topico-sub">
+                <li>Triângulo, quadriláteros, polígonos regulares</li>
+                <li>Círculo e setor circular</li>
+                <li>Fórmula de Herão</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MÓDULO 9 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 09</span>
+          <span class="modulo-title">Geometria Espacial</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">9.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Posições no Espaço</div>
+              <ul class="topico-sub">
+                <li>Retas e planos no espaço</li>
+                <li>Paralelismo e perpendicularismo espacial</li>
+                <li>Diedros e triedros</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">9.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Poliedros</div>
+              <ul class="topico-sub">
+                <li>Prismas e pirâmides — área e volume</li>
+                <li>Relação de Euler (V + F = A + 2)</li>
+                <li>Poliedros regulares (sólidos de Platão)</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">9.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Sólidos de Revolução</div>
+              <ul class="topico-sub">
+                <li>Cilindro, cone, tronco de cone — área e volume</li>
+                <li>Esfera — área da superfície e volume</li>
+                <li>Relações entre sólidos inscritos e circunscritos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MÓDULO 10 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 10</span>
+          <span class="modulo-title">Geometria Analítica</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">10.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Ponto no Plano Cartesiano</div>
+              <ul class="topico-sub">
+                <li>Distância entre dois pontos</li>
+                <li>Ponto médio e baricentro</li>
+                <li>Alinhamento de três pontos</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">10.2</div>
+            <div class="topico-content">
+              <div class="topico-name">A Reta</div>
+              <ul class="topico-sub">
+                <li>Equações da reta (geral, reduzida, segmentária)</li>
+                <li>Coeficiente angular e posições relativas</li>
+                <li>Distância de ponto a reta</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">10.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Circunferência</div>
+              <ul class="topico-sub">
+                <li>Equação geral e reduzida</li>
+                <li>Centro e raio</li>
+                <li>Posições relativas com reta e ponto</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">10.4</div>
+            <div class="topico-content">
+              <div class="topico-name">Cônicas</div>
+              <ul class="topico-sub">
+                <li>Elipse — focos, vértices, equação</li>
+                <li>Hipérbole — focos, assíntotas, equação</li>
+                <li>Parábola — foco, diretriz, equação</li>
+                <li>Reconhecimento pela equação geral</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MÓDULO 11 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 11</span>
+          <span class="modulo-title">Sequências e Progressões</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">11.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Progressão Aritmética (PA)</div>
+              <ul class="topico-sub">
+                <li>Termo geral e razão</li>
+                <li>Soma dos n primeiros termos</li>
+                <li>PA finita e infinita</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">11.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Progressão Geométrica (PG)</div>
+              <ul class="topico-sub">
+                <li>Termo geral e razão</li>
+                <li>Soma dos n primeiros termos</li>
+                <li>Soma da PG infinita (|q| &lt; 1)</li>
+                <li>Aplicações: juros compostos, crescimento populacional</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">11.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Grandezas Proporcionais</div>
+              <ul class="topico-sub">
+                <li>Razão e proporção</li>
+                <li>Grandezas direta e inversamente proporcionais</li>
+                <li>Regra de três simples e composta</li>
+                <li>Porcentagem e juros simples</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MÓDULO 12 -->
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 12</span>
+          <span class="modulo-title">Introdução ao Cálculo</span>
+          <span class="nivel-badge nivel-av">Avançado</span>
+          <span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">12.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Limites</div>
+              <ul class="topico-sub">
+                <li>Noção intuitiva de limite</li>
+                <li>Limites laterais e existência do limite</li>
+                <li>Limites no infinito</li>
+                <li>Formas indeterminadas (0/0, ∞/∞)</li>
+                <li>Teorema do confronto (sanduíche)</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">12.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Derivadas</div>
+              <ul class="topico-sub">
+                <li>Definição como limite do quociente incremental</li>
+                <li>Regras de derivação (produto, quociente, cadeia)</li>
+                <li>Derivadas das funções elementares</li>
+                <li>Derivadas de ordem superior</li>
+                <li>Aplicações: taxa de variação, otimização</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">12.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Introdução à Integral</div>
+              <ul class="topico-sub">
+                <li>Antiderivada e integral indefinida</li>
+                <li>Regras básicas de integração</li>
+                <li>Integral definida e Teorema Fundamental do Cálculo</li>
+                <li>Área sob a curva</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="footer-left">
+          ENORASKI · MATEMÁTICA · REVISÃO TOTAL · 2026
+        </div>
+        <div class="footer-right">Orlov, M.</div>
+      </footer>
+    </div>
+
+    <script>
+      function toggle(header) {
+        header.classList.toggle("open");
+        const body = header.nextElementSibling;
+        body.classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>

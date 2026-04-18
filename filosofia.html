@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Filosofia — Enoraski</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Courier+Prime:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0a0a0e;
+        --surface: #111118;
+        --surface2: #181820;
+        --border: #202030;
+        --border-light: #2a2a40;
+        --accent: #9090e0;
+        --accent2: #606090;
+        --text: #d8d8f0;
+        --muted: #404060;
+        --muted2: #707090;
+        --fund: #5a9a70;
+        --inter: #9090e0;
+        --av: #c06060;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Courier Prime", monospace;
+        font-size: 12px;
+        line-height: 1.85;
+        min-height: 100vh;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 50%;
+        width: 1px;
+        height: 100%;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          rgba(144, 144, 224, 0.08) 30%,
+          rgba(144, 144, 224, 0.08) 70%,
+          transparent
+        );
+        pointer-events: none;
+        z-index: 0;
+      }
+      .container {
+        position: relative;
+        z-index: 1;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 64px 44px 80px;
+      }
+      header {
+        margin-bottom: 48px;
+        padding-bottom: 28px;
+        border-bottom: 1px solid var(--border-light);
+      }
+      .school-tag {
+        font-size: 9px;
+        letter-spacing: 0.38em;
+        color: var(--muted2);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      h1 {
+        font-family: "Cardo", serif;
+        font-size: clamp(3rem, 8vw, 5.5rem);
+        font-weight: 400;
+        line-height: 0.95;
+        color: var(--text);
+        margin-bottom: 16px;
+      }
+      h1 em {
+        font-style: italic;
+        color: var(--accent);
+      }
+      .teacher-block {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .teacher-name {
+        font-family: "Cardo", serif;
+        font-size: 1.1rem;
+        font-style: italic;
+        color: var(--accent);
+      }
+      .teacher-desc {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        color: var(--muted2);
+        text-transform: uppercase;
+      }
+      .prof-note {
+        margin-bottom: 36px;
+        padding: 16px 22px 16px 20px;
+        border-left: 2px solid var(--accent2);
+        background: var(--surface2);
+        font-family: "Cardo", serif;
+        font-style: italic;
+        font-size: 1.1rem;
+        color: #8888c0;
+        line-height: 1.65;
+      }
+      .prof-note strong {
+        display: block;
+        font-family: "Courier Prime", monospace;
+        font-style: normal;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.25em;
+        color: var(--accent2);
+        margin-bottom: 6px;
+        text-transform: uppercase;
+      }
+      .legend {
+        display: flex;
+        gap: 22px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+        padding: 12px 16px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 10px;
+        color: var(--muted2);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .dot-fund {
+        background: var(--fund);
+      }
+      .dot-inter {
+        background: var(--inter);
+      }
+      .dot-av {
+        background: var(--av);
+      }
+      .modulo {
+        margin-bottom: 28px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        overflow: hidden;
+        animation: up 0.4s ease both;
+      }
+      @keyframes up {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .modulo:nth-child(1) {
+        animation-delay: 0.04s;
+      }
+      .modulo:nth-child(2) {
+        animation-delay: 0.09s;
+      }
+      .modulo:nth-child(3) {
+        animation-delay: 0.14s;
+      }
+      .modulo:nth-child(4) {
+        animation-delay: 0.19s;
+      }
+      .modulo:nth-child(5) {
+        animation-delay: 0.24s;
+      }
+      .modulo:nth-child(6) {
+        animation-delay: 0.29s;
+      }
+      .modulo:nth-child(7) {
+        animation-delay: 0.34s;
+      }
+      .modulo:nth-child(8) {
+        animation-delay: 0.39s;
+      }
+      .modulo-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 15px 20px;
+        border-bottom: 1px solid var(--border);
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.2s;
+      }
+      .modulo-header:hover {
+        background: var(--surface2);
+      }
+      .modulo-num {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.12em;
+        min-width: 40px;
+      }
+      .modulo-title {
+        font-family: "Cardo", serif;
+        font-size: 1.15rem;
+        color: var(--text);
+        flex: 1;
+      }
+      .nivel-badge {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 3px 9px;
+        border: 1px solid;
+      }
+      .nivel-fund {
+        color: var(--fund);
+        border-color: var(--fund);
+      }
+      .nivel-inter {
+        color: var(--inter);
+        border-color: var(--inter);
+      }
+      .nivel-av {
+        color: var(--av);
+        border-color: var(--av);
+      }
+      .chevron {
+        color: var(--muted);
+        font-size: 10px;
+        transition: transform 0.2s;
+      }
+      .modulo-header.open .chevron {
+        transform: rotate(90deg);
+      }
+      .modulo-body {
+        display: none;
+      }
+      .modulo-body.open {
+        display: block;
+      }
+      .topico {
+        display: flex;
+        border-bottom: 1px solid var(--border);
+      }
+      .topico:last-child {
+        border-bottom: none;
+      }
+      .topico-idx {
+        min-width: 48px;
+        padding: 12px 14px;
+        font-size: 9px;
+        color: var(--muted);
+        border-right: 1px solid var(--border);
+        display: flex;
+        align-items: flex-start;
+        padding-top: 14px;
+      }
+      .topico-content {
+        padding: 12px 20px;
+        flex: 1;
+      }
+      .topico-name {
+        font-family: "Cardo", serif;
+        font-size: 1.05rem;
+        color: var(--text);
+        margin-bottom: 5px;
+      }
+      .topico-sub {
+        color: var(--muted2);
+        font-size: 11px;
+        line-height: 1.7;
+      }
+      .topico-sub li {
+        list-style: none;
+        padding-left: 14px;
+        position: relative;
+      }
+      .topico-sub li::before {
+        content: "∴";
+        position: absolute;
+        left: 0;
+        color: var(--muted);
+        font-size: 9px;
+        top: 2px;
+      }
+      footer {
+        margin-top: 52px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-light);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .footer-left {
+        font-size: 9px;
+        color: var(--muted);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+      .footer-right {
+        font-family: "Cardo", serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: var(--muted2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="school-tag">Instituto Enoraski — Grade Curricular</div>
+        <h1>Fi<em>lo</em>sofia</h1>
+        <div class="teacher-block">
+          <span class="teacher-name">Elena Petrovna</span>
+          <span class="teacher-desc"
+            >/ Abstrata · Profunda · Desconstrói Fundamentos · Ignora Respostas
+            Fáceis</span
+          >
+        </div>
+      </header>
+      <div class="prof-note">
+        <strong>Petrovna — nota de entrada</strong>
+        A pergunta que parece respondida é exatamente onde a filosofia começa.
+        Qualquer resposta que não te incomode provavelmente não é ainda uma
+        resposta filosófica.
+      </div>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="dot dot-fund"></div>
+          Fundamento
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-inter"></div>
+          Intermediário
+        </div>
+        <div class="legend-item">
+          <div class="dot dot-av"></div>
+          Avançado
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 01</span
+          ><span class="modulo-title">O Que É Filosofia</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">1.1</div>
+            <div class="topico-content">
+              <div class="topico-name">A Atitude Filosófica</div>
+              <ul class="topico-sub">
+                <li>Thaumazein — o espanto como origem do pensamento</li>
+                <li>
+                  Diferença entre opinião (doxa) e conhecimento (episteme)
+                </li>
+                <li>
+                  Filosofia vs. mitologia, religião, ciência — fronteiras e
+                  sobreposições
+                </li>
+                <li>O que significa um problema ser filosófico</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">1.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Método Filosófico</div>
+              <ul class="topico-sub">
+                <li>Análise conceitual — decompor para examinar</li>
+                <li>Argumento filosófico — estrutura e avaliação</li>
+                <li>
+                  Experimentos mentais — pensar o impossível para entender o
+                  possível
+                </li>
+                <li>Diálogo socrático — refutação como caminho</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 02</span
+          ><span class="modulo-title">Filosofia Antiga</span>
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">2.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Pré-Socráticos</div>
+              <ul class="topico-sub">
+                <li>A busca pelo arché — o princípio de tudo</li>
+                <li>Tales, Anaximandro, Anaxímenes — água, ápeiron, ar</li>
+                <li>Heráclito — o devir e a unidade dos opostos</li>
+                <li>Parmênides — o ser e a impossibilidade do não-ser</li>
+                <li>Demócrito e os átomos</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Sócrates e Platão</div>
+              <ul class="topico-sub">
+                <li>Sócrates — ironia, maiêutica, "sei que nada sei"</li>
+                <li>Teoria das Ideias — mundo sensível e mundo inteligível</li>
+                <li>A alegoria da caverna — o que significa sair dela</li>
+                <li>A República — justiça, alma, cidade ideal</li>
+                <li>Eros filosófico no Banquete</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">2.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Aristóteles</div>
+              <ul class="topico-sub">
+                <li>Crítica à teoria das Ideias — forma imanente na matéria</li>
+                <li>As quatro causas</li>
+                <li>Ética das virtudes — eudaimonia e o justo meio</li>
+                <li>Política — o homem como animal político</li>
+                <li>Lógica — o silogismo como instrumento</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 03</span
+          ><span class="modulo-title"
+            >Filosofia Medieval e do Renascimento</span
+          >
+          <span class="nivel-badge nivel-fund">Fundamento</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">3.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Filosofia Medieval</div>
+              <ul class="topico-sub">
+                <li>Razão e fé — problema central</li>
+                <li>Agostinho — iluminação divina, livre-arbítrio e mal</li>
+                <li>
+                  Tomás de Aquino — as cinco vias, síntese aristotélico-cristã
+                </li>
+                <li>Nominalismo vs. realismo — os universais existem?</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">3.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Renascimento e Humanismo</div>
+              <ul class="topico-sub">
+                <li>Maquiavel — o poder sem ilusões morais</li>
+                <li>Montaigne — o ensaio como forma de pensar sobre si</li>
+                <li>Erasmo e o elogio da loucura</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 04</span
+          ><span class="modulo-title">Filosofia Moderna</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">4.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Racionalismo</div>
+              <ul class="topico-sub">
+                <li>Descartes — dúvida metódica e cogito ergo sum</li>
+                <li>Dualismo mente-corpo e seus problemas</li>
+                <li>
+                  Espinosa — Deus ou Natureza, determinismo, ética geométrica
+                </li>
+                <li>Leibniz — mônadas e harmonia pré-estabelecida</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Empirismo</div>
+              <ul class="topico-sub">
+                <li>Locke — tábula rasa, ideias simples e complexas</li>
+                <li>Berkeley — esse est percipi — ser é ser percebido</li>
+                <li>
+                  Hume — ceticismo, causalidade como hábito, problema da indução
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">4.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Iluminismo e Kant</div>
+              <ul class="topico-sub">
+                <li>O que é Iluminismo — Kant sobre a maioridade da razão</li>
+                <li>Kant — a revolução copernicana na filosofia</li>
+                <li>Categorias do entendimento e formas da intuição</li>
+                <li>Imperativo categórico — ética como forma, não conteúdo</li>
+                <li>A coisa em si e os limites do conhecimento</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 05</span
+          ><span class="modulo-title">Filosofia Contemporânea</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">5.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Hegel, Marx e Nietzsche</div>
+              <ul class="topico-sub">
+                <li>
+                  Hegel — dialética, espírito absoluto, história como
+                  desenvolvimento
+                </li>
+                <li>Marx — materialismo histórico, alienação, mais-valia</li>
+                <li>
+                  Nietzsche — morte de Deus, além-do-homem, vontade de poder,
+                  eterno retorno
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Existencialismo e Fenomenologia</div>
+              <ul class="topico-sub">
+                <li>Husserl — a intencionalidade da consciência</li>
+                <li>
+                  Heidegger — ser-no-mundo, dasein, angústia, ser-para-a-morte
+                </li>
+                <li>
+                  Sartre — existência precede a essência, liberdade radical,
+                  má-fé
+                </li>
+                <li>Beauvoir — ambiguidade, feminismo existencialista</li>
+                <li>Camus — absurdo e revolta</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">5.3</div>
+            <div class="topico-content">
+              <div class="topico-name">Filosofia Analítica e Pragmatismo</div>
+              <ul class="topico-sub">
+                <li>Frege, Russell — lógica e linguagem</li>
+                <li>
+                  Wittgenstein I — tudo que pode ser dito pode ser dito
+                  claramente
+                </li>
+                <li>Wittgenstein II — jogos de linguagem, formas de vida</li>
+                <li>Pragmatismo — Peirce, James, Dewey</li>
+                <li>Popper — falsificacionismo e ciência</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 06</span
+          ><span class="modulo-title">Epistemologia</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">6.1</div>
+            <div class="topico-content">
+              <div class="topico-name">O Que É Conhecimento</div>
+              <ul class="topico-sub">
+                <li>Definição tripartite — crença verdadeira justificada</li>
+                <li>Gettier e o colapso da definição clássica</li>
+                <li>Ceticismo — tipos e respostas</li>
+                <li>Fundacionismo, coerentismo, externalismo</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">6.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Ciência e Conhecimento</div>
+              <ul class="topico-sub">
+                <li>Indução e seus problemas — Hume e depois</li>
+                <li>Filosofia da ciência — Kuhn, Lakatos, Feyerabend</li>
+                <li>Paradigmas e revoluções científicas</li>
+                <li>Limites do método científico</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 07</span
+          ><span class="modulo-title">Ética e Filosofia Política</span>
+          <span class="nivel-badge nivel-inter">Intermediário</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">7.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Teorias Éticas</div>
+              <ul class="topico-sub">
+                <li>Ética das virtudes — Aristóteles e o neoaristotelismo</li>
+                <li>Deontologia — Kant e a obrigação moral</li>
+                <li>Utilitarismo — Bentham, Mill, Singer</li>
+                <li>Ética do cuidado — Gilligan, Noddings</li>
+                <li>Metaética — o que são afirmações morais?</li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">7.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Filosofia Política</div>
+              <ul class="topico-sub">
+                <li>Contratualismo — Hobbes, Locke, Rousseau</li>
+                <li>Liberalismo — Mill, Rawls e a justiça como equidade</li>
+                <li>Comunitarismo — crítica ao sujeito liberal</li>
+                <li>Hannah Arendt — banalidade do mal, esfera pública</li>
+                <li>Foucault — poder, biopolítica, disciplina</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modulo">
+        <div class="modulo-header" onclick="toggle(this)">
+          <span class="modulo-num">MOD 08</span
+          ><span class="modulo-title">Metafísica e Filosofia da Mente</span>
+          <span class="nivel-badge nivel-av">Avançado</span
+          ><span class="chevron">▶</span>
+        </div>
+        <div class="modulo-body">
+          <div class="topico">
+            <div class="topico-idx">8.1</div>
+            <div class="topico-content">
+              <div class="topico-name">Problemas Metafísicos</div>
+              <ul class="topico-sub">
+                <li>Ser e existência — o problema ontológico central</li>
+                <li>
+                  Identidade pessoal — o que faz você ser você ao longo do tempo
+                </li>
+                <li>
+                  Livre-arbítrio vs. determinismo — compatibilismo e suas
+                  variantes
+                </li>
+                <li>Tempo — McTaggart, séries A e B</li>
+                <li>
+                  Modalidades — necessidade, possibilidade, mundos possíveis
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="topico">
+            <div class="topico-idx">8.2</div>
+            <div class="topico-content">
+              <div class="topico-name">Filosofia da Mente</div>
+              <ul class="topico-sub">
+                <li>O problema mente-corpo — dualismo e seus problemas</li>
+                <li>Fisicalismo — redutivo e não-redutivo</li>
+                <li>Qualia e o argumento do quarto de Mary</li>
+                <li>Consciência — o problema difícil (Chalmers)</li>
+                <li>Intencionalidade e representação mental</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div class="footer-left">Enoraski · Filosofia · 2026</div>
+        <div class="footer-right">Petrovna, E.</div>
+      </footer>
+    </div>
+    <script>
+      function toggle(h) {
+        h.classList.toggle("open");
+        h.nextElementSibling.classList.toggle("open");
+      }
+    </script>
+  </body>
+</html>
