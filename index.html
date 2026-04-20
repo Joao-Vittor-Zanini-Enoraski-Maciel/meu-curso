@@ -3,618 +3,1894 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Enoraski · Grade Principal</title>
+    <title>Ficha — João Vittor — Instituto Enoraski</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@300;400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Share+Tech+Mono&display=swap"
       rel="stylesheet"
     />
     <style>
+      :root {
+        --bg: #f5f0e8;
+        --surface: #ede6d8;
+        --surface2: #e3d9c8;
+        --border: #c8bea8;
+        --border-dark: #a89878;
+        --accent: #1a1408;
+        --gold: #b8820a;
+        --red: #8a1a1a;
+        --text: #18140a;
+        --muted: #786858;
+        --muted2: #a89878;
+        --green: #3a6a3a;
+      }
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
-
-      :root {
-        --bg: #0a0a0c;
-        --surface: #0f0f12;
-        --surface-card: #111115;
-        --border: #2a1a1f;
-        --accent: #b91c1c; /* vermelho principal */
-        --accent-dark: #7f1a1a;
-        --accent-glow: #b91c1c30;
-        --text: #e5e0d8;
-        --muted: #6e6a78;
-        --muted-dark: #3a2a2f;
-        --highlight: #f0e6d0;
-      }
-
       body {
         background: var(--bg);
         color: var(--text);
-        font-family: "JetBrains Mono", monospace;
-        font-size: 13px;
-        line-height: 1.6;
+        font-family: "Share Tech Mono", monospace;
+        font-size: 12px;
+        line-height: 1.75;
         min-height: 100vh;
       }
-
-      /* grade / grid noise */
       body::before {
         content: "";
         position: fixed;
         inset: 0;
-        background-image:
-          repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 39px,
-            var(--border) 39px,
-            var(--border) 40px
-          ),
-          repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 39px,
-            var(--border) 39px,
-            var(--border) 40px
-          );
-        opacity: 0.2;
+        background-image: repeating-linear-gradient(
+          transparent,
+          transparent 31px,
+          rgba(168, 152, 120, 0.12) 31px,
+          rgba(168, 152, 120, 0.12) 32px
+        );
         pointer-events: none;
         z-index: 0;
       }
 
-      .container {
+      /* SCROLL HORIZONTAL */
+      .scroll-wrap {
         position: relative;
         z-index: 1;
-        max-width: 1300px;
-        margin: 0 auto;
-        padding: 40px 28px 70px;
-      }
-
-      /* HEADER */
-      header {
-        border-bottom: 1px solid var(--border);
-        padding-bottom: 32px;
-        margin-bottom: 48px;
         display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: flex-end;
+        flex-direction: row;
+        width: max-content;
+        min-height: 100vh;
+        padding: 48px 0;
       }
 
-      .title-area .school-tag {
-        font-size: 10px;
-        letter-spacing: 0.3em;
-        color: var(--muted);
-        text-transform: uppercase;
-        margin-bottom: 12px;
-      }
-
-      h1 {
-        font-family: "Playfair Display", serif;
-        font-size: clamp(2.4rem, 6vw, 4rem);
-        font-weight: 700;
-        color: var(--highlight);
-        line-height: 1.05;
-        letter-spacing: -0.01em;
-      }
-
-      .sub {
-        font-size: 11px;
-        color: var(--accent);
-        margin-top: 8px;
-        letter-spacing: 0.2em;
-      }
-
-      .voronin-mini {
-        text-align: right;
-        font-style: italic;
-        font-size: 11px;
-        color: var(--muted);
-        border-right: 2px solid var(--accent);
-        padding-right: 18px;
-      }
-
-      .voronin-mini strong {
-        color: var(--accent);
-        font-style: normal;
-      }
-
-      /* LEGENDA / aviso */
-      .notice {
-        background: var(--surface);
-        border-left: 3px solid var(--accent);
-        padding: 14px 20px;
-        margin-bottom: 44px;
-        font-size: 11px;
-        color: var(--muted);
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .badge-red {
-        background: var(--accent);
-        color: #0a0a0c;
-        padding: 4px 12px;
-        font-size: 9px;
-        letter-spacing: 0.1em;
-        font-weight: 600;
-      }
-
-      /* GRADE MATERIAS - GRID CARDS */
-      .subjects-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-        gap: 16px;
-        margin-bottom: 60px;
-      }
-
-      .subject-card {
-        background: var(--surface-card);
-        border: 1px solid var(--border);
-        padding: 16px 14px;
-        transition: all 0.2s ease;
-        cursor: pointer;
+      /* SEÇÃO GENÉRICA */
+      .section {
+        width: 480px;
+        min-height: calc(100vh - 96px);
+        padding: 40px 36px;
+        border-right: 1px solid var(--border);
+        flex-shrink: 0;
         position: relative;
       }
-
-      .subject-card:hover {
-        border-color: var(--accent);
-        transform: translateY(-3px);
-        background: #141418;
-        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+      .section:last-child {
+        border-right: none;
+      }
+      .section-label {
+        font-size: 9px;
+        letter-spacing: 0.35em;
+        color: var(--muted2);
+        text-transform: uppercase;
+        margin-bottom: 28px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .section-label::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
       }
 
-      .subject-name {
-        font-family: "Playfair Display", serif;
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: #f0e6da;
+      /* ═══════════════════════════════════════
+   SEÇÃO 1 — FICHA DO ALUNO
+═══════════════════════════════════════ */
+      #s1 {
+        width: 520px;
+      }
+
+      .aluno-header {
+        margin-bottom: 32px;
+        padding-bottom: 24px;
+        border-bottom: 2px solid var(--accent);
+      }
+      .school-tag {
+        font-size: 9px;
+        letter-spacing: 0.35em;
+        color: var(--muted2);
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+      .aluno-nome {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2rem;
+        font-weight: 400;
+        line-height: 1.1;
+        color: var(--text);
+        margin-bottom: 6px;
+      }
+      .aluno-nome em {
+        font-style: italic;
+        color: var(--gold);
+      }
+      .aluno-sub {
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+      }
+
+      /* bloco de dados */
+      .dados-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        margin-bottom: 28px;
+        border: 1px solid var(--border);
+      }
+      .dado {
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--border);
+        border-right: 1px solid var(--border);
+      }
+      .dado:nth-child(even) {
+        border-right: none;
+      }
+      .dado:nth-last-child(-n + 2) {
+        border-bottom: none;
+      }
+      .dado-label {
+        font-size: 8.5px;
+        letter-spacing: 0.2em;
+        color: var(--muted2);
+        text-transform: uppercase;
+        margin-bottom: 3px;
+      }
+      .dado-val {
+        font-size: 12px;
+        color: var(--text);
+      }
+      .dado-val.gold {
+        color: var(--gold);
+        font-family: "Cormorant Garamond", serif;
+        font-size: 13px;
+      }
+      .dado-val.red {
+        color: var(--red);
+      }
+
+      /* sangue */
+      .sangue-block {
+        padding: 12px 14px;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        margin-bottom: 28px;
+      }
+      .sangue-title {
+        font-size: 8.5px;
+        letter-spacing: 0.2em;
+        color: var(--muted2);
+        text-transform: uppercase;
         margin-bottom: 8px;
       }
-
-      .subject-meta {
-        font-size: 9px;
-        letter-spacing: 0.1em;
-        color: var(--accent);
-        text-transform: uppercase;
-        border-top: 1px dashed var(--border);
-        padding-top: 8px;
-        margin-top: 4px;
-        display: inline-block;
-      }
-
-      /* CRONOGRAMA SEMANAL */
-      .schedule-section {
-        margin-top: 20px;
-        margin-bottom: 60px;
-      }
-
-      .section-title {
-        font-family: "Playfair Display", serif;
-        font-size: 1.5rem;
-        font-weight: 400;
-        letter-spacing: -0.2px;
-        border-left: 4px solid var(--accent);
-        padding-left: 18px;
-        margin-bottom: 28px;
-        color: #ddd6cc;
-      }
-
-      .schedule-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 24px;
-      }
-
-      .day-card {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        overflow: hidden;
-        transition: all 0.2s;
-      }
-
-      .day-header {
-        background: #14111a;
-        padding: 14px 18px;
-        border-bottom: 1px solid var(--border);
+      .sangue-main {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.6rem;
+        color: var(--red);
         font-weight: 600;
-        font-family: "Playfair Display", serif;
-        font-size: 1.2rem;
-        color: var(--accent);
-        letter-spacing: 0.05em;
+        margin-bottom: 4px;
+      }
+      .sangue-detail {
+        font-size: 10px;
+        color: var(--muted);
       }
 
-      .day-content {
-        padding: 14px 18px;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
+      /* irmão */
+      .irmao-block {
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        margin-bottom: 28px;
+      }
+      .irmao-title {
+        font-size: 8.5px;
+        letter-spacing: 0.2em;
+        color: var(--muted2);
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+      .irmao-nome {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.1rem;
+        margin-bottom: 4px;
+      }
+      .irmao-detail {
+        font-size: 10px;
+        color: var(--muted);
       }
 
-      .schedule-item {
+      /* linhagem */
+      .linhagem-title {
+        font-size: 9px;
+        letter-spacing: 0.25em;
+        color: var(--gold);
+        text-transform: uppercase;
+        margin-bottom: 16px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border);
+      }
+      .gen-block {
+        margin-bottom: 16px;
+      }
+      .gen-label {
+        font-size: 8px;
+        letter-spacing: 0.2em;
+        color: var(--muted2);
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+      .gen-item {
         display: flex;
         align-items: baseline;
-        gap: 12px;
-        border-bottom: 1px dotted #2a2228;
-        padding-bottom: 8px;
+        gap: 8px;
+        padding: 5px 0;
+        border-bottom: 1px solid rgba(168, 152, 120, 0.3);
+      }
+      .gen-item:last-child {
+        border-bottom: none;
+      }
+      .gen-nome {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1rem;
+        color: var(--text);
+        flex: 1;
+      }
+      .gen-anos {
+        font-size: 10px;
+        color: var(--muted2);
+        white-space: nowrap;
+      }
+      .gen-obs {
+        font-size: 9px;
+        color: var(--muted);
+        font-style: italic;
+        display: block;
+        margin-top: 2px;
+        padding-left: 0;
+        font-family: "Cormorant Garamond", serif;
+      }
+      .tipo-direto {
+        display: inline-block;
+        font-size: 8px;
+        padding: 1px 6px;
+        border: 1px solid var(--gold);
+        color: var(--gold);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-left: 6px;
+        vertical-align: middle;
+      }
+      .tipo-indireto {
+        display: inline-block;
+        font-size: 8px;
+        padding: 1px 6px;
+        border: 1px solid var(--muted2);
+        color: var(--muted2);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-left: 6px;
+        vertical-align: middle;
+      }
+      .obs-bloco {
+        margin-top: 16px;
+        padding: 10px 14px;
+        border-left: 2px solid var(--gold);
+        background: var(--surface2);
+        font-size: 10px;
+        color: var(--muted);
+        font-style: italic;
+        font-family: "Cormorant Garamond", serif;
       }
 
-      .schedule-dot {
-        width: 5px;
-        height: 5px;
-        background: var(--accent);
-        border-radius: 50%;
+      /* ═══════════════════════════════════════
+   SEÇÃO 2 — MAPA INTERATIVO
+═══════════════════════════════════════ */
+      #s2 {
+        width: 900px;
+      }
+
+      .mapa-container {
+        display: flex;
+        gap: 20px;
+      }
+      .mapa-esquerda {
+        flex: 1;
+        min-width: 0;
+      }
+      .mapa-direita {
+        width: 280px;
         flex-shrink: 0;
       }
 
-      .schedule-subject {
-        font-size: 12px;
-        font-weight: 500;
-        color: #e0d8ce;
+      /* grid do terreno */
+      .terreno {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(10, 52px);
+        gap: 3px;
+        margin-bottom: 16px;
       }
 
-      /* FOOTER */
-      footer {
-        margin-top: 50px;
-        padding-top: 28px;
-        border-top: 1px solid var(--border);
+      .zona {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 2px;
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        flex-wrap: wrap;
-        gap: 14px;
-        font-size: 10px;
+        justify-content: center;
+        font-size: 8.5px;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          border-color 0.15s;
+        padding: 3px;
+        line-height: 1.3;
         color: var(--muted);
+        user-select: none;
+      }
+      .zona:hover {
+        background: var(--surface2);
+        border-color: var(--gold);
+        color: var(--text);
+      }
+      .zona.active {
+        background: var(--surface2);
+        border-color: var(--gold);
+        color: var(--gold);
       }
 
-      .footer-right {
-        font-family: "Playfair Display", serif;
-        font-style: italic;
-        color: #3a2a32;
+      .zona.norte {
+        background: rgba(184, 130, 10, 0.08);
+      }
+      .zona.central {
+        background: rgba(58, 106, 58, 0.06);
+      }
+      .zona.sul {
+        background: rgba(138, 26, 26, 0.06);
+      }
+      .zona.bosque {
+        background: rgba(58, 106, 58, 0.12);
+        color: var(--green);
+      }
+      .zona.span2h {
+        grid-column: span 2;
+      }
+      .zona.span3h {
+        grid-column: span 3;
+      }
+      .zona.span5h {
+        grid-column: span 5;
+      }
+      .zona.span2v {
+        grid-row: span 2;
+      }
+      .zona.span3v {
+        grid-row: span 3;
       }
 
-      /* RESPONSIVE */
-      @media (max-width: 720px) {
-        .container {
-          padding: 28px 20px;
-        }
-        .subjects-grid {
-          grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-        }
-        .day-header {
-          font-size: 1rem;
-        }
+      /* painel de info */
+      .info-panel {
+        border: 1px solid var(--border);
+        background: var(--surface);
+        padding: 16px;
+        min-height: 300px;
+      }
+      .info-panel-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 4px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border);
+      }
+      .info-panel-sub {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        color: var(--muted2);
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+      .info-panel-desc {
+        font-size: 11px;
+        color: var(--muted);
+        line-height: 1.7;
+        margin-bottom: 12px;
       }
 
-      /* small micro interação */
-      a {
-        text-decoration: none;
-        color: inherit;
+      /* andares */
+      .andares-title {
+        font-size: 8.5px;
+        letter-spacing: 0.2em;
+        color: var(--muted2);
+        text-transform: uppercase;
+        margin-bottom: 8px;
+        margin-top: 12px;
+      }
+      .andar-tabs {
+        display: flex;
+        gap: 4px;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+      }
+      .andar-tab {
+        font-size: 9px;
+        padding: 3px 10px;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        cursor: pointer;
+        transition: all 0.15s;
+        background: transparent;
+      }
+      .andar-tab:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+      .andar-tab.active {
+        border-color: var(--gold);
+        color: var(--text);
+        background: var(--surface2);
+      }
+      .andar-content {
+        display: none;
+        font-size: 11px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .andar-content.active {
         display: block;
       }
 
-      .subject-card {
-        transition: all 0.2s ease;
+      /* pessoas */
+      .pessoas-list {
+        margin-top: 10px;
+        border-top: 1px solid var(--border);
+        padding-top: 10px;
+      }
+      .pessoa {
+        display: flex;
+        gap: 8px;
+        padding: 4px 0;
+        border-bottom: 1px solid rgba(168, 152, 120, 0.2);
+        align-items: baseline;
+      }
+      .pessoa:last-child {
+        border-bottom: none;
+      }
+      .pessoa-nome {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1rem;
+        color: var(--text);
+        flex: 1;
+      }
+      .pessoa-cargo {
+        font-size: 9px;
+        color: var(--muted2);
+      }
+
+      .info-default {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 200px;
+        font-size: 10px;
+        color: var(--muted2);
+        font-style: italic;
+        font-family: "Cormorant Garamond", serif;
+        text-align: center;
+      }
+
+      /* legenda */
+      .legenda {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+      .leg-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 9px;
+        color: var(--muted);
+      }
+      .leg-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 1px;
+        flex-shrink: 0;
+      }
+
+      /* bússola norte */
+      .norte-indicator {
+        font-size: 9px;
+        color: var(--muted2);
+        text-align: center;
+        margin-bottom: 6px;
+        letter-spacing: 0.2em;
+      }
+
+      /* ═══════════════════════════════════════
+   SEÇÃO 3 — REGRAS
+═══════════════════════════════════════ */
+      #s3 {
+        width: 520px;
+      }
+
+      .regra-item {
+        margin-bottom: 0;
+        border-bottom: 1px solid var(--border);
+        overflow: hidden;
+      }
+      .regra-item:last-child {
+        border-bottom: none;
+      }
+      .regra-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 13px 16px;
+        cursor: pointer;
+        transition: background 0.15s;
+        user-select: none;
+      }
+      .regra-header:hover {
+        background: var(--surface2);
+      }
+      .regra-num {
+        font-size: 9px;
+        color: var(--muted2);
+        letter-spacing: 0.1em;
+        min-width: 32px;
+      }
+      .regra-titulo {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--text);
+        flex: 1;
+      }
+      .regra-ano {
+        font-size: 9px;
+        color: var(--muted2);
+      }
+      .regra-chevron {
+        font-size: 9px;
+        color: var(--muted2);
+        transition: transform 0.2s;
+      }
+      .regra-header.open .regra-chevron {
+        transform: rotate(90deg);
+      }
+      .regra-body {
+        display: none;
+        padding: 0 16px 14px 60px;
+      }
+      .regra-body.open {
+        display: block;
+      }
+      .regra-atual {
+        font-size: 11px;
+        color: var(--text);
+        line-height: 1.7;
+        margin-bottom: 8px;
+        padding: 8px 12px;
+        background: var(--surface2);
+        border-left: 2px solid var(--gold);
+      }
+      .regra-hist {
+        font-size: 10px;
+        color: var(--muted);
+        line-height: 1.65;
+        margin-bottom: 6px;
+      }
+      .regra-hist strong {
+        color: var(--muted2);
+        font-weight: 500;
+      }
+      .excecao {
+        margin-top: 8px;
+        padding: 8px 12px;
+        border-left: 2px solid var(--red);
+        background: rgba(138, 26, 26, 0.04);
+        font-size: 10px;
+        color: var(--muted);
+        font-style: italic;
+        font-family: "Cormorant Garamond", serif;
+      }
+      .excecao strong {
+        font-family: "Share Tech Mono", monospace;
+        font-style: normal;
+        font-size: 8.5px;
+        letter-spacing: 0.15em;
+        color: var(--red);
+        display: block;
+        margin-bottom: 4px;
+      }
+      .modif-tag {
+        display: inline-block;
+        font-size: 8px;
+        padding: 1px 6px;
+        border: 1px solid var(--border-dark);
+        color: var(--muted2);
+        letter-spacing: 0.1em;
+        margin-right: 4px;
+        margin-bottom: 2px;
+      }
+
+      /* FOOTER DA PÁGINA */
+      .page-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 28px;
+        background: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 32px;
+        z-index: 100;
+        font-size: 9px;
+        letter-spacing: 0.2em;
+        color: rgba(245, 240, 232, 0.5);
+        text-transform: uppercase;
+      }
+      .scroll-hint {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: rgba(245, 240, 232, 0.4);
+        font-size: 9px;
+      }
+
+      /* animações */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .section {
+        animation: fadeIn 0.4s ease both;
+      }
+      #s1 {
+        animation-delay: 0.05s;
+      }
+      #s2 {
+        animation-delay: 0.15s;
+      }
+      #s3 {
+        animation-delay: 0.25s;
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <header>
-        <div class="title-area">
-          <div class="school-tag">INSTITUTO ENORASKI · CURRÍCULO INTEGRAL</div>
-          <h1>Trivium &<br />Quadrivium moderno</h1>
-          <div class="sub">disciplinas · retórica · ciência · humanidades</div>
-        </div>
-        <div class="voronin-mini">
-          <strong>VORONIN</strong><br />
-          "Conduzir é desaparecer na estrutura."
-        </div>
-      </header>
+    <div class="scroll-wrap">
+      <!-- ═══════════════════════════════════════════════
+     SEÇÃO 1 — FICHA DO ALUNO
+═══════════════════════════════════════════════ -->
+      <div class="section" id="s1">
+        <div class="section-label">Ficha de Aluno · 2026</div>
 
-      <div class="notice">
-        <span
-          >⬤ 19 áreas do conhecimento — acesso direto a cada guia de
-          estudos</span
-        >
-        <span class="badge-red">CLIQUE NO CARD</span>
-      </div>
+        <div class="aluno-header">
+          <div class="school-tag">Instituto Enoraski · Varsóvia</div>
+          <div class="aluno-nome">
+            João Vittor<br /><em>Zanini Enoraski Maciel</em>
+          </div>
+          <div class="aluno-sub">
+            Descendente Direto &nbsp;·&nbsp; Admissão 2026
+          </div>
+        </div>
 
-      <!-- GRADE DE MATÉRIAS (cada card redireciona para página própria) -->
-      <div class="subjects-grid">
-        <!-- 1 filosofia -->
-        <div
-          class="subject-card"
-          onclick="window.location.href = 'filosofia.html'"
-        >
-          <div class="subject-name">Filosofia</div>
-          <div class="subject-meta">ética · metafísica · lógica</div>
+        <div class="dados-grid">
+          <div class="dado">
+            <div class="dado-label">Idade</div>
+            <div class="dado-val gold">17 anos</div>
+          </div>
+          <div class="dado">
+            <div class="dado-label">Data de Nascimento</div>
+            <div class="dado-val">02 / 06 / 2008</div>
+          </div>
+          <div class="dado">
+            <div class="dado-label">Naturalidade</div>
+            <div class="dado-val">Santa Catarina, Brasil</div>
+          </div>
+          <div class="dado">
+            <div class="dado-label">Status</div>
+            <div class="dado-val">Solteiro</div>
+          </div>
+          <div class="dado">
+            <div class="dado-label">Permanência máxima</div>
+            <div class="dado-val red">Até 2033</div>
+          </div>
+          <div class="dado">
+            <div class="dado-label">Linhagem</div>
+            <div class="dado-val gold">Direta</div>
+          </div>
         </div>
-        <!-- 2 retorica -->
-        <div
-          class="subject-card"
-          onclick="window.location.href = 'retorica.html'"
-        >
-          <div class="subject-name">Retórica</div>
-          <div class="subject-meta">persuasão · ethos · pathos</div>
-        </div>
-        <!-- 3 oratória -->
-        <div
-          class="subject-card"
-          onclick="window.location.href = 'oratoria.html'"
-        >
-          <div class="subject-name">Oratória</div>
-          <div class="subject-meta">discurso · voz · presença</div>
-        </div>
-        <!-- 4 português -->
-        <div
-          class="subject-card"
-          onclick="window.location.href = 'portugues.html'"
-        >
-          <div class="subject-name">Português</div>
-          <div class="subject-meta">língua · redação · estilo</div>
-        </div>
-        <!-- 5 gramatica -->
-        <div
-          class="subject-card"
-          onclick="window.location.href = 'gramatica.html'"
-        >
-          <div class="subject-name">Gramática</div>
-          <div class="subject-meta">sintaxe · morfologia · norma</div>
-        </div>
-        <!-- 6 literatura -->
-        <div
-          class="subject-card"
-          onclick="window.location.href = 'literatura.html'"
-        >
-          <div class="subject-name">Literatura</div>
-          <div class="subject-meta">clássicos · análise · poesia</div>
-        </div>
-        <!-- 7 matemática -->
-        <div
-          class="subject-card"
-          onclick="window.location.href = 'matematica.html'"
-        >
-          <div class="subject-name">Matemática</div>
-          <div class="subject-meta">cálculo · álgebra · geometria</div>
-        </div>
-        <!-- 8 física -->
-        <div
-          class="subject-card"
-          onclick="window.location.href = 'fisica.html'"
-        >
-          <div class="subject-name">Física</div>
-          <div class="subject-meta">mecânica · campos · termo</div>
-        </div>
-        <!-- 9 computação -->
-        <div
-          class="subject-card"
-          onclick="window.location.href = 'computacao.html'"
-        >
-          <div class="subject-name">Computação</div>
-          <div class="subject-meta">algoritmos · estruturas · lógica</div>
-        </div>
-        <!-- 10 astronomia -->
-        <div
-          class="subject-card"
-          onclick="window.location.href = 'astronomia.html'"
-        >
-          <div class="subject-name">Astronomia</div>
-          <div class="subject-meta">cosmos · órbitas · evolução estelar</div>
-        </div>
-        <!-- 11 geografia -->
-        <div
-          class="subject-card"
-          onclick="window.location.href = 'geografia.html'"
-        >
-          <div class="subject-name">Geografia</div>
-          <div class="subject-meta">espaço · território · cartografia</div>
-        </div>
-        <!-- 12 politica do brasil -->
-        <div
-          class="subject-card"
-          onclick="window.location.href = 'politica.html'"
-        >
-          <div class="subject-name">Política do Brasil</div>
-          <div class="subject-meta">instituições · constituição · poder</div>
-        </div>
-        <!-- 13 química -->
-        <div
-          class="subject-card"
-          onclick="window.location.href = 'quimica.html'"
-        >
-          <div class="subject-name">Química</div>
-          <div class="subject-meta">átomos · reações · orgânica</div>
-        </div>
-        <!-- 14 biologia -->
-        <div
-          class="subject-card"
-          onclick="window.location.href = 'biologia.html'"
-        >
-          <div class="subject-name">Biologia</div>
-          <div class="subject-meta">células · evolução · ecossistemas</div>
-        </div>
-        <!-- 15 doenças e remédios -->
-        <div
-          class="subject-card"
-          onclick="window.location.href = 'doencas.html'"
-        >
-          <div class="subject-name">Doenças e Remédios</div>
-          <div class="subject-meta">farmacologia · patologia · terapia</div>
-        </div>
-        <!-- 16 historia -->
-        <div
-          class="subject-card"
-          onclick="window.location.href = 'historia.html'"
-        >
-          <div class="subject-name">História</div>
-          <div class="subject-meta">civilizações · processos · rupturas</div>
-        </div>
-        <!-- 17 inglês -->
-        <div
-          class="subject-card"
-          onclick="window.location.href = 'ingles.html'"
-        >
-          <div class="subject-name">Inglês</div>
-          <div class="subject-meta">estrutura · leitura · produção</div>
-        </div>
-        <!-- 18 latim -->
-        <div class="subject-card" onclick="window.location.href = 'latim.html'">
-          <div class="subject-name">Latim</div>
-          <div class="subject-meta">raízes · sintaxe · clássicos</div>
-        </div>
-        <!-- 19 musica -->
-        <div
-          class="subject-card"
-          onclick="window.location.href = 'musica.html'"
-        >
-          <div class="subject-name">Música</div>
-          <div class="subject-meta">teoria · harmonia · percepção</div>
-        </div>
-      </div>
 
-      <!-- CRONOGRAMA SEMANAL -->
-      <div class="schedule-section">
-        <div class="section-title">cronograma · rhytmus studiorum</div>
-        <div class="schedule-grid">
-          <!-- segunda -->
-          <div class="day-card">
-            <div class="day-header">SEGUNDA · LOGOS</div>
-            <div class="day-content">
-              <div class="schedule-item">
-                <span class="schedule-dot"></span
-                ><span class="schedule-subject">Filosofia</span>
-              </div>
-              <div class="schedule-item">
-                <span class="schedule-dot"></span
-                ><span class="schedule-subject">Retórica</span>
-              </div>
-              <div class="schedule-item">
-                <span class="schedule-dot"></span
-                ><span class="schedule-subject">Oratória</span>
-              </div>
+        <div class="sangue-block">
+          <div class="sangue-title">Tipo Sanguíneo</div>
+          <div class="sangue-main">O<sup>+</sup></div>
+          <div class="sangue-detail">
+            Genótipo: ii &nbsp;·&nbsp; Pai: ii &nbsp;·&nbsp; Mãe: Ai
+          </div>
+        </div>
+
+        <div class="irmao-block">
+          <div class="irmao-title">Irmão</div>
+          <div class="irmao-nome">Rafael Zanini Enoraski Maciel</div>
+          <div class="irmao-detail">
+            Nascimento: 30 / 06 / 2014 &nbsp;·&nbsp; Tipo sanguíneo: A+
+          </div>
+        </div>
+
+        <div class="linhagem-title">Linhagem Enoraski</div>
+
+        <div class="gen-block">
+          <div class="gen-label">Bisavô</div>
+          <div class="gen-item">
+            <div class="gen-nome">
+              Dmitry Enoraski
+              <span class="tipo-direto">Direto</span>
+              <span class="gen-obs"
+                >Converteu-se ao judaísmo; adotou o nome Olímpio Enoraski.<br />Emigrou
+                para o Brasil em 1931. Reconvertido ao catolicismo em
+                1940.</span
+              >
+            </div>
+            <div class="gen-anos">1899 – 1946</div>
+          </div>
+        </div>
+
+        <div class="gen-block">
+          <div class="gen-label">Bisavó</div>
+          <div class="gen-item">
+            <div class="gen-nome">
+              Margareth Enoraski Maciel <span class="tipo-direto">Direta</span>
+            </div>
+            <div class="gen-anos">1918 – 1998</div>
+          </div>
+        </div>
+
+        <div class="gen-block">
+          <div class="gen-label">Avô Paterno</div>
+          <div class="gen-item">
+            <div class="gen-nome">
+              Meuquides Enoraski Maciel <span class="tipo-direto">Direto</span>
+            </div>
+            <div class="gen-anos">1944 – 2025</div>
+          </div>
+        </div>
+
+        <div class="gen-block">
+          <div class="gen-label">Tios-avós</div>
+          <div class="gen-item">
+            <div class="gen-nome">Zau Maciel</div>
+          </div>
+          <div class="gen-item">
+            <div class="gen-nome">Zique Maciel</div>
+          </div>
+          <div class="gen-item">
+            <div class="gen-nome">Perdid Maciel</div>
+          </div>
+        </div>
+
+        <div class="gen-block">
+          <div class="gen-label">Avó Paterna</div>
+          <div class="gen-item">
+            <div class="gen-nome">
+              Chica Shetrober Guepiker
+              <span class="tipo-indireto">Indireta</span>
+            </div>
+            <div class="gen-anos">1951 – 2016</div>
+          </div>
+        </div>
+
+        <div class="gen-block">
+          <div class="gen-label">Pai</div>
+          <div class="gen-item">
+            <div class="gen-nome">
+              Acácio Enoraski Maciel <span class="tipo-direto">Direto</span>
+            </div>
+            <div class="gen-anos">1975 – **</div>
+          </div>
+        </div>
+
+        <div class="gen-block">
+          <div class="gen-label">Tios Paternos</div>
+          <div class="gen-item">
+            <div class="gen-nome">Adilson Enoraski Maciel</div>
+          </div>
+          <div class="gen-item">
+            <div class="gen-nome">Ademar Enoraski Maciel</div>
+          </div>
+          <div class="gen-item">
+            <div class="gen-nome">Almir Enoraski Maciel</div>
+          </div>
+          <div class="gen-item">
+            <div class="gen-nome">Claudenice Enoraski Maciel</div>
+          </div>
+        </div>
+
+        <div class="gen-block">
+          <div class="gen-label">Mãe</div>
+          <div class="gen-item">
+            <div class="gen-nome">
+              Silmara Zanini Gonçalves
+              <span class="tipo-indireto">Indireta por casamento</span>
             </div>
           </div>
-          <!-- terça -->
-          <div class="day-card">
-            <div class="day-header">TERÇA · LÍNGUA & TEXTO</div>
-            <div class="day-content">
-              <div class="schedule-item">
-                <span class="schedule-dot"></span
-                ><span class="schedule-subject">Português</span>
-              </div>
-              <div class="schedule-item">
-                <span class="schedule-dot"></span
-                ><span class="schedule-subject">Gramática</span>
-              </div>
-              <div class="schedule-item">
-                <span class="schedule-dot"></span
-                ><span class="schedule-subject">Literatura</span>
-              </div>
-            </div>
-          </div>
-          <!-- quarta -->
-          <div class="day-card">
-            <div class="day-header">QUARTA · EXATAS & MÁQUINAS</div>
-            <div class="day-content">
-              <div class="schedule-item">
-                <span class="schedule-dot"></span
-                ><span class="schedule-subject">Matemática</span>
-              </div>
-              <div class="schedule-item">
-                <span class="schedule-dot"></span
-                ><span class="schedule-subject">Física</span>
-              </div>
-              <div class="schedule-item">
-                <span class="schedule-dot"></span
-                ><span class="schedule-subject">Computação</span>
-              </div>
-            </div>
-          </div>
-          <!-- quinta -->
-          <div class="day-card">
-            <div class="day-header">QUINTA · ESPAÇO & PODER</div>
-            <div class="day-content">
-              <div class="schedule-item">
-                <span class="schedule-dot"></span
-                ><span class="schedule-subject">Astronomia</span>
-              </div>
-              <div class="schedule-item">
-                <span class="schedule-dot"></span
-                ><span class="schedule-subject">Geografia</span>
-              </div>
-              <div class="schedule-item">
-                <span class="schedule-dot"></span
-                ><span class="schedule-subject">Política do Brasil</span>
-              </div>
-            </div>
-          </div>
-          <!-- sexta -->
-          <div class="day-card">
-            <div class="day-header">SEXTA · VIDA & MATÉRIA</div>
-            <div class="day-content">
-              <div class="schedule-item">
-                <span class="schedule-dot"></span
-                ><span class="schedule-subject">Química</span>
-              </div>
-              <div class="schedule-item">
-                <span class="schedule-dot"></span
-                ><span class="schedule-subject">Biologia</span>
-              </div>
-              <div class="schedule-item">
-                <span class="schedule-dot"></span
-                ><span class="schedule-subject">Doenças e Remédios</span>
-              </div>
-            </div>
-          </div>
-          <!-- sábado -->
-          <div class="day-card">
-            <div class="day-header">SÁBADO · MEMÓRIA & LÍNGUAS</div>
-            <div class="day-content">
-              <div class="schedule-item">
-                <span class="schedule-dot"></span
-                ><span class="schedule-subject">História</span>
-              </div>
-              <div class="schedule-item">
-                <span class="schedule-dot"></span
-                ><span class="schedule-subject">Inglês</span>
-              </div>
-              <div class="schedule-item">
-                <span class="schedule-dot"></span
-                ><span class="schedule-subject">Latim</span>
-              </div>
-            </div>
-          </div>
-          <!-- domingo -->
-          <div class="day-card">
-            <div class="day-header">DOMINGO · HARMONIA</div>
-            <div class="day-content">
-              <div class="schedule-item">
-                <span class="schedule-dot"></span
-                ><span class="schedule-subject">Música</span>
-              </div>
-            </div>
-          </div>
+        </div>
+
+        <div class="obs-bloco">
+          A família Enoraski-Maciel converteu-se ao catolicismo em 1940, após
+          período judaico iniciado com a conversão de Dmitry Enoraski (Olímpio)
+          em data imprecisa anterior a 1930. A reconversão não gerou disputa
+          documental — os registros da escola aceitam ambos os períodos como
+          parte da mesma linhagem contínua.
+        </div>
+        <div class="btn-grade-wrapper">
+          <a href="grade_materias.html" class="btn-grade"
+            >⤚ ACESSAR GRADE DE MATÉRIAS ⬤</a
+          >
         </div>
       </div>
 
-      <footer>
-        <div class="footer-left">
-          ENORASKI · 2026 · CURSO INTEGRAL · ACESSO LIVRE ÀS 19 MATRIZES
+      <!-- ═══════════════════════════════════════════════
+     SEÇÃO 2 — MAPA INTERATIVO
+═══════════════════════════════════════════════ -->
+      <div class="section" id="s2">
+        <div class="section-label">Mapa do Terreno · Instituto Enoraski</div>
+
+        <div class="mapa-container">
+          <div class="mapa-esquerda">
+            <div class="norte-indicator">↑ NORTE</div>
+            <div class="terreno" id="terreno">
+              <!-- LINHA 1: RUA NORTE -->
+              <div
+                class="zona norte span5h"
+                data-id="rua"
+                style="
+                  background: rgba(184, 130, 10, 0.04);
+                  color: var(--muted2);
+                "
+              >
+                — Rua Norte / Seis Casas —
+              </div>
+
+              <!-- LINHA 2-3: MURO + CAMINHO + CASA PRINCIPAL -->
+              <div class="zona norte" data-id="muro" style="grid-column: 1">
+                Muro<br />1918
+              </div>
+              <div
+                class="zona norte span3h span2v"
+                data-id="casa_principal"
+                style="grid-column: 2/5; grid-row: 2/4"
+              >
+                🏛 Casa Principal<br /><small>1817 · ref.1889·1946</small>
+              </div>
+              <div class="zona norte" data-id="muro2" style="grid-column: 5">
+                Muro<br />1918
+              </div>
+              <div
+                class="zona norte"
+                data-id="muro3"
+                style="grid-column: 1"
+              ></div>
+              <div
+                class="zona norte"
+                data-id="muro4"
+                style="grid-column: 5"
+              ></div>
+
+              <!-- LINHA 4-5: JARDIM + OFICINAS -->
+              <div
+                class="zona bosque"
+                data-id="jardim"
+                style="grid-column: 1/3; grid-row: 4/6"
+              >
+                🌿 Jardim<br />Central
+              </div>
+              <div
+                class="zona central"
+                data-id="ofic_a"
+                style="grid-column: 3; grid-row: 4"
+              >
+                Of. A<br />Marcenaria
+              </div>
+              <div
+                class="zona central"
+                data-id="ofic_b"
+                style="grid-column: 4; grid-row: 4"
+              >
+                Of. B<br />Artes Visuais
+              </div>
+              <div
+                class="zona central"
+                data-id="galpao"
+                style="grid-column: 5; grid-row: 4/6"
+              >
+                📦 Galpão<br />1912
+              </div>
+              <div
+                class="zona central"
+                data-id="ofic_c"
+                style="grid-column: 3; grid-row: 5"
+              >
+                Of. C<br />Música
+              </div>
+              <div
+                class="zona central"
+                data-id="ofic_d"
+                style="grid-column: 4; grid-row: 5"
+              >
+                Of. D<br />Ciências Apl.
+              </div>
+
+              <!-- LINHA 6-7: BOSQUE + DORMITÓRIOS + CAMPO -->
+              <div
+                class="zona bosque"
+                data-id="bosque_n"
+                style="grid-column: 1/3; grid-row: 6/8"
+              >
+                🌲 Bosque<br />Norte
+              </div>
+              <div
+                class="zona central span2v"
+                data-id="campo"
+                style="grid-column: 3; grid-row: 6/8"
+              >
+                ⚽ Campo<br />Aberto
+              </div>
+              <div
+                class="zona central span2h span2v"
+                data-id="dormitorio"
+                style="grid-column: 4/6; grid-row: 6/8"
+              >
+                🏠 Stary Dom<br />Dormitório<br />1743
+              </div>
+
+              <!-- LINHA 8-9: OBSERVATÓRIO + COMPLEXO H + ESTUFA -->
+              <div
+                class="zona central"
+                data-id="observatorio"
+                style="grid-column: 1; grid-row: 8/10"
+              >
+                🔭 Obser-<br />vatório<br />1921
+              </div>
+              <div
+                class="zona central span3h span2v"
+                data-id="complexo_h"
+                style="grid-column: 2/5; grid-row: 8/10"
+              >
+                📐 Complexo Acadêmico<br />Mat · Hum · Ciências<br />H-shape
+                1889–1912
+              </div>
+              <div
+                class="zona bosque"
+                data-id="estufa"
+                style="grid-column: 5; grid-row: 8/10"
+              >
+                🌱 Estufa<br />1908<br />3 andares
+              </div>
+
+              <!-- LINHA 10: SUL -->
+              <div
+                class="zona bosque"
+                data-id="bosque_s"
+                style="grid-column: 1"
+              >
+                🌲 Bosque<br />Sul
+              </div>
+              <div class="zona sul" data-id="praca" style="grid-column: 2">
+                ⬡ Praça<br />Central
+              </div>
+              <div class="zona sul" data-id="igreja" style="grid-column: 3">
+                ⛪ Igreja<br />Sta.Catarina<br />1834
+              </div>
+              <div class="zona sul" data-id="biblioteca" style="grid-column: 4">
+                📚 Biblio-<br />teca<br />1931
+              </div>
+              <div class="zona sul" data-id="esportes" style="grid-column: 5">
+                🏇 Esportes<br />Equitação<br />Galpão
+              </div>
+            </div>
+
+            <div class="legenda">
+              <div class="leg-item">
+                <div
+                  class="leg-dot"
+                  style="
+                    background: rgba(184, 130, 10, 0.15);
+                    border: 1px solid rgba(184, 130, 10, 0.3);
+                  "
+                ></div>
+                Norte / Admin
+              </div>
+              <div class="leg-item">
+                <div
+                  class="leg-dot"
+                  style="
+                    background: rgba(58, 106, 58, 0.15);
+                    border: 1px solid rgba(58, 106, 58, 0.3);
+                  "
+                ></div>
+                Bosque / Jardim
+              </div>
+              <div class="leg-item">
+                <div
+                  class="leg-dot"
+                  style="
+                    background: rgba(26, 20, 8, 0.06);
+                    border: 1px solid var(--border);
+                  "
+                ></div>
+                Centro Acadêmico
+              </div>
+              <div class="leg-item">
+                <div
+                  class="leg-dot"
+                  style="
+                    background: rgba(138, 26, 26, 0.08);
+                    border: 1px solid rgba(138, 26, 26, 0.2);
+                  "
+                ></div>
+                Sul
+              </div>
+            </div>
+          </div>
+
+          <!-- PAINEL INFO -->
+          <div class="mapa-direita">
+            <div class="info-panel" id="infoPanel">
+              <div class="info-default" id="defaultMsg">
+                Clique em qualquer<br />estrutura do mapa<br />para ver detalhes
+              </div>
+              <div id="infoContent" style="display: none">
+                <div class="info-panel-title" id="infoTitle"></div>
+                <div class="info-panel-sub" id="infoSub"></div>
+                <div class="info-panel-desc" id="infoDesc"></div>
+                <div id="andaresSection" style="display: none">
+                  <div class="andares-title">Andares</div>
+                  <div class="andar-tabs" id="andarTabs"></div>
+                  <div id="andarContents"></div>
+                </div>
+                <div id="pessoasSection" style="display: none">
+                  <div class="pessoas-list" id="pessoasList"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="footer-right">
-          Aleksy Voronin — método da condução invisível
+      </div>
+
+      <!-- ═══════════════════════════════════════════════
+     SEÇÃO 3 — REGRAS
+═══════════════════════════════════════════════ -->
+      <div class="section" id="s3">
+        <div class="section-label">Regulamento da Instituição</div>
+
+        <div id="regras-container">
+          <div class="regra-item">
+            <div class="regra-header" onclick="toggleRegra(this)">
+              <span class="regra-num">R.01</span>
+              <span class="regra-titulo">Admissão</span>
+              <span class="regra-ano">1821</span>
+              <span class="regra-chevron">▶</span>
+            </div>
+            <div class="regra-body">
+              <div class="regra-atual">
+                Todo aluno admitido deve ser descendente comprovado da família
+                Enoraski, por linha direta de sangue ou por adoção formal
+                reconhecida pela Direção.
+              </div>
+              <div class="regra-hist">
+                <strong>1821:</strong> Apenas membros com sobrenome Enoraski de
+                nascimento.
+              </div>
+              <div class="regra-hist">
+                <strong>Mod. 1892:</strong> Admite descendência por linha
+                materna e emigrados com documentação genealógica.
+              </div>
+              <div class="regra-hist">
+                <strong>Mod. 1906:</strong> Admite descendência sem o sobrenome,
+                verificável até três gerações anteriores.
+              </div>
+              <div class="regra-hist">
+                <strong>Mod. 1937:</strong> Mulheres admitidas nas mesmas
+                condições.
+              </div>
+              <div class="regra-hist">
+                <strong>Mod. 2003:</strong> Remove critério étnico. Mantém
+                exclusivamente o critério genealógico.
+              </div>
+              <div class="excecao">
+                <strong>⚑ Exceção — Caso Brennan (1943)</strong>Thomas Brennan,
+                irlandês sem descendência Enoraski, foi admitido como "aluno de
+                circunstância" por Józef Enoraski após salvar três alunos de uma
+                redada alemã. Nunca constou em registros oficiais.
+              </div>
+            </div>
+          </div>
+
+          <div class="regra-item">
+            <div class="regra-header" onclick="toggleRegra(this)">
+              <span class="regra-num">R.02</span>
+              <span class="regra-titulo">Língua Oficial</span>
+              <span class="regra-ano">1821</span>
+              <span class="regra-chevron">▶</span>
+            </div>
+            <div class="regra-body">
+              <div class="regra-atual">
+                O polonês é a língua oficial. Em contexto acadêmico e
+                administrativo tem precedência absoluta. Outras línguas são
+                permitidas em contexto social e pessoal.
+              </div>
+              <div class="regra-hist">
+                <strong>1821:</strong> Apenas o polonês permitido em todas as
+                dependências.
+              </div>
+              <div class="regra-hist">
+                <strong>Mod. 1892:</strong> Outras línguas permitidas em
+                contexto informal com a chegada de alunos internacionais.
+              </div>
+              <div class="regra-hist">
+                <strong>Mod. 1946:</strong> O russo, imposto durante a ocupação
+                soviética, é formalmente removido. O polonês é reafirmado em ato
+                assinado por Zofia Enoraski — com sua assinatura duas vezes, no
+                início e no fim do documento.
+              </div>
+            </div>
+          </div>
+
+          <div class="regra-item">
+            <div class="regra-header" onclick="toggleRegra(this)">
+              <span class="regra-num">R.03</span>
+              <span class="regra-titulo">Permanência e Formatura</span>
+              <span class="regra-ano">1821</span>
+              <span class="regra-chevron">▶</span>
+            </div>
+            <div class="regra-body">
+              <div class="regra-atual">
+                O aluno pode permanecer até os 25 anos. A formatura ocorre ao
+                atingir os critérios de cada departamento. Quem não se forma até
+                os 25 recebe certificado de frequência, não diploma.
+              </div>
+              <div class="regra-hist">
+                <strong>1821:</strong> Período fixo de seis anos, dos 14 aos 20
+                anos.
+              </div>
+              <div class="regra-hist">
+                <strong>Mod. 1974:</strong> Sistema de critérios por competência
+                substitui anos fixos. Limite de 25 anos mantido. Proposto após
+                três anos consecutivos com taxa de formatura abaixo de 10%.
+              </div>
+              <div class="excecao">
+                <strong>⚑ Exceção — Caso Marta Enoraski-Kowalczyk (1981)</strong
+                >Extensão de seis meses concedida pela Diretora por
+                "circunstâncias de força maior" — os eventos políticos de 1981
+                na Polônia haviam impedido acesso a materiais. Única extensão
+                concedida na história da escola. Não virou regra.
+              </div>
+            </div>
+          </div>
+
+          <div class="regra-item">
+            <div class="regra-header" onclick="toggleRegra(this)">
+              <span class="regra-num">R.04</span>
+              <span class="regra-titulo">Dormitórios</span>
+              <span class="regra-ano">1867</span>
+              <span class="regra-chevron">▶</span>
+            </div>
+            <div class="regra-body">
+              <div class="regra-atual">
+                Alunos de fora de Varsóvia têm prioridade. Alunos locais podem
+                solicitar vaga sujeita à disponibilidade. Não há separação por
+                gênero nos andares — apenas nos banheiros.
+              </div>
+              <div class="regra-hist">
+                <strong>1867:</strong> Dormitórios exclusivamente masculinos,
+                separados por faixa etária.
+              </div>
+              <div class="regra-hist">
+                <strong>Mod. 1937:</strong> Com a admissão de mulheres, andares
+                separados por gênero são criados.
+              </div>
+              <div class="regra-hist">
+                <strong>Mod. 1991:</strong> Separação por gênero nos andares é
+                removida com a laicização. Quatro famílias retiraram seus
+                filhos. Nenhuma voltou atrás. Dois filhos solicitaram readmissão
+                individualmente anos depois.
+              </div>
+            </div>
+          </div>
+
+          <div class="regra-item">
+            <div class="regra-header" onclick="toggleRegra(this)">
+              <span class="regra-num">R.05</span>
+              <span class="regra-titulo">Departamentos Internos</span>
+              <span class="regra-ano">1934</span>
+              <span class="regra-chevron">▶</span>
+            </div>
+            <div class="regra-body">
+              <div class="regra-atual">
+                Cada departamento pode constituir corpo de membros além dos
+                professores, selecionados por prova não oficial de critério
+                exclusivo. A Direção reconhece os departamentos mas não
+                interfere em seus processos.
+              </div>
+              <div class="regra-hist">
+                <strong>Não modificada desde 1934.</strong>
+              </div>
+              <div class="excecao">
+                <strong>⚑ Exceção — Caso Nowicki (1971)</strong>O Departamento
+                de Ciências Exatas recusou o candidato de maior pontuação em
+                décadas. Razão interna: demonstrou competência, não curiosidade.
+                O candidato, Andrzej Nowicki, tornou-se professor universitário
+                em Cracóvia com dois trabalhos citados internacionalmente. O
+                departamento nunca comentou.
+              </div>
+            </div>
+          </div>
+
+          <div class="regra-item">
+            <div class="regra-header" onclick="toggleRegra(this)">
+              <span class="regra-num">R.06</span>
+              <span class="regra-titulo">Espaços Comuns</span>
+              <span class="regra-ano">1821</span>
+              <span class="regra-chevron">▶</span>
+            </div>
+            <div class="regra-body">
+              <div class="regra-atual">
+                Os espaços do terreno são de uso coletivo. Nenhum aluno,
+                professor ou funcionário pode reivindicar uso exclusivo
+                permanente de qualquer espaço comum. Exceções: quartos
+                individuais, escritórios e boxes dos cavalos.
+              </div>
+              <div class="regra-hist">
+                <strong>1821:</strong> Idêntica em essência, aplicada apenas a
+                espaços acadêmicos.
+              </div>
+              <div class="regra-hist">
+                <strong>Mod. 1952:</strong> Expandida para incluir todas as
+                áreas do terreno após conflitos durante a reconstrução
+                pós-guerra.
+              </div>
+            </div>
+          </div>
+
+          <div class="regra-item">
+            <div class="regra-header" onclick="toggleRegra(this)">
+              <span class="regra-num">R.07</span>
+              <span class="regra-titulo">Silêncio Noturno</span>
+              <span class="regra-ano">1889</span>
+              <span class="regra-chevron">▶</span>
+            </div>
+            <div class="regra-body">
+              <div class="regra-atual">
+                Entre meia-noite e seis da manhã, silêncio obrigatório em todas
+                as dependências cobertas. Áreas externas sem restrição formal —
+                a convenção se aplica por extensão.
+              </div>
+              <div class="regra-hist">
+                <strong>Não modificada desde 1889.</strong>
+              </div>
+              <div
+                class="regra-hist"
+                style="
+                  font-style: italic;
+                  font-family: &quot;Cormorant Garamond&quot;, serif;
+                "
+              >
+                A Diretora, em contexto não registrado:
+                <em
+                  >"Quem estuda às três da manhã tem razões que o regulamento
+                  não precisa conhecer."</em
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="regra-item">
+            <div class="regra-header" onclick="toggleRegra(this)">
+              <span class="regra-num">R.08</span>
+              <span class="regra-titulo">Visitantes Externos</span>
+              <span class="regra-ano">1892</span>
+              <span class="regra-chevron">▶</span>
+            </div>
+            <div class="regra-body">
+              <div class="regra-atual">
+                Visitantes devem ser registrados na portaria da Casa Principal.
+                Acesso mediante identificação e relação com aluno ou
+                funcionário. Áreas restritas são inacessíveis a visitantes em
+                qualquer circunstância.
+              </div>
+              <div class="regra-hist">
+                <strong>Mod. 1981:</strong> Cláusula adicionada permitindo
+                "visitas de natureza institucional mediante autorização direta
+                da Direção sem registro no livro comum." Utilizada durante o
+                período MI6.
+              </div>
+              <div class="regra-hist">
+                <strong>Mod. 1991:</strong> Cláusula de 1981 removida sem menção
+                ao motivo.
+              </div>
+            </div>
+          </div>
+
+          <div class="regra-item">
+            <div class="regra-header" onclick="toggleRegra(this)">
+              <span class="regra-num">R.09</span>
+              <span class="regra-titulo">Cavalos e Cavalariça</span>
+              <span class="regra-ano">1934</span>
+              <span class="regra-chevron">▶</span>
+            </div>
+            <div class="regra-body">
+              <div class="regra-atual">
+                O acesso à cavalariça requer orientação de Pan Mazurek ou aluno
+                certificado por ele. Nenhum cavalo pode ser montado sem sua
+                aprovação prévia. A avaliação de Mazurek sobre aptidão não é
+                contestável por nenhuma instância, incluindo a Direção.
+              </div>
+              <div class="regra-hist">
+                <strong>1934:</strong> Regras gerais de segurança, sem cláusula
+                de autoridade final.
+              </div>
+              <div class="regra-hist">
+                <strong>Mod. 1978:</strong> Cláusula de autoridade final
+                adicionada após aluno montar sem autorização. O cavalo ficou
+                agitado por três semanas. Mazurek não disse nada na reunião de
+                revisão. Apenas ficou de pé até o fim e saiu.
+              </div>
+            </div>
+          </div>
+
+          <div class="regra-item">
+            <div class="regra-header" onclick="toggleRegra(this)">
+              <span class="regra-num">R.10</span>
+              <span class="regra-titulo">Registro de Nascimentos</span>
+              <span class="regra-ano">1906</span>
+              <span class="regra-chevron">▶</span>
+            </div>
+            <div class="regra-body">
+              <div class="regra-atual">
+                A escola reconhece e registra formalmente o nascimento de
+                descendentes Enoraski como evento institucional. O registro é
+                feito na Parede dos Enoraski na data do nascimento pela Diretora
+                pessoalmente.
+              </div>
+              <div class="regra-hist">
+                <strong>Não modificada desde 1906.</strong> A taxa histórica de
+                nascimentos na linhagem principal é de aproximadamente um a cada
+                187 anos — registrada como fato estatístico desde 1906, quando o
+                diretor da época anotou:
+                <em
+                  >"A família parece se reproduzir no ritmo que a escola
+                  consegue absorver."</em
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="regra-item">
+            <div class="regra-header" onclick="toggleRegra(this)">
+              <span class="regra-num">R.11</span>
+              <span class="regra-titulo">Conduta nas Dependências</span>
+              <span class="regra-ano">1991</span>
+              <span class="regra-chevron">▶</span>
+            </div>
+            <div class="regra-body">
+              <div class="regra-atual">
+                É expressamente proibido qualquer ato de natureza sexual dentro
+                das dependências do Instituto Enoraski — em espaços cobertos ou
+                descobertos, comuns ou privados — durante todo o período de
+                matrícula ativa do aluno. A violação desta regra é causa
+                imediata de processo disciplinar com possibilidade de
+                desligamento.
+              </div>
+              <div class="regra-hist">
+                <strong>Criada em 1991</strong> com a laicização da escola,
+                substituindo as normas de conduta moral de base católica que
+                vigoravam desde 1821. A nova redação laica manteve a proibição
+                em termos institucionais, não religiosos.
+              </div>
+              <div class="regra-hist">
+                <strong>Fundamentação registrada:</strong> "A escola é um espaço
+                de formação intelectual. Relações de qualquer natureza que
+                comprometam este ambiente — entre alunos, entre aluno e
+                funcionário, entre aluno e professor — representam conflito de
+                interesse com o propósito da instituição."
+              </div>
+            </div>
+          </div>
         </div>
-      </footer>
+      </div>
+    </div>
+    <!-- fim scroll-wrap -->
+
+    <div class="page-footer">
+      <span>Instituto Enoraski · Varsóvia · Est. 1799</span>
+      <span class="scroll-hint">← scroll horizontal →</span>
+      <span>Ficha · Mapa · Regulamento</span>
     </div>
 
     <script>
-      // Script sutil para manter consistência (opcional)
-      // Apenas garante que cliques nos cards redirecionam
-      console.log("Portal Enoraski — todas as matérias com cronograma semanal");
+      // ═══ TOGGLE REGRAS ═══
+      function toggleRegra(header) {
+        header.classList.toggle("open");
+        header.nextElementSibling.classList.toggle("open");
+      }
+
+      // ═══ DADOS DO MAPA ═══
+      const mapaData = {
+        rua: {
+          titulo: "Rua Norte & Seis Casas",
+          sub: "Exterior · Uso privado da escola",
+          desc: "A rua ao norte separa o terreno do mundo exterior. Do lado oposto ao muro de 1918, seis casas do século XIX convertidas para uso exclusivo de alunos, professores e funcionários.",
+          andares: {
+            "Casa 1":
+              "Restaurante Szara Sól (Sal Cinza). Térreo: salão principal de carvalho, cozinha aberta, cardápio polonês. 1º andar: sala reservada para professores.",
+            "Casa 2":
+              "Restaurante Dwa Okna (Duas Janelas). Térreo: informal, sopas e pratos rápidos desde o café da manhã. 1º andar: sala de jogos — xadrez, gamão, cartas.",
+            "Casa 3":
+              "Café Ostatnia Strona (Última Página). Térreo: café estreito, parede de recados desde 1962. 1º andar: mesas de estudo silencioso.",
+            "Casa 4":
+              "Papelaria Pióro (Pena). Térreo: papelaria com prensa tipográfica de 1931 — imprime O Enoraski mensal. 1º andar: ateliê de encadernação.",
+            "Casa 5":
+              "Alfaiate Nić i Igła (Linha e Agulha). Térreo: atendimento, uniformes sob medida. 1º andar: oficina com Pani Wróbel, 31 anos na escola.",
+            "Casa 6":
+              "Museu Enoraski (A Memória). Térreo: Sala I Origens, Sala II Guerras, Sala III Presente. 1º andar: arquivo histórico restrito — documentos do MI6 parcialmente lacrados.",
+          },
+          pessoas: [
+            { nome: "Pani Wróbel", cargo: "Alfaiate-chefe · Casa 5" },
+            {
+              nome: "Pani Brzezińska",
+              cargo: "Cozinheira · Restaurante Dwa Okna",
+            },
+          ],
+        },
+        casa_principal: {
+          titulo: "Casa Principal",
+          sub: "1817 · Reformada 1889 e 1946 · Sede Administrativa",
+          desc: 'Pedra calcária clara, telhado de ardósia. Puxadores de leão em bronze. Cinco degraus de granito. O piso de mármore xadrez do hall — com as rachaduras chamadas "as veias" — é original de 1889.',
+          andares: {
+            Subsolo:
+              "Auditório de 1900 (180 lugares). Estilo vienense tardio, cortina vermelha, palco original. Filmes às sextas desde 1959. Uma parede de tijolos no fundo — cor diferente, construída circa 1981.",
+            Térreo:
+              "Hall com relógio de 1901 (atrasa 3min/semana, por decisão). Recepção: Pan Kowalczyk e Pani Nowak (fala português). Salas: Matrículas, Financeiro, Protocolo, Espera, Professores, Orientação, Disciplina (o confessionário).",
+            "1º Andar":
+              "Corredor com piso que range — alunos antigos sabem os passos silenciosos. Retratos dos diretores. Sala de Reuniões (mesa oval, lareira, mapa de 1817). Sala dos Diretores (Parede Enoraski). Sala da Diretora.",
+            "Sala Diretora":
+              "Janelas para norte — vê quem entra sem ser vista. Mesa de carvalho, sem computador visível. Poltronas baixas para visitantes (não é acidente). Crânio de animal entre os livros. Foto emoldurada virada para a parede.",
+          },
+          pessoas: [
+            { nome: "A Diretora", cargo: "Diretora · 1998–presente" },
+            {
+              nome: "Pani Zielińska",
+              cargo: "Secretária pessoal · desde 1987",
+            },
+            { nome: "Pan Kowalczyk", cargo: "Recepcionista · 58 anos" },
+            { nome: "Pani Nowak", cargo: "Recepcionista · fala português" },
+          ],
+        },
+        jardim: {
+          titulo: "Jardim Central",
+          sub: "1889 · Sobreviveu à guerra intacto",
+          desc: "Retangular, 40×25m. Caminho central de pedra portuguesa. Canteiros leste com flores sazonais; canteiros oeste com ervas para os restaurantes. Carvalho de 1892 com placa comemorativa.",
+          andares: {
+            Elementos:
+              'Quatro bancos de ferro forjado. Fonte circular central — funciona abril a outubro. Banco circular ao redor da fonte (8 lugares, chamado "o confessionário"). Fechado formalmente após 21h — portão sem cadeado desde 1974.',
+          },
+          pessoas: [
+            {
+              nome: "Pan Wieczorek",
+              cargo: "Jardineiro · 67 anos · trabalha em silêncio absoluto",
+            },
+          ],
+        },
+        ofic_a: {
+          titulo: "Oficina A — Marcenaria e Metalurgia",
+          sub: "1889 · Par norte, lado oeste",
+          desc: "Pé-direito de seis metros, janelas compridas. Seção de marcenaria à esquerda; forja a carvão à direita. Pan Dąbrowski recusa substituir carvão por gás.",
+          andares: {
+            Único:
+              "Bancadas de marcenaria, tornos, serras. Forja com bigorna e martelos. Parede de ferramentas por tamanho. Prateleiras com projetos em andamento — um está há três anos, de aluno já formado. Ninguém tocou.",
+          },
+          pessoas: [
+            {
+              nome: "Pan Dąbrowski",
+              cargo:
+                "Mestre oficineiro · 71 anos · desde 1979 · falta parte do indicador direito",
+            },
+          ],
+        },
+        ofic_b: {
+          titulo: "Oficina B — Artes Visuais e Gravura",
+          sub: "1903 · Par norte, lado leste",
+          desc: "Piso de cimento manchado de décadas de tinta. Cavaletes sem ordem aparente — mas os alunos sabem onde está o de cada um.",
+          andares: {
+            Único:
+              "Ala de pintura com parede de trabalhos em processo. Ala de gravura com prensa de 1921 e matrizes em varais. Tela grandes suspensas no teto para secar. Poltrona desgastada de Pani Kamińska no canto — quando ela se levanta em direção a um trabalho, o aluno para.",
+          },
+          pessoas: [
+            {
+              nome: "Pani Kamińska",
+              cargo: "Professora de Artes Visuais · 54 anos",
+            },
+          ],
+        },
+        ofic_c: {
+          titulo: "Oficina C — Música",
+          sub: "1897 · Paredes com enchimento duplo (1952)",
+          desc: "A mais isolada acusticamente. Dividida em três zonas: Ensaio Coletivo, Prática Individual (6 boxes), Teoria. O Steinway de 1938 sobreviveu enterrado no bunker — três teclas marcadas com tinta vermelha nunca voltaram a afinar.",
+          andares: {
+            Único:
+              "Zona de Ensaio: piano Steinway 1938, 3 teclas com pontos vermelhos. Zona Individual: 6 boxes com anotações a lápis nas paredes de décadas de alunos. Zona de Teoria: mesa para análise e composição. Armário com instrumentos — um contrabaixo de aluno falecido em 1971, nunca devolvido porque família nunca pediu.",
+          },
+          pessoas: [
+            {
+              nome: "Anya Belinskaya",
+              cargo: "Professora de Música · cadeira de vime azul desbotada",
+            },
+          ],
+        },
+        ofic_d: {
+          titulo: "Oficina D — Ciências Aplicadas",
+          sub: "1901 · Reformada 1965 e 1998",
+          desc: "A mais modificada das quatro. Eletrônica, pneumática e hidráulica. Quadro de distribuição elétrica funcional como objeto de estudo.",
+          andares: {
+            Único:
+              "Bancadas com tomadas, multímetros, osciloscópios. Gavetas de componentes eletrônicos. Claraboia de 1965 — único andar com luz zenital. Quando o feixe atinge a bancada central são 14h20 exatos. Alunos antigos sabem disso.",
+          },
+          pessoas: [],
+        },
+        galpao: {
+          titulo: "Galpão",
+          sub: "1912 · Telhado de chapa — barulhento na chuva",
+          desc: "Portão duplo de metal ao norte, porta menor ao sul. Cheiro de graxa, madeira úmida, terra e metal.",
+          andares: {
+            Térreo:
+              "Área de veículos: dois tratores, caminhonete antiga, bicicletas (frequentemente com pneus vazios). Área de materiais: prateleiras com itens de manutenção. Área indefinida ao fundo: móveis antigos, caixas sem identificação, três cadeiras de cinema numeradas 14–15–16 do auditório destruído em 1944.",
+            Mezanino:
+              "Ao longo da parede oeste. Piso de tábuas que flexionam. Vista de todo o galpão e fragmento do jardim pela janela norte.",
+          },
+          pessoas: [],
+        },
+        bosque_n: {
+          titulo: "Bosque Norte",
+          sub: "Árvores com ~200 anos · anterior à escola",
+          desc: "Carvalhos, pinheiros e bordos que tingem o outono de vermelho. A trilha principal corta o bosque de norte a sul. Ao entrar: luz, som e temperatura mudam em cinquenta metros.",
+          andares: {
+            "Trilha Principal":
+              "Larga para duas pessoas. 8 minutos até a praça sul. Marcas de iniciais em troncos — a mais antiga de 1901, a mais recente de 1980.",
+            Atalho:
+              "Trilha não oficial, 30m após a entrada, desvia para leste em direção aos dormitórios. Administração não reconhece, nunca fechou.",
+          },
+          pessoas: [],
+        },
+        campo: {
+          titulo: "Campo Aberto",
+          sub: "Grama baixa · uso informal e esportivo",
+          desc: "80×60m. Sem marcações permanentes — linhas de cal traçadas quando necessário. Em janeiro e fevereiro a neve cobre o campo em superfície intocada.",
+          andares: {
+            "Nível único":
+              "Fileira de bancos rústicos de tronco na borda oeste — colocados em 1967 por alunos sem autorização, nunca retirados. Têm musgo nas laterais.",
+          },
+          pessoas: [],
+        },
+        dormitorio: {
+          titulo: "Stary Dom — Dormitórios",
+          sub: "1743 · Mansão Kostrzyński · a mais antiga do terreno",
+          desc: "Forma de # com quatro andares. Pátio central com estátua de Aleksander Enoraski (1901) e chafariz. No inverno o chafariz forma estruturas de gelo fotografadas por alunos todos os anos como se fosse a primeira vez.",
+          andares: {
+            Térreo:
+              "Portaria 24h (Pan Wiśniewski toca acordeão à noite). Caixas de correspondência por aluno. Sala comum com lareira Kostrzyński de 1743 — a mais antiga em uso no terreno. Televisão desde 1988. Refeitório para café e lanches. Lavanderia. Sala de estudos até meia-noite.",
+            "1º Andar":
+              "Quartos individuais e duplos nas alas. Quartos do corpo central: mais antigos, paredes espessas, vidro ondulado de 1743. Portas com painel na altura dos olhos para verificar quem está do lado de fora. Janelas com banco embutido no corredor.",
+            "2º Andar":
+              "Mesma distribuição. Quartos das alas: mais padronizados, teto mais baixo, mais frios.",
+            "3º Andar": "Mesma distribuição.",
+            "4º Andar":
+              "De 1923 — o chapéu ligeiramente grande. Quatro quartos: O Monastério, O Observatório (fresta do céu deitado), O Arquivo (mais silencioso), O Último (três traços no rodapé — ninguém apagou). Escada estreita para sótão com cadeado.",
+          },
+          pessoas: [
+            {
+              nome: "Pan Wiśniewski",
+              cargo: "Portaria noturna (ter/qua) · toca acordeão",
+            },
+          ],
+        },
+        observatorio: {
+          titulo: "Observatório",
+          sub: "1921 · Entre as árvores a oeste · Cúpula de cobre oxidado",
+          desc: 'Não visível da trilha principal — encontrado por quem sabe onde procurar. Cúpula verde-azulada chamada "a cor do tempo". Clareira com banco voltado para a estrutura.',
+          andares: {
+            Térreo:
+              "Sala circular de entrada. Mesa de trabalho em arco. Armários com mapas celulares e cadernos de observação desde 1921. Os cadernos de 1939–1945 têm seis anos em branco. O de 1946 começa com uma frase que ninguém traduziu oficialmente.",
+            Cúpula:
+              "Telescópio refrator alemão de 1921 (200mm). Montagem equatorial em pilar separado para evitar vibração. Sistema de manivela original. Poltrona de couro de Orshin. Janela circular permanentemente aberta exceto no inverno extremo.",
+          },
+          pessoas: [
+            {
+              nome: "Nikolai Orshin",
+              cargo:
+                "Professor de Astronomia e Computação · a chave do observatório é uma das três que existem",
+            },
+          ],
+        },
+        complexo_h: {
+          titulo: "Complexo Acadêmico — Forma H",
+          sub: "1889–1912 · Três prédios interligados",
+          desc: "Passagens cobertas com teto de vidro (1934, substituído 1989). Na chuva, o som dentro das passagens é amplificado e contido. Bancos ao longo das paredes de vidro entre os prédios.",
+          andares: {
+            "Matemática · Térreo":
+              "Quadro-negro de parede no hall — problema não resolvido desde 1997. Salas: A Sala do Pilar, A Sala Fria. Sala de Mikhail Orlov: três paredes de quadros, xícara virada para baixo = voltará em breve.",
+            "Matemática · 1º Andar":
+              "Sala de Geometria com diagramas pintados no reboco (1961–1988), alguns errados propositalmente. Sala de Análise: as sessões abertas mensais. Escritório de Orlov: sem cadeira extra — quem vem fica de pé.",
+            "Matemática · 2º (Computação)":
+              "Lab principal (20 estações, Linux e Windows). Lab de redes com equipamento exposto. Sala de servidores (única fechadura eletrônica do complexo). Escritório de Orshin-Computação: três monitores, a única planta do complexo.",
+            "Humanas · Térreo (Geo)":
+              "Mapas de todas as épocas nas paredes. Mesa de cartografia. Sala do Departamento restrito. Escritório de Antonov: mapas sobrepostos com pesos de pedra nos cantos.",
+            "Humanas · 1º (História+Fil)":
+              "Corredor com tábuas originais de 1897 que rangem diferente por pessoa. Sala de Sokolov: linha do tempo de 3000 a.C. ao presente pintada no reboco. Sala de Petrovna: cadeiras em círculo, sem mesa, cortinas fecham quando quer atenção.",
+            "Humanas · 2º (Línguas)":
+              "7 línguas: Polonês, Português, Inglês, Francês, Russo, Alemão, Latim. Sala de russo com cartazes soviéticos. Sala de latim com inscrições no reboco (algumas erradas por intenção). Sala de português com mapa do Brasil — uma foto de Santa Catarina sem identificação.",
+            "Ciências · Subsolo":
+              "Enfermaria. Sala de espera, dois consultórios, sala de observação (4 camas). Dra. Jabłońska, 49 anos, 12 anos na escola.",
+            "Ciências · Térreo (Bio)":
+              "Vitrines de espécimes. Lab de biologia com diagramas feitos à mão por Markova em nanquim. Lab de microbiologia (avental obrigatório). Escritório de Markova: terrário com plantas carnívoras.",
+            "Ciências · 1º (Quím+Fís)":
+              "Ventilação reforçada desde 1967 (incidente não detalhado). Lab de Lebedeva: bancadas de pedra preta, balança em mesa antivibrante. Lab de Kireev: pêndulo de Foucault desde 1971 — nunca aponta para ele, espera a pergunta.",
+            "Ciências · 2º (Astronomia)":
+              "Duas salas de aula voltadas para o sul. Sala de Orshin: quase monástica, mapas celulares de culturas diversas. Sala Escura: projetor de cúpula portátil de 1968. Terraço de observação: porta no teto, sem cobertura — vista de todo o terreno.",
+          },
+          pessoas: [
+            { nome: "Mikhail Orlov", cargo: "Matemática" },
+            { nome: "Nikolai Orshin", cargo: "Astronomia e Computação" },
+            { nome: "Sergei Antonov", cargo: "Geografia" },
+            { nome: "Dmitri Sokolov", cargo: "História e Latim" },
+            { nome: "Elena Petrovna", cargo: "Filosofia" },
+            {
+              nome: "Irina Volkov",
+              cargo: "Português, Gramática e Literatura",
+            },
+            { nome: "Victor Dragunov", cargo: "Inglês" },
+            { nome: "Pani Fischer", cargo: "Alemão" },
+            { nome: "Pan Lefebvre", cargo: "Francês" },
+            { nome: "Pan Volkov", cargo: "Russo (sem relação com Irina)" },
+            { nome: "Anton Kireev", cargo: "Física" },
+            { nome: "Sofiya Lebedeva", cargo: "Química" },
+            { nome: "Yelena Markova", cargo: "Biologia" },
+            { nome: "Dra. Jabłońska", cargo: "Médica da escola · Enfermaria" },
+          ],
+        },
+        estufa: {
+          titulo: "Estufa",
+          sub: "1908 · Ferro e vidro · Sobre o muro de contenção",
+          desc: "35m de comprimento sobre o muro que divide os dois níveis do terreno (8m de diferença). Vista do norte parece térrea; do sul revela três andares. Escada central de ferro fundido de 1908, ornamentada. Duas passarelas por andar.",
+          andares: {
+            "Superior (nível norte)":
+              "Acesso direto do nível alto. Plantas temperadas e de clima frio. Mesas de trabalho para projetos de botânica. Vista para os andares inferiores pelo vidro sul.",
+            Intermediário:
+              "Mais denso — samambaias, musgos, orquídeas. Umidade visivelmente maior. Passarelas sobre canteiro central aberto. Sala fechada de experimentos controlados com etiquetas de latão.",
+            "Inferior (nível sul)":
+              "Acesso direto do nível baixo. Plantas tropicais e subtropicais. Temperatura 8°C acima do andar superior. Bancos entre as plantas — os únicos da estufa. Destino favorito no inverno polonês, descoberto rapidamente pelos alunos do dormitório.",
+          },
+          pessoas: [],
+        },
+        bosque_s: {
+          titulo: "Bosque Sul e Araucárias",
+          sub: "Bosque contínuo · Araucárias plantadas em 2026",
+          desc: "O bosque se fecha mais aqui — dossel mais denso, luz em menos fragmentos. Em 2026, João Vittor Zanini Enoraski Maciel plantou sete Araucaria angustifolia em semicírculo entre a Sala Górecki e o bunker. Pan Wieczorek examina as mudas toda segunda-feira sem que ninguém pedisse.",
+          andares: {
+            Semicírculo:
+              "Sete araucárias com estacas numeradas 1–7. Em 2026, ~80cm de altura. Em cem anos: 25–40m, as mais altas do terreno. Entre a 3ª e 4ª: uma pedra plana no chão, larga o suficiente para sentar.",
+            Bunker:
+              "Porta de aço embutida numa elevação coberta de vegetação. Três chaves: Diretora, Pani Zielińska, arquivo lacrado da biblioteca. Corredor 1,9m — quem ultrapassa curva a cabeça. Sala principal: lista de 47 pessoas de 1939–1945 com cruzes ao lado de alguns nomes. Mapa de 1938 ainda na parede leste. Caixa de madeira escura na prateleira mais alta — sem identificação, não consta em nenhum inventário.",
+          },
+          pessoas: [],
+        },
+        praca: {
+          titulo: "Praça Central",
+          sub: "Nível baixo · Sul do terreno",
+          desc: "Paralelepípedo de granito, 25×20m. Poste de 1931 com quatro luminárias de vidro fosco. Dois degraus de descida sem corrimão desde 1974.",
+          andares: {
+            "Nível único":
+              "Oito bancos de ferro forjado. Poste central — à noite, único círculo de luz com bosque escuro ao redor. Última sexta de cada mês às 20h: a Roda — conversa sem tema, sem professor, sem hierarquia. Pode durar 20 minutos ou 3 horas. Nenhum professor aparece. A Diretora sabe e nunca interveio.",
+          },
+          pessoas: [],
+        },
+        igreja: {
+          titulo: "Igreja de Santa Catarina de Alexandria",
+          sub: "1834 · Ampliada 1878 · Reconstruída 1948–1952",
+          desc: "Dedicada à padroeira dos filósofos. Neogótica modesta, duas torres, rosácea em vitral (1955, artista sem nome nos registros). Santa Catarina segurando um livro dourado, roda quebrada em azul. Laica desde 1991 — permanece aberta como espaço de silêncio.",
+          andares: {
+            Interior:
+              "16 bancos de carvalho cada lado. Altar de mármore branco reconstruído. Lateral leste: 43 nomes em bronze de mortos na 2ª Guerra — flores frescas frequentes sem identificação de origem. Confessionário de 1834 não utilizado desde 1991 — usado informalmente como cabine de silêncio.",
+            Galeria:
+              "Órgão de 1891, restaurado 1967. Belinskaya toca ocasionalmente ao anoitecer, sem aviso, sem razão particular. O som sai pela porta e alcança a praça.",
+            Cripta:
+              "Sob o altar. Aleksander Enoraski (1761–1831), Helena Enoraski (1769–1847), Stanisław Enoraski (1798–1869). Porta sem cadeado.",
+            "Sala Górecki — A Orquestra":
+              "Ligada à Igreja em L. Construída em 1961, nomeada em 1994 em homenagem a Henryk Górecki. Tijolo e vidro, teto alto com painéis de madeira. Palco para 40 músicos, plateia com 120 cadeiras azuis. Acústica projetada — 'o lugar ouve junto.' Ensaios: terças, quintas e domingo. Maestro Pan Kowalski, 61 anos, na escola desde 2008. Porta discreta conecta à nave da Igreja.",
+          },
+          pessoas: [
+            {
+              nome: "Anya Belinskaya",
+              cargo: "Toca o órgão ocasionalmente — sem aviso",
+            },
+          ],
+        },
+        biblioteca: {
+          titulo: "Biblioteca",
+          sub: "1931 · Art Déco · 34.000 volumes",
+          desc: '"Quem lê, vive mais de uma vez" — gravado na pedra acima da porta em polonês e latim. Piso de mármore no hall (transição sonora deliberada), depois madeira.',
+          andares: {
+            Térreo:
+              "Estantes de carvalho 4m com escadas deslizantes. Organização cronológica dentro de cada área — não alfabética (decisão de 1931 defendida por Pani Kowalska). Sala de Leitura: 32 lugares, lâmpadas de bronze originais, lareira. Seção de periódicos com arquivo desde 1934.",
+            "1º Andar":
+              "Acervo Restrito (grade de ferro). Quatro salas de estudo individual reservadas. Sala de Mapas com mapas históricos únicos em Varsóvia. Escritório de Pani Kowalska: porta sempre entreaberta.",
+            Subsolo:
+              'Arquivo desde 1799 — caixas de papel acid-free. O arquivo de 1944 é menor que os outros: o que sobreviveu cabe em menos espaço. Prateleira do fundo: caixas de 1981–1991 sem número no índice geral. Pani Kowalska: "documentos que ainda não decidiram o que são."',
+          },
+          pessoas: [
+            {
+              nome: "Pani Kowalska",
+              cargo:
+                "Bibliotecária · 57 anos · conhece 34.000 volumes sem consultar sistema",
+            },
+          ],
+        },
+        esportes: {
+          titulo: "Área de Esportes e Equitação",
+          sub: "Nível baixo · Leste do terreno sul",
+          desc: "17 cavalos, 11 adultos e 6 jovens. A avaliação de Mazurek sobre aptidão de cavaleiro não é contestável por nenhuma instância — incluindo a Diretora.",
+          andares: {
+            Solário:
+              "Plataforma de madeira 15×10m. Sem cobertura. Espreguiçadeiras dobráveis. No outono serve como palco improvisado — a acústica ao ar livre é boa.",
+            "Circuito + Campos":
+              "Circuito oval de 400m com marcações de cal renovadas semanalmente. Dois campos de futebol com goleiras de ferro. Linha de árvores no fundo com bolas acumuladas há décadas.",
+            "Galpão Coberto":
+              "Esgrima: 12 pistes, tradição de bater a lâmina no piso antes do combate (origem desconhecida, desde ~1988). Ginásio: quadra polivalente, arquibancada para 40. Musculação. Vestiários.",
+            Cavalariça:
+              "17 cavalos. Wicher (16), Burza (14), Cisza (13), Głaz (15), Mgła (11), Dąb (12), Iskra (10), Północ (9), Grad (13), Zorza (11), Strzała (8). Jovens: Pył, Wihr, Cień, Brzask, Kamień, Blask.",
+          },
+          pessoas: [
+            {
+              nome: "Pan Mazurek",
+              cargo:
+                "Zelador dos cavalos · 63 anos · fala com cavalos mais que com pessoas",
+            },
+          ],
+        },
+        muro: {
+          titulo: "Muro de 1918",
+          sub: "Construído para impedir entrada de soldados russos",
+          desc: "Muro de pedra ao longo de todo o perímetro do terreno. Construído em 1918. Os fragmentos destruídos em 1944 estão expostos no museu.",
+          andares: {},
+          pessoas: [],
+        },
+        muro2: {
+          titulo: "Muro de 1918",
+          sub: "",
+          desc: "Perímetro leste.",
+          andares: {},
+          pessoas: [],
+        },
+        muro3: {
+          titulo: "Muro de 1918",
+          sub: "",
+          desc: "Perímetro oeste.",
+          andares: {},
+          pessoas: [],
+        },
+        muro4: {
+          titulo: "Muro de 1918",
+          sub: "",
+          desc: "Perímetro leste.",
+          andares: {},
+          pessoas: [],
+        },
+      };
+
+      // ═══ LÓGICA DO MAPA ═══
+      document.querySelectorAll(".zona[data-id]").forEach((zona) => {
+        zona.addEventListener("click", function () {
+          const id = this.dataset.id;
+          const data = mapaData[id];
+          if (!data) return;
+
+          document
+            .querySelectorAll(".zona")
+            .forEach((z) => z.classList.remove("active"));
+          this.classList.add("active");
+
+          const defaultMsg = document.getElementById("defaultMsg");
+          const infoContent = document.getElementById("infoContent");
+          defaultMsg.style.display = "none";
+          infoContent.style.display = "block";
+
+          document.getElementById("infoTitle").textContent = data.titulo;
+          document.getElementById("infoSub").textContent = data.sub;
+          document.getElementById("infoDesc").textContent = data.desc;
+
+          // andares
+          const andaresSection = document.getElementById("andaresSection");
+          const andarTabs = document.getElementById("andarTabs");
+          const andarContents = document.getElementById("andarContents");
+          andarTabs.innerHTML = "";
+          andarContents.innerHTML = "";
+
+          if (data.andares && Object.keys(data.andares).length > 0) {
+            andaresSection.style.display = "block";
+            Object.entries(data.andares).forEach(([nome, desc], i) => {
+              const tab = document.createElement("button");
+              tab.className = "andar-tab" + (i === 0 ? " active" : "");
+              tab.textContent = nome;
+              tab.onclick = () => {
+                document
+                  .querySelectorAll(".andar-tab")
+                  .forEach((t) => t.classList.remove("active"));
+                document
+                  .querySelectorAll(".andar-content")
+                  .forEach((c) => c.classList.remove("active"));
+                tab.classList.add("active");
+                document.getElementById("ac-" + i).classList.add("active");
+              };
+              andarTabs.appendChild(tab);
+
+              const content = document.createElement("div");
+              content.className = "andar-content" + (i === 0 ? " active" : "");
+              content.id = "ac-" + i;
+              content.textContent = desc;
+              andarContents.appendChild(content);
+            });
+          } else {
+            andaresSection.style.display = "none";
+          }
+
+          // pessoas
+          const pessoasSection = document.getElementById("pessoasSection");
+          const pessoasList = document.getElementById("pessoasList");
+          pessoasList.innerHTML = "";
+
+          if (data.pessoas && data.pessoas.length > 0) {
+            pessoasSection.style.display = "block";
+            data.pessoas.forEach((p) => {
+              const div = document.createElement("div");
+              div.className = "pessoa";
+              div.innerHTML = `<span class="pessoa-nome">${p.nome}</span><span class="pessoa-cargo">${p.cargo}</span>`;
+              pessoasList.appendChild(div);
+            });
+          } else {
+            pessoasSection.style.display = "none";
+          }
+        });
+      });
     </script>
   </body>
 </html>
